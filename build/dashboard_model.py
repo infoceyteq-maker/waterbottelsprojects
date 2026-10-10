@@ -30,7 +30,7 @@ NAMEPLATE_MONTH = CAPACITY_BPH * SHIFT_HOURS * WORK_DAYS_MONTH   # 1,200,000 bot
 # SKU mix (share of PET bottle count) and unit economics in LKR
 SKUS = [
     {
-        "sku": "500 ml", "share": 0.45, "volume_l": 0.5,
+        "sku": "500 ml", "share": 0.40, "volume_l": 0.5,
         "costs": {
             "PET bottle (purchased, SLS 1336 marked)": 12.50,
             "Cap (PCO 1881)": 3.00,
@@ -47,7 +47,7 @@ SKUS = [
         "retail_price": 75.00,
     },
     {
-        "sku": "1 L", "share": 0.30, "volume_l": 1.0,
+        "sku": "1 L", "share": 0.25, "volume_l": 1.0,
         "costs": {
             "PET bottle (purchased, SLS 1336 marked)": 18.50,
             "Cap (PCO 1881)": 3.00,
@@ -64,7 +64,7 @@ SKUS = [
         "retail_price": 100.00,
     },
     {
-        "sku": "1.5 L", "share": 0.25, "volume_l": 1.5,
+        "sku": "1.5 L", "share": 0.20, "volume_l": 1.5,
         "costs": {
             "PET bottle (purchased, SLS 1336 marked)": 23.00,
             "Cap (PCO 1881)": 3.00,
@@ -79,6 +79,23 @@ SKUS = [
         },
         "ex_factory_price": 82.00,
         "retail_price": 130.00,
+    },
+    {
+        "sku": "5 L", "share": 0.15, "volume_l": 5.0,
+        "costs": {
+            "PET bottle (purchased, SLS 1336 marked)": 42.00,
+            "Cap + handle (5 L screw cap)": 6.00,
+            "Label (5 L)": 5.00,
+            "Shrink film / packing": 2.20,
+            "Water + treatment chemicals": 4.20,
+            "Power": 7.50,
+            "Consumables (filters, lab)": 2.00,
+            "Direct labour": 3.20,
+            "Maintenance & spares": 2.50,
+            "Rejects & losses (3%)": 2.20,
+        },
+        "ex_factory_price": 200.00,
+        "retail_price": 290.00,
     },
 ]
 
@@ -162,11 +179,43 @@ CAPEX = [
 ]
 
 
+# Stage 1 = from the day the project starts until the FACTORY IS OPEN
+#           (land, building, civil, utilities to the building, approvals, well).
+# Stage 2 = from the open factory until it is READY TO MANUFACTURE
+#           (treatment train, filling line, packing, QC lab, product approvals).
+# Anything not listed here is Stage 2.
+STAGE1_ITEMS = {
+    "Land (Mr. Thilakarathna's contribution - in kind)",
+    "Factory building shell + civil works (approx. 18,000 sq ft)",
+    "Cleanroom filling room (ISO 8 / Class 100,000)",
+    "Warehouse, offices, racking",
+    "CEB 3-phase connection + main panel + MCC",
+    "Standby generator 250 kVA",
+    "Effluent treatment plant (ETP) + soakaway",
+    "Fire systems, extinguishers, emergency lighting",
+    "Pest control setup + waste management",
+    "Legal (NDA, MOU, shareholders agreement, land contracts)",
+    "Feasibility study + financial model",
+    "Hydrogeological survey + borewell drilling",
+    "Water testing (SLS 614 + bromide + heavy metals, 4 rounds)",
+    "Architect + structural engineer + building approvals",
+    "CEA EPL + environmental consultant",
+}
+
+STAGE_TITLES = {
+    1: ("අදියර 1 — පටන් ගත් දවසේ සිට කර්මාන්ත ශාලාව විවෘත කරන තෙක්",
+        "Stage 1 - From day one until the factory is open"),
+    2: ("අදියර 2 — කර්මාන්ත ශාලාව විවෘත කළා සිට නිෂ්පාදනය ආරම්භ කරන තෙක්",
+        "Stage 2 - From the open factory until it can manufacture"),
+}
+
+
 def capex_rows(items=None):
-    """Normalise to (name, qty, unit, rate, amount, category, in_kind)."""
+    """Normalise to (name, qty, unit, rate, amount, category, in_kind, stage)."""
     rows = []
     for name, qty, unit, rate, cat, inkind in (items or CAPEX):
-        rows.append((name, qty, unit, rate, qty * rate, cat, inkind))
+        stage = 1 if name in STAGE1_ITEMS else 2
+        rows.append((name, qty, unit, rate, qty * rate, cat, inkind, stage))
     return rows
 CONTINGENCY_PCT = 0.15
 WORKING_CAPITAL = 28000000
@@ -384,6 +433,13 @@ def build_model():
         "total_investment": total_investment,
         "cash_investment": cash_investment,
         "depreciation_month": dep_month,
+        "stage_titles": STAGE_TITLES,
+        "stage1_rows": [r for r in capex_rows() if r[7] == 1],
+        "stage2_rows": [r for r in capex_rows() if r[7] == 2],
+        "stage1_total": sum(r[4] for r in capex_rows() if r[7] == 1),
+        "stage2_total": sum(r[4] for r in capex_rows() if r[7] == 2),
+        "stage1_cash": sum(r[4] for r in capex_rows() if r[7] == 1 and not r[6]),
+        "stage2_cash": sum(r[4] for r in capex_rows() if r[7] == 2 and not r[6]),
         "projection": proj,
         "scenarios": scenarios,
         "recommended": scenarios[0],

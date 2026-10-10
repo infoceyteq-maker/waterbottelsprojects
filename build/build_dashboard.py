@@ -285,16 +285,16 @@ PAGE = """<!doctype html>
     <p>__LOCATION__<br><b>ආයෝජක / Investor:<br>__INVESTOR__</b></p>
   </div>
   <div class="nsec">දළ විශ්ලේෂණය / Overview</div>
-  <a href="#dash">📊 Dashboard<span class="en">At a glance</span></a>
+  <a href="#dash">📊 සාරාංශය<span class="en">Summary &amp; the 5 products</span></a>
   <a href="#project">🏭 ව්‍යාපෘතිය<span class="en">What exists today</span></a>
   <a href="#process">💧 පිරිපහදු ක්‍රියාවලිය<span class="en">Treatment train</span></a>
-  <div class="nsec">මුදල් / Money</div>
-  <a href="#production">📦 නිෂ්පාදන පරිමාව<span class="en">Bottle quantities</span></a>
-  <a href="#materials">🏷️ අමුද්‍රව්‍ය + ලේබල්<span class="en">Material &amp; label qty</span></a>
-  <a href="#budget">💰 සම්පූර්ණ අයවැය<span class="en">Full budget</span></a>
-  <a href="#unitcost">🧮 බෝතලයක පිරිවැය<span class="en">Cost per bottle</span></a>
-  <a href="#profit">📈 ලාභය + Break-even<span class="en">Profit & break-even</span></a>
-  <a href="#growth">🚀 වර්ධන සැලැස්ම<span class="en">Expansion plan</span></a>
+  <a href="#production">📦 නිෂ්පාදන 5<span class="en">Bottle quantities</span></a>
+  <div class="nsec">පිරිවැය / The cost</div>
+  <a href="#stage1">💰 අදියර 1 — ෆැක්ටරි ඕපන්<span class="en">Day one to open factory</span></a>
+  <a href="#stage2">🏭 අදියර 2 — නිෂ්පාදනයට<span class="en">Open factory to manufacturing</span></a>
+  <a href="#total">🧾 මුළු ආයෝජනය<span class="en">Everything added up</span></a>
+  <a href="#unitcost">🧮 බෝතලයක පිරිවැය<span class="en">Cost per bottle, all 5</span></a>
+  <a href="#materials">🏷️ අමුද්‍රව්‍ය + ලේබල්<span class="en">What to buy monthly</span></a>
   <div class="nsec">ක්‍රියාත්මක කිරීම / Execution</div>
   <a href="#checklist">✅ ලේඛන ලැයිස්තුව<span class="en">160-item checklist</span></a>
   <a href="#timeline">🗓️ කාලසටහන<span class="en">Timeline</span></a>
@@ -405,47 +405,57 @@ def build():
     y1, y2, y3, y4 = M["projection"]
     REC = M["recommended"]
 
-    # ================= DASHBOARD =================
     s = []
-    # (hero cover replaces the old text header)
 
-    s.append('<section id="dash"><h2><span class="n">1</span>📊 Dashboard — එක බැල්මකින්</h2>'
-             '<p class="lead">සම්පූර්ණ ව්‍යාපෘතියේ ප්‍රධාන සංඛ්‍යා · <b>The whole project at a glance</b></p>')
+    # ================= 1. SUMMARY =================
+    s.append('<section id="dash"><h2><span class="n">1</span>📊 සාරාංශය — එක බැල්මකින්</h2>'
+             '<p class="lead">ආයෝජකයා, ඉඩම, නිෂ්පාදන 5 සහ ප්‍රධාන පිරිවැය · '
+             '<b>The investor, the land, the five products, and the two headline costs</b></p>')
     s.append('<div class="grid g4">')
-    s.append(kpi("ධාරිතාව / Capacity", f'{M["capacity_bph"]:,} <em>BPH</em>',
-                 f'{M["shift_hours"]}h × {M["work_days"]}d = {M["nameplate_month"]:,} බෝතල්/මාස (100%)'))
-    s.append(kpi("මුළු ආයෝජනය / Total Investment", "Rs " + m(REC["total_investment"]),
-                 "⭐ Option A (Lean Start) · CAPEX + working capital", "ol"))
-    s.append(kpi("Mr. Thilakarathna ගේ මුදල්", "Rs " + m(REC["cash_investment"]),
-                 f'Option A · ඉඩම් වටිනාකම Rs {m(M["land_value"])} අඩු කිරීමෙන් පසු', "am"))
-    s.append(kpi("බෝතලයක පිරිවැය (blended)", f'Rs {M["blend_variable"]:,.2f}',
-                 "PET බෝතලයක සාමාන්‍ය variable cost", "bl"))
-    s.append('</div>')
-    s.append('<div class="grid g4" style="margin-top:14px">')
-    s.append(kpi("බෝතලයක ලාභය (blended)", f'Rs {M["blend_contribution"]:,.2f}',
-                 f'Margin {M["blend_margin_pct"]}% · ex-factory Rs {M["blend_price"]:,.0f}'))
-    s.append(kpi("Break-even", f'{M["breakeven_pct"]*100:,.0f}<em>%</em>',
-                 f'බෝතල් {M["breakeven_pet"]:,}/මාස — ඉතා ආරක්ෂිතයි', "ol"))
-    s.append(kpi("Year 1 ශුද්ධ ලාභය", "Rs " + m(y1["pat_y"]),
-                 f'25% utilisation (පරික්ෂාකාරී) · Revenue Rs {m(y1["revenue_y"])}/yr'))
-    s.append(kpi("Payback", f'{M["payback_year"]} <em>වසර</em>',
-                 f'Year {M["payback_year"]} මාස {M["payback_months"]} දී ආයෝජනය ආපසු', "ol"))
+    s.append(kpi("අදියර 1 — ෆැක්ටරි එක ඕපන් කරන තෙක්",
+                 "Rs " + m(M["stage1_total"]),
+                 "පටන් ගත් දවසේ සිට · ඉඩම + ගොඩනැඟිල්ල + ළිඳ + අනුමැති", "ol"))
+    s.append(kpi("අදියර 2 — නිෂ්පාදනයට සූදානම් වන තෙක්",
+                 "Rs " + m(M["stage2_total"]),
+                 "යන්ත්‍ර + පිරිපහදු පද්ධතිය + QC lab", "am"))
+    s.append(kpi("මුළු ආයෝජනය / Total investment",
+                 "Rs " + m(M["total_investment"]),
+                 "CAPEX + contingency 15% + working capital"))
+    s.append(kpi("Mr. Thilakarathna ගේ මුදල්",
+                 "Rs " + m(M["cash_investment"]),
+                 f'ඉඩම් වටිනාකම Rs {m(M["land_value"])} අඩු කිරීමෙන් පසු', "bl"))
     s.append('</div>')
 
-    s.append('<div class="card" style="margin-top:16px"><h3 style="margin-top:0">'
-             '📅 වසර 3ක ප්‍රක්ෂේපණය / 3-Year Projection</h3><div class="scroll"><table>'
-             '<tr><th>වසර</th><th class="num">Utilisation</th><th class="num">බෝතල්/මාස</th>'
-             '<th class="num">ආදායම/වසර</th><th class="num">Contribution/මාස</th>'
-             '<th class="num">Fixed/මාස</th><th class="num">ශුද්ධ ලාභය/වසර</th></tr>')
-    for p in M["projection"]:
-        s.append(f'<tr><td><b>{p["year"]}</b></td><td class="num">{p["utilisation"]*100:,.0f}%</td>'
-                 f'<td class="num">{p["pet_bottles_m"]:,}</td>'
-                 f'<td class="num">Rs {m(p["revenue_y"])}</td>'
-                 f'<td class="num">Rs {m(p["contribution_m"])}</td>'
-                 f'<td class="num">Rs {m(p["fixed_m"])}</td>'
-                 f'<td class="num"><b>Rs {m(p["pat_y"])}</b></td></tr>')
-    s.append('</table></div></div></section>')
-
+    s.append('<h3>🍶 නිෂ්පාදන 5ක් — වෙන වෙනම <span class="en">The five products, separately</span></h3>')
+    s.append('<div class="tbl scroll"><table><thead><tr>'
+             '<th>නිෂ්පාදනය / Product</th><th class="num">Mix %</th>'
+             '<th class="num">එකක පිරිවැය / Cost</th>'
+             '<th class="num">Ex-factory මිල</th>'
+             '<th class="num">ලාභය / Margin</th>'
+             '<th class="num">Margin %</th></tr></thead><tbody>')
+    for sk in M["skus"]:
+        c = sk["variable_cost"]
+        mg = sk["ex_factory_price"] - c
+        s.append(f'<tr><td><b>💧 {sk["sku"]}</b></td>'
+                 f'<td class="num">{sk["share"]*100:.0f}%</td>'
+                 f'<td class="num">Rs {c:,.2f}</td>'
+                 f'<td class="num">Rs {sk["ex_factory_price"]:,.0f}</td>'
+                 f'<td class="num">Rs {mg:,.2f}</td>'
+                 f'<td class="num">{mg/sk["ex_factory_price"]*100:.1f}%</td></tr>')
+    c19 = M["sku19"]["variable_cost"]
+    mg19 = M["sku19"]["ex_factory_price"] - c19
+    s.append(f'<tr><td><b>🫙 {M["sku19"]["sku"]}</b></td><td class="num">—</td>'
+             f'<td class="num">Rs {c19:,.2f}</td>'
+             f'<td class="num">Rs {M["sku19"]["ex_factory_price"]:,.0f}</td>'
+             f'<td class="num">Rs {mg19:,.2f}</td>'
+             f'<td class="num">{mg19/M["sku19"]["ex_factory_price"]*100:.1f}%</td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<div class="note ol"><b>📌 ඔබ ඉල්ලූ පරිදි:</b> මෙම dashboard එක '
+             '<b>නිෂ්පාදනය ආරම්භ කරන තැනින් නවතී.</b> අවුරුදු ගණන් ලාභ/පාඩු '
+             'ප්‍රක්ෂේපණ <b>මෙහි නැත</b> — ඒවා පසුව වෙනම සාදමු. '
+             '<br><b>As you asked:</b> this stops at the point manufacturing begins. '
+             'No multi-year profit projections here — we will do those separately later.</div>')
+    s.append('</section>')
     # ================= PROJECT =================
     s.append('<section id="project"><h2><span class="n">2</span>🏭 ව්‍යාපෘතිය — දැන් තිබෙන්නේ මොනවාද?</h2>'
              '<p class="lead">දැනට ඇති දේ සහ මුල සිට ගොඩනැගිය යුතු දේ · <b>What exists today vs. what must be built from scratch</b></p>')
@@ -466,7 +476,7 @@ def build():
     s.append('<div class="card"><h3 style="margin-top:0">🏗️ මුල සිට කළ යුතු දේ / To be built from scratch</h3>'
              '<div class="tbl"><table><tr><th>කොටස</th><th class="num">පිරිවැය (Rs)</th></tr>')
     cats = {}
-    for name, qty, unit, rate, amt, cat, inkind in M["capex"]:
+    for name, qty, unit, rate, amt, cat, inkind, stg in M["capex"]:
         cats[cat] = cats.get(cat, 0) + amt
     for cat, label in [("building", "🏢 ගොඩනැඟිල්ල"), ("plant", "⚙️ යන්ත්‍රෝපකරණ + QC lab"),
                        ("utility", "⚡ Utilities"), ("env", "🌿 පරිසර + ආරක්ෂාව"),
@@ -521,439 +531,234 @@ def build():
              '<b>සෑම batch එකකම පරීක්ෂා කරන්න.</b></div></div>')
     s.append('</div></section>')
 
-    # ================= PRODUCTION =================
+    # ================= 4. PRODUCTION =================
     s.append('<section id="production"><h2><span class="n">4</span>📦 නිෂ්පාදන පරිමාව — බෝතල් Qty</h2>'
-             '<p class="lead">SKU mix අනුව මාසික බෝතල් ප්‍රමාණය · <b>Production volumes — monthly bottle quantities by SKU</b></p>')
-    s.append('<div class="grid g3">')
-    s.append(kpi("Nameplate (100%, 1 shift)", f'{M["nameplate_month"]:,}',
-                 f'{M["capacity_bph"]:,} BPH × {M["shift_hours"]}h × {M["work_days"]}d'))
-    s.append(kpi(f'Year 1 ({y1["utilisation"]*100:.0f}%)', f'{y1["pet_bottles_m"]:,}',
-                 f'බෝතල්/මාස · {y1["pet_bottles_y"]:,}/වසර', "ol"))
-    s.append(kpi("Year 2 (50%)", f'{y2["pet_bottles_m"]:,}',
-                 f'බෝතල්/මාස · {y2["pet_bottles_y"]:,}/වසර', "ol"))
-    s.append(kpi("Year 4 (100%)", f'{y4["pet_bottles_m"]:,}',
-                 f'බෝතල්/මාස · {y4["pet_bottles_y"]:,}/වසර', "ol"))
-    s.append('</div>')
-
-    s.append('<h3>🍶 SKU mix — PET රේඛාව</h3><div class="tbl"><table>'
-             '<tr><th>බෝතලය</th><th class="num">Mix</th><th class="num">Y1 බෝතල්/මාස</th>'
-             '<th class="num">Y2 බෝතල්/මාස</th><th class="num">Y3 බෝතල්/මාස</th>'
-             '<th class="num">Y4 බෝතල්/මාස</th><th class="num">ලීටර්/මාස (Y1)</th></tr>')
-    for sk in M["skus"]:
-        s.append(f'<tr><td><b>{sk["sku"]}</b></td><td class="num">{sk["share"]*100:.0f}%</td>'
-                 f'<td class="num">{round(y1["pet_bottles_m"]*sk["share"]):,}</td>'
-                 f'<td class="num">{round(y2["pet_bottles_m"]*sk["share"]):,}</td>'
-                 f'<td class="num">{round(y3["pet_bottles_m"]*sk["share"]):,}</td>'
-                 f'<td class="num">{round(y4["pet_bottles_m"]*sk["share"]):,}</td>'
-                 f'<td class="num">{round(y1["pet_bottles_m"]*sk["share"]*sk["volume_l"]):,}</td></tr>')
-    tot_l = sum(y1["pet_bottles_m"] * sk["share"] * sk["volume_l"] for sk in M["skus"])
-    s.append(f'<tr class="tot"><td>මුළු PET</td><td class="num">100%</td>'
-             f'<td class="num">{y1["pet_bottles_m"]:,}</td><td class="num">{y2["pet_bottles_m"]:,}</td>'
-             f'<td class="num">{y3["pet_bottles_m"]:,}</td><td class="num">{y4["pet_bottles_m"]:,}</td>'
-             f'<td class="num">{round(tot_l):,} L</td></tr>')
-    s.append(f'<tr class="land"><td><b>19 L (returnable)</b></td><td class="num">වෙනම රේඛාව</td>'
-             f'<td class="num">{y1["v19_m"]:,}</td><td class="num">{y2["v19_m"]:,}</td>'
-             f'<td class="num">{y3["v19_m"]:,}</td><td class="num">{y4["v19_m"]:,}</td>'
-             f'<td class="num">{y1["v19_m"]*19:,} L</td></tr>')
-    s.append('</table></div>')
-
-    s.append('<div class="note"><b>⭐ 19 L රේඛාව ඇයි වැදගත්:</b> බෝතලය වරක් මිලදී ගෙන '
-             'වසර 3–5ක් නැවත භාවිත කරයි → ඇසුරුම් පිරිවැය ඉතා අඩුයි. '
-             f'Gross margin <b>{M["sku19"]["margin_pct"]:.0f}%</b> '
-             f'(PET වල {M["blend_margin_pct"]:.0f}% ට එරෙහිව). '
-             'උඩරට හෝටල්, නිවාඩු නිකේතන, කාර්යාල, රෝහල් සඳහා ඉල්ලුම වැඩියි.</div>')
-    s.append('</section>')
-
-    # ================= MATERIALS =================
-    s.append('<section id="materials"><h2><span class="n">5</span>🏷️ අමුද්‍රව්‍ය සහ ලේබල් Qty</h2>'
-             '<p class="lead">සෑම මාසයකම මිලදී ගත යුතු ප්‍රමාණය (wastage සහිතව) · <b>Raw material &amp; label quantities to buy each month</b></p>')
-    # cost key inside each SKU's cost dict, for the qty x rate = amount columns
-    RATE_KEY = {
-        "බෝතල් / PET bottles (SLS 1336)": ("bottle_qty_factor", "PET bottle (purchased, SLS 1336 marked)"),
-        "මූඩි / Caps (PCO 1881)": ("cap_qty_factor", "Cap (PCO 1881)"),
-        "ලේබල් / Shrink sleeve labels": ("label_qty_factor", "Shrink sleeve label"),
-        "Shrink film / multipack": ("film_qty_factor", "Shrink film / packing"),
-    }
-    for yr in M["projection"]:
-        s.append(f'<h3 style="font-size:13.5px">{yr["year"]} '
-                 f'({yr["utilisation"]*100:.0f}% ධාරිතාව) — බෝතල් '
-                 f'{yr["pet_bottles_m"]:,}/මාස</h3>')
-        s.append('<div class="tbl scroll"><table><thead><tr>'
-                 '<th>අමුද්‍රව්‍යය / Material</th>'
-                 '<th class="num">500 ml</th><th class="num">1 L</th><th class="num">1.5 L</th>'
-                 '<th class="num">මුළු Qty / මාස</th><th class="num">මාසික මුදල (Rs)</th>'
-                 '</tr></thead><tbody>')
-        grand = 0
-        for nm, (qkey, ckey) in RATE_KEY.items():
-            cells, tot, cost = [], 0, 0.0
-            for sk in M["skus"]:
-                q = round(yr["pet_bottles_m"] * sk["share"] * sk[qkey])
-                cells.append(q); tot += q
-                cost += q * sk["costs"][ckey]
-            grand += cost
-            s.append(f'<tr><td><b>{nm}</b></td>'
-                     + "".join(f'<td class="num">{c:,}</td>' for c in cells)
-                     + f'<td class="num"><b>{tot:,}</b></td>'
-                       f'<td class="num">{cost:,.0f}</td></tr>')
-        pallets = round(yr["pet_bottles_m"] / 60)
-        grand += pallets * 2200
-        s.append(f'<tr><td>Pallets (60 බෝතල්/pallet @ Rs 2,200)</td>'
-                 f'<td class="num" colspan="3">—</td>'
-                 f'<td class="num">{pallets:,}</td><td class="num">{pallets*2200:,}</td></tr>')
-        s.append(f'<tr class="tot"><td>PET රේඛාව — මාසික මුළු / Monthly total</td>'
-                 f'<td class="num" colspan="3"></td><td class="num"></td>'
-                 f'<td class="num">{grand:,.0f}</td></tr>')
-        s.append('</tbody></table></div>')
-
-    s.append('<div class="note ol"><b>📌 ලේබල් ගණනය කිරීමේ නීතිය:</b> '
-             'ලේබල් 1ක් = බෝතල් 1ක්. නමුත් මුද්‍රණ වැරදි, යන්ත්‍ර waste, '
-             'label changeovers නිසා <b>4% wastage</b> එක් කරන්න. '
-             'Caps සහ බෝතල් සඳහා <b>3%</b>. '
-             '<b>SKU එකකට වෙනම ලේබලයක්</b> — එබැවින් SKU 3ක් = ලේබල් නිර්මාණ 3ක් '
-             '(+ 19L tag = 4ක්). '
-             'සෑම ලේබලයක්ම FCAU අනුමත විය යුතුය.</div>')
-
-    s.append('<h3>19 L රේඛාව — මාසික</h3><div class="tbl"><table>'
-             '<tr><th>අමුද්‍රව්‍යය</th><th class="num">Y1</th><th class="num">Y2</th>'
-             '<th class="num">Y3</th></tr>')
-    for nm, f in [("19 L බෝතල් (ආරම්භක තොගය — returnable)", 1.15),
-                  ("Caps (returnable)", 1.10),
-                  ("Handle tags / ලේබල්", 1.05)]:
-        s.append(f'<tr><td>{nm}</td>' +
-                 "".join(f'<td class="num">{round(y["v19_m"]*f):,}</td>' for y in M["projection"]) +
-                 '</tr>')
-    s.append('</table></div>')
-    s.append('<div class="note am"><b>⚠️ 19 L බෝතල් = ආයෝජනයක්, පිරිවැයක් නොවේ.</b> '
-             'බෝතලයක් ~Rs 1,200; එය වාර 40ක් භාවිත කරයි → භාරය Rs 30/බෝතල්. '
-             'නමුත් ආරම්භක තොගය (Y1: '
-             f'{round(y1["v19_m"]*1.15):,} බෝතල් × Rs 1,200 = '
-             f'Rs {y1["v19_m"]*1.15*1200/1_000_000:,.1f}M) CAPEX එකේ ඇතුළත් විය යුතුය.</div>')
-    s.append('</section>')
-
-    # ================= BUDGET =================
-    s.append('<section id="budget"><h2><span class="n">6</span>💰 සම්පූර්ණ අයවැය — නිෂ්පාදනය ආරම්භ කරන තෙක්</h2>'
-             '<p class="lead">නිෂ්පාදනය ආරම්භ කරන තෙක් සියලු විස්තර · <b>Full budget to the point of manufacturing — every line item</b></p>')
+             '<p class="lead">නිෂ්පාදන 5ම වෙන වෙනම · '
+             '<b>All five products, each with its own monthly quantity</b></p>')
     s.append('<div class="grid g4">')
-    s.append(kpi("ඉදිකිරීම් + යන්ත්‍ර", "Rs " + m(cats["building"] + cats["plant"] + cats["utility"]
-                                                  + cats["env"] + cats["logistics"]),
-                 "ගොඩනැඟිල්ල, plant, utilities, වාහන"))
-    s.append(kpi("ලියාපදිංචි + උපදේශන", "Rs " + m(cats["pre"]),
-                 "සමාගම්, WRB, FCAU, SLSI, CEA, branding", "ol"))
-    s.append(kpi("Contingency (15%)", "Rs " + m(M["contingency"]),
-                 "ඉදිකිරීම් වියදම් ඉහළ යාම සඳහා", "am"))
-    s.append(kpi("Working capital (මාස 3)", "Rs " + m(M["working_capital"]),
-                 "බෝතල්, ලේබල්, වැටුප්, විදුලිය", "bl"))
+    s.append(kpi("ධාරිතාව / Capacity", f'{M["capacity_bph"]:,} <em>BPH</em>',
+                 f'බෝතල් පැයට · {M["shift_hours"]}h × {M["work_days"]}d/මාස'))
+    s.append(kpi("මාසික උපරිමය / Nameplate", f'{M["nameplate_month"]:,}',
+                 "බෝතල්/මාස — 100% ධාරිතාවේදී", "ol"))
+    s.append(kpi("නිෂ්පාදන වර්ග / Products", "5",
+                 "500 ml · 1 L · 1.5 L · 5 L · 19 L", "am"))
+    s.append(kpi("PET රේඛාව + 19 L රේඛාව", "2",
+                 "වෙනම යන්ත්‍ර දෙකක්", "bl"))
     s.append('</div>')
 
-    CAT_LBL = [("land", "🏞️ ඉඩම / Land"),
-               ("building", "🏢 ගොඩනැඟිලි / Building & civil"),
-               ("plant", "⚙️ යන්ත්‍රෝපකරණ / Plant & machinery"),
-               ("utility", "⚡ උපයෝගිතා / Utilities"),
-               ("env", "🌿 පරිසර + ආරක්ෂාව / Environment & safety"),
-               ("logistics", "🚚 ප්‍රවාහන + ගබඩා / Logistics"),
-               ("pre", "📄 ලියාපදිංචි + උපදේශන / Registration & consultancy")]
-
-    s.append('<h3>📋 සම්පූර්ණ CAPEX අයවැය '
-             '<span class="en">Quantity x Rate = Amount</span></h3>')
-    s.append('<div class="tbl scroll"><table id="capex"><thead><tr>'
-             '<th style="width:34px">#</th><th>අයිතමය / Item</th>'
-             '<th class="num">ප්‍රමාණය / Qty</th><th>ඒකකය / Unit</th>'
-             '<th class="num">ඒකක මිල / Rate (Rs)</th>'
-             '<th class="num">මුදල / Amount (Rs)</th>'
-             '<th class="num">%</th></tr></thead><tbody>')
-    n = 0
-    for ckey, clbl in CAT_LBL:
-        rows = [r for r in M["capex"] if r[5] == ckey]
-        if not rows:
-            continue
-        s.append(f'<tr class="grp"><td colspan="7">{clbl}</td></tr>')
-        for name, qty, unit, rate, amt, cat, inkind in rows:
-            n += 1
-            cls = ' class="land"' if inkind else ''
-            tag = ' <span class="pill p-high">ආයෝජකයාගේ / in-kind</span>' if inkind else ''
-            pct = amt / M["total_capex"] * 100
-            s.append(f'<tr{cls}><td class="num">{n}</td><td>{name}{tag}</td>'
-                     f'<td class="num">{qty:,}</td><td>{unit}</td>'
-                     f'<td class="num">{rate:,.0f}</td>'
-                     f'<td class="num"><b>{amt:,}</b></td>'
-                     f'<td class="num">{pct:.1f}%</td></tr>')
-        s.append(f'<tr class="sub"><td></td><td>{clbl.split("/")[0].strip()} — '
-                 f'උප මුළු / Subtotal</td><td class="num"></td><td></td><td class="num"></td>'
-                 f'<td class="num">{sum(r[4] for r in rows):,}</td>'
-                 f'<td class="num">{sum(r[4] for r in rows)/M["total_capex"]*100:.1f}%</td></tr>')
-    s.append(f'<tr class="tot"><td></td><td>A. CAPEX උප මුළු / CAPEX subtotal '
-             f'({n} අයිතම්)</td><td class="num"></td><td></td><td class="num"></td>'
-             f'<td class="num">{M["capex_subtotal"]:,}</td><td class="num"></td></tr>')
-    s.append(f'<tr><td></td><td>B. Contingency @ 15% '
-             '<span style="color:var(--muted);font-size:11.5px">ඉදිකිරීම් මිල ඉහළ යාමට</span></td>'
-             f'<td class="num"></td><td></td><td class="num"></td>'
-             f'<td class="num">{M["contingency"]:,}</td><td class="num"></td></tr>')
-    s.append(f'<tr class="tot"><td></td><td>C. මුළු CAPEX / TOTAL CAPEX (A + B)</td>'
-             f'<td class="num"></td><td></td><td class="num"></td>'
-             f'<td class="num">{M["total_capex"]:,}</td><td class="num">100%</td></tr>')
-    s.append(f'<tr><td></td><td>D. Working capital (මාස 3) '
-             '<span style="color:var(--muted);font-size:11.5px">බෝතල්, ලේබල්, වැටුප්, විදුලිය</span></td>'
-             f'<td class="num"></td><td></td><td class="num"></td>'
-             f'<td class="num">{M["working_capital"]:,}</td><td class="num"></td></tr>')
-    s.append(f'<tr class="grand"><td></td><td>💰 E. මුළු ආයෝජනය / TOTAL INVESTMENT (C + D)</td>'
-             f'<td class="num"></td><td></td><td class="num"></td>'
-             f'<td class="num">{M["total_investment"]:,}</td><td class="num"></td></tr>')
-    s.append(f'<tr class="grand cash"><td></td><td><b>Mr. Thilakarathna ගේ මුදල් අවශ්‍යතාව / '
-             'CASH REQUIRED</b> <span style="font-size:11.5px">(E − ඉඩම් වටිනාකම '
-             f'Rs {M["land_value"]:,})</span></td>'
-             f'<td class="num"></td><td></td><td class="num"></td>'
-             f'<td class="num">{M["cash_investment"]:,}</td><td class="num"></td></tr>')
+    s.append('<h3>📋 මාසික බෝතල් ප්‍රමාණය — නිෂ්පාදනය අනුව '
+             '<span class="en">Monthly bottle quantity by product</span></h3>')
+    s.append('<div class="tbl scroll"><table><thead><tr>'
+             '<th>නිෂ්පාදනය / Product</th><th class="num">Mix %</th>'
+             '<th class="num">50% ධාරිතාව</th><th class="num">75% ධාරිතාව</th>'
+             '<th class="num">100% ධාරිතාව</th>'
+             '<th class="num">ලීටර්/මාස (100%)</th></tr></thead><tbody>')
+    tot = {u: 0 for u in (50, 75, 100)}
+    for sk in M["skus"]:
+        cells = []
+        for u in (50, 75, 100):
+            q = round(M["nameplate_month"] * u / 100 * sk["share"])
+            tot[u] += q
+            cells.append(q)
+        s.append(f'<tr><td><b>💧 {sk["sku"]}</b></td>'
+                 f'<td class="num">{sk["share"]*100:.0f}%</td>'
+                 + "".join(f'<td class="num">{c:,}</td>' for c in cells)
+                 + f'<td class="num">{round(cells[2]*sk["volume_l"]):,} L</td></tr>')
+    s.append(f'<tr class="tot"><td>PET මුළු / PET total</td><td class="num">100%</td>'
+             + "".join(f'<td class="num">{tot[u]:,}</td>' for u in (50, 75, 100))
+             + f'<td class="num">{round(sum(round(M["nameplate_month"]*sk["share"]*sk["volume_l"]) for sk in M["skus"])):,} L</td></tr>')
+    s.append(f'<tr class="land"><td><b>🫙 19 L (returnable)</b></td>'
+             f'<td class="num">වෙනම රේඛාව</td>'
+             f'<td class="num">20,000</td><td class="num">45,000</td>'
+             f'<td class="num">80,000</td>'
+             f'<td class="num">{80000*19:,} L</td></tr>')
     s.append('</tbody></table></div>')
-
-    s.append('<h3>📊 කාණ්ඩ අනුව බෙදීම</h3><div class="card">' +
-             bar_chart([(lbl, cats[c]) for c, lbl in
-                        [("building", "🏢 ගොඩනැඟිල්ල"), ("plant", "⚙️ යන්ත්‍රෝපකරණ + QC lab"),
-                         ("utility", "⚡ Utilities"), ("logistics", "🚚 වාහන + ගබඩා"),
-                         ("env", "🌿 පරිසර + ආරක්ෂාව"), ("pre", "📄 ලියාපදිංචි + උපදේශන")]]) +
-             '</div>')
-
-    s.append('<div class="note rd"><b>⚠️ මිල සටහන:</b> ඉහත සියලු අගයන් '
-             '<b>උපකල්පිත (indicative) පමණි.</b> විදේශ යන්ත්‍ර සඳහා රේගු තීරු බදු, PAL, VAT, '
-             'CESS, නැව් ගාස්තු සහ විනිමය අනුපාත අනුව සැලකිය යුතු ලෙස වෙනස් වේ. '
-             '<b>සෑම ප්‍රධාන යන්ත්‍රයක් සඳහාම quotation 3ක්</b> ලබාගෙන මෙම අයවැය '
-             'යළි ගණනය කරන්න. මෙය ආයෝජන තීරණයක් ගැනීමට පෙර අනිවාර්යයි.</div>')
-    s.append('<h3>🎯 අයවැය විකල්ප 3ක් — Mr. Thilakarathna ට තෝරාගැනීමට</h3>')
-    s.append('<div class="tbl"><table><tr><th>විකල්පය</th><th class="num">CAPEX</th>'
-             '<th class="num">Working capital</th><th class="num">මුළු ආයෝජනය</th>'
-             '<th class="num">ආයෝජකයාගේ මුදල්</th><th>විස්තරය</th></tr>')
-    for sc in M["scenarios"]:
-        star = ' class="land"' if sc is M["scenarios"][0] else ''
-        s.append(f'<tr{star}><td><b>{sc["name"]}</b><br>'
-                 f'<span class="pill p-high">{sc["tag"]}</span></td>'
-                 f'<td class="num">{sc["total_capex"]:,}</td>'
-                 f'<td class="num">{sc["working_capital"]:,}</td>'
-                 f'<td class="num"><b>{sc["total_investment"]:,}</b></td>'
-                 f'<td class="num">{sc["cash_investment"]:,}</td>'
-                 f'<td style="font-size:12px">{sc["note"]}</td></tr>')
-    s.append('</table></div>')
-    saving = M["scenarios"][1]["cash_investment"] - M["scenarios"][0]["cash_investment"]
-    s.append(f'<div class="note"><b>⭐ Option A නිර්දේශ කරන්නේ ඇයි:</b> Option B ට වඩා '
-             f'<b>Rs {saving/1_000_000:,.1f}M ක් අඩුය.</b> ඒ මුදලින් වෙළඳපොළ වර්ධනය කළ හැක. '
-             'වාහන, 19L රේඛාව සහ blow moulding වෙළඳපොළ තහවුරු වූ <b>පසු</b> එකතු කරන්න — '
-             'එවිට ඒවාට අවශ්‍ය ධාරිතාව ඇති බව ඔබ දන්නවා. '
-             '<b>අඩු ආරම්භක මුදලක් + අඩු අවදානමක් + එකම වර්ධන මාර්ගය.</b></div>')
-
+    s.append('<div class="note"><b>💡 19 L රේඛාව වෙනමයි:</b> එය PET monoblock එකෙන් '
+             'පිටත, වෙනම wash-fill-cap යන්ත්‍රයකි. බෝතල් නැවත ලබාගෙන සෝදා '
+             'පුරවන බැවින් <b>බෝතලයක පිරිවැය ඉතා අඩුය</b> (Rs '
+             f'{M["sku19"]["variable_cost"]:.2f}) නමුත් ආරම්භක බෝතල් තොගයක් '
+             'මිලදී ගත යුතුය.</div>')
     s.append('</section>')
+    # ============ 5 + 6. STAGE 1 and STAGE 2 BUDGETS ============
+    CAT_LBL = {"land": "🏞️ ඉඩම / Land",
+               "building": "🏢 ගොඩනැඟිලි / Building & civil",
+               "plant": "⚙️ යන්ත්‍රෝපකරණ / Plant & machinery",
+               "utility": "⚡ උපයෝගිතා / Utilities",
+               "env": "🌿 පරිසර + ආරක්ෂාව / Environment & safety",
+               "logistics": "🚚 ප්‍රවාහන / Logistics",
+               "pre": "📄 ලියාපදිංචි + උපදේශන / Registration & consultancy"}
+    CAT_ORDER = ["land", "building", "plant", "utility", "env", "logistics", "pre"]
 
-    # ================= UNIT COST =================
-    s.append('<section id="unitcost"><h2><span class="n">7</span>🧮 බෝතලයක පිරිවැය — සම්පූර්ණ ගණනය</h2>'
-             '<p class="lead">සෑම සතයක්ම කොහෙද යන්නේ කියා · <b>Cost of one bottle — line by line</b></p>')
-    s.append('<div class="grid g4">')
-    for sk in M["skus"]:
-        s.append(kpi(f'{sk["sku"]} — පිරිවැය', f'Rs {sk["variable_cost"]:,.2f}',
-                     f'විකුණුම් Rs {sk["ex_factory_price"]:,.0f} · ලාභය Rs {sk["contribution"]:,.2f} '
-                     f'({sk["margin_pct"]:.0f}%)'))
-    s.append(kpi("19 L — පිරිවැය", f'Rs {M["sku19"]["variable_cost"]:,.2f}',
-                 f'විකුණුම් Rs {M["sku19"]["ex_factory_price"]:,.0f} · ලාභය '
-                 f'Rs {M["sku19"]["contribution"]:,.2f} ({M["sku19"]["margin_pct"]:.0f}%)', "ol"))
-    s.append('</div>')
+    def stage_block(num, stage, anchor, rows, stage_total, extra_note):
+        si, en = M["stage_titles"][stage]
+        out = [f'<section id="{anchor}"><h2><span class="n">{num}</span>'
+               f'💰 {si}</h2><p class="lead">{en}</p>']
+        out.append('<div class="tbl scroll"><table><thead><tr>'
+                   '<th style="width:34px">#</th><th>අයිතමය / Item</th>'
+                   '<th class="num">Qty</th><th>ඒකකය / Unit</th>'
+                   '<th class="num">ඒකක මිල / Rate (Rs)</th>'
+                   '<th class="num">මුදල / Amount (Rs)</th></tr></thead><tbody>')
+        n = 0
+        for ckey in CAT_ORDER:
+            sel = [r for r in rows if r[5] == ckey]
+            if not sel:
+                continue
+            out.append(f'<tr class="grp"><td colspan="6">{CAT_LBL[ckey]}</td></tr>')
+            for name, qty, unit, rate, amt, cat, inkind, stg in sel:
+                n += 1
+                cls = ' class="land"' if inkind else ''
+                tag = ' <span class="pill p-high">ආයෝජකයාගේ / in-kind</span>' if inkind else ''
+                out.append(f'<tr{cls}><td class="num">{n}</td><td>{name}{tag}</td>'
+                           f'<td class="num">{qty:,}</td><td>{unit}</td>'
+                           f'<td class="num">{rate:,.0f}</td>'
+                           f'<td class="num"><b>{amt:,}</b></td></tr>')
+            out.append(f'<tr class="sub"><td></td><td>උප මුළු / Subtotal</td>'
+                       f'<td class="num"></td><td></td><td class="num"></td>'
+                       f'<td class="num">{sum(r[4] for r in sel):,}</td></tr>')
+        out.append(f'<tr class="grand"><td></td><td>🔵 අදියර {stage} මුළු පිරිවැය / '
+                   f'STAGE {stage} TOTAL ({n} අයිතම්)</td><td class="num"></td><td></td>'
+                   f'<td class="num"></td><td class="num">{stage_total:,}</td></tr>')
+        cash = sum(r[4] for r in rows if not r[6])
+        out.append(f'<tr class="grand cash"><td></td><td>💵 මුදලින් ගෙවිය යුතු / '
+                   f'CASH OUT (ඉඩම හැර / excl. land)</td><td class="num"></td><td></td>'
+                   f'<td class="num"></td><td class="num">{cash:,}</td></tr>')
+        out.append('</tbody></table></div>')
+        out.append(extra_note)
+        out.append('</section>')
+        return out
 
-    for sk in M["skus"] + [M["sku19"]]:
-        s.append(f'<h3>🍶 {sk["sku"]} — පිරිවැය ගොඩනැගීම</h3>')
-        s.append('<div class="grid g2"><div class="tbl"><table>'
-                 '<tr><th>අයිතමය</th><th class="num">Rs</th><th class="num">%</th></tr>')
-        tot = sum(sk["costs"].values())
-        for k, v in sk["costs"].items():
-            s.append(f'<tr><td>{k}</td><td class="num">{v:,.2f}</td>'
-                     f'<td class="num">{v/tot*100:.0f}%</td></tr>')
-        s.append(f'<tr class="tot"><td>මුළු variable පිරිවැය</td>'
-                 f'<td class="num">{tot:,.2f}</td><td class="num">100%</td></tr>')
-        s.append('</table></div><div>')
-        mx = max(sk["costs"].values())
-        s.append('<div class="card" style="height:100%"><div class="bar-chart">')
-        for k, v in sorted(sk["costs"].items(), key=lambda x: -x[1]):
-            w = max(3, round(v / mx * 100))
-            short = k.split("(")[0].strip()[:34]
-            s.append(f'<div class="bc-row"><div class="lbl">{short}</div>'
-                     f'<div class="bar"><i style="width:{w}%"></i></div>'
-                     f'<div class="val">{v:,.2f}</div></div>')
-        s.append('</div></div></div></div>')
+    s += stage_block(
+        5, 1, "stage1", M["stage1_rows"], M["stage1_total"],
+        '<div class="note ol"><b>🏁 අදියර 1 අවසන් වන්නේ:</b> ගොඩනැඟිල්ල සම්පූර්ණයි, '
+        'විදුලිය සම්බන්ධයි, ළිඳ කැණී ජල පරීක්ෂණ සමත් වී ඇත, ETP සහ ගිනි ආරක්ෂාව '
+        'සූදානම්, CEA EPL ලැබී ඇත. <b>නමුත් තවම නිෂ්පාදනය කළ නොහැක</b> — '
+        'යන්ත්‍ර නැත.<br><b>Stage 1 ends when</b> the building is complete, power is on, '
+        'the well is drilled and has passed SLS 614, and the ETP and fire systems are in. '
+        'You still cannot manufacture — there is no machinery yet.</div>')
 
-    s.append('<h3>🎯 Blended (මිශ්‍ර) — SKU mix අනුව</h3><div class="tbl"><table>'
-             '<tr><th>SKU</th><th class="num">Mix</th><th class="num">පිරිවැය</th>'
-             '<th class="num">Ex-factory මිල</th><th class="num">ලාභය</th>'
-             '<th class="num">Margin</th><th class="num">Retail මිල</th></tr>')
-    for sk in M["skus"]:
-        s.append(f'<tr><td><b>{sk["sku"]}</b></td><td class="num">{sk["share"]*100:.0f}%</td>'
-                 f'<td class="num">Rs {sk["variable_cost"]:,.2f}</td>'
-                 f'<td class="num">Rs {sk["ex_factory_price"]:,.2f}</td>'
-                 f'<td class="num">Rs {sk["contribution"]:,.2f}</td>'
-                 f'<td class="num">{sk["margin_pct"]:.0f}%</td>'
-                 f'<td class="num">Rs {sk["retail_price"]:,.0f}</td></tr>')
-    s.append(f'<tr class="tot"><td>Blended</td><td class="num">100%</td>'
-             f'<td class="num">Rs {M["blend_variable"]:,.2f}</td>'
-             f'<td class="num">Rs {M["blend_price"]:,.2f}</td>'
-             f'<td class="num">Rs {M["blend_contribution"]:,.2f}</td>'
-             f'<td class="num">{M["blend_margin_pct"]:.0f}%</td><td class="num">—</td></tr>')
-    s.append('</table></div>')
+    s += stage_block(
+        6, 2, "stage2", M["stage2_rows"], M["stage2_total"],
+        '<div class="note"><b>🏭 අදියර 2 අවසන් වන්නේ:</b> සම්පූර්ණ පිරිපහදු දාමය සවි කර '
+        'ඇත, filling monoblock සහ 19L රේඛාව ක්‍රියාත්මකයි, QC lab සූදානම්, '
+        'FCAU + SLSI ලියාපදිංචිය ලැබී ඇත → <b>නිෂ්පාදනය ආරම්භ කළ හැක.</b> '
+        '<b>මෙතනින් ඔබ්බට මෙම dashboard එක යන්නේ නැත.</b>'
+        '<br><b>Stage 2 ends when</b> the treatment train and filling lines run, the QC lab '
+        'is equipped and FCAU + SLSI registration is granted — manufacturing can start. '
+        'This dashboard stops here.</div>')
 
-    s.append('<div class="note"><b>🔑 වැදගත්:</b> ඉහත පිරිවැය <b>variable</b> පමණි. '
-             'Fixed පිරිවැය (වැටුප්, marketing, නඩත්තු, depreciation) තවත් '
-             f'<b>Rs {M["fixed_total_y1"]/y1["pet_bottles_m"]:,.2f}</b> එක් බෝතලයකට එකතු වේ '
-             f'(Year 1, බෝතල් {y1["pet_bottles_m"]:,}/මාස දී). '
-             f'එවිට <b>සම්පූර්ණ පිරිවැය ≈ Rs {M["blend_variable"]+M["fixed_total_y1"]/y1["pet_bottles_m"]:,.2f}</b> '
-             f'· ලාභය ≈ Rs {M["blend_price"]-(M["blend_variable"]+M["fixed_total_y1"]/y1["pet_bottles_m"]):,.2f}/බෝතලය.</div>')
+    # ---- the combined roll-up ----
+    s.append('<section id="total"><h2><span class="n">7</span>🧾 මුළු ආයෝජනය — එක තැනක</h2>'
+             '<p class="lead">අදියර 1 + අදියර 2 + contingency + working capital · '
+             '<b>Everything added up in one place</b></p>')
+    s.append('<div class="tbl"><table><tbody>')
+    s.append(f'<tr><td><b>A.</b> අදියර 1 — ෆැක්ටරි එක ඕපන් කරන තෙක් '
+             f'<span style="color:var(--muted);font-size:12px">({len(M["stage1_rows"])} අයිතම්)</span></td>'
+             f'<td class="num">{M["stage1_total"]:,}</td></tr>')
+    s.append(f'<tr><td><b>B.</b> අදියර 2 — නිෂ්පාදනයට සූදානම් වන තෙක් '
+             f'<span style="color:var(--muted);font-size:12px">({len(M["stage2_rows"])} අයිතම්)</span></td>'
+             f'<td class="num">{M["stage2_total"]:,}</td></tr>')
+    s.append(f'<tr class="tot"><td><b>C.</b> CAPEX උප මුළු (A + B)</td>'
+             f'<td class="num">{M["capex_subtotal"]:,}</td></tr>')
+    s.append(f'<tr><td><b>D.</b> Contingency @ 15% '
+             '<span style="color:var(--muted);font-size:12px">මිල ඉහළ යාමට ආරක්ෂාව</span></td>'
+             f'<td class="num">{M["contingency"]:,}</td></tr>')
+    s.append(f'<tr class="tot"><td><b>E.</b> මුළු CAPEX (C + D)</td>'
+             f'<td class="num">{M["total_capex"]:,}</td></tr>')
+    s.append(f'<tr><td><b>F.</b> Working capital (මාස 3) '
+             '<span style="color:var(--muted);font-size:12px">බෝතල්, ලේබල්, වැටුප්, විදුලිය</span></td>'
+             f'<td class="num">{M["working_capital"]:,}</td></tr>')
+    s.append(f'<tr class="grand"><td><b>G.</b> 💰 මුළු ආයෝජනය / TOTAL INVESTMENT (E + F)</td>'
+             f'<td class="num">{M["total_investment"]:,}</td></tr>')
+    s.append(f'<tr class="grand cash"><td>💵 <b>Mr. Thilakarathna ගේ මුදල් අවශ්‍යතාව / '
+             f'CASH REQUIRED</b> <span style="font-size:12px">(G − ඉඩම් වටිනාකම '
+             f'Rs {M["land_value"]:,})</span></td>'
+             f'<td class="num">{M["cash_investment"]:,}</td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<div class="note rd"><b>⚠️ මිල සටහන:</b> සියලු අගයන් '
+             '<b>උපකල්පිත (indicative)</b>. යන්ත්‍ර සඳහා <b>quotation 3ක්</b> ලබාගෙන '
+             'තහවුරු කරගන්න — රේගු තීරු බදු, PAL, VAT, නැව් ගාස්තු සහ විනිමය අනුපාත '
+             'අනුව සැලකිය යුතු ලෙස වෙනස් වේ.</div>')
     s.append('</section>')
+    # ============ 8. COST OF ONE BOTTLE, PER PRODUCT ============
+    s.append('<section id="unitcost"><h2><span class="n">8</span>🧮 එක බෝතලයක පිරිවැය — '
+             'නිෂ්පාදන 5ම වෙන වෙනම</h2>'
+             '<p class="lead">සෑම නිෂ්පාදනයක්ම වෙන වෙනම · '
+             '<b>The cost of one bottle, worked out separately for each of the five products</b></p>')
 
-    # ================= PROFIT =================
-    s.append('<section id="profit"><h2><span class="n">8</span>📈 ලාභය සහ Break-even</h2>'
-             '<p class="lead">ව්‍යාපාරය ලාභදායී වන්නේ කෙසේද · <b>How the business makes money</b></p>')
-    s.append('<div class="grid g4">')
-    s.append(kpi("Contribution / බෝතලය", f'Rs {M["blend_contribution"]:,.2f}',
-                 f'{M["blend_margin_pct"]}% margin'))
-    s.append(kpi("Break-even පරිමාව", f'{M["breakeven_pet"]:,}',
-                 f'බෝතල්/මාස · ධාරිතාවෙන් {M["breakeven_pct"]*100:.0f}% පමණයි', "ol"))
-    s.append(kpi("Fixed පිරිවැය / මාස (Y1)", "Rs " + m(M["fixed_total_y1"]),
-                 "වැටුප්, marketing, නඩත්තු, depreciation"))
-    s.append(kpi("Payback", f'{M["payback_year"]} <em>වසර</em>',
-                 f'Year {M["payback_year"]} මාස {M["payback_months"]} දී', "ol"))
-    s.append('</div>')
+    def cost_card(title, emoji, costs, price, cls=""):
+        total = sum(costs.values())
+        out = [f'<div class="card {cls}"><h3 style="margin-top:0">{emoji} {title}</h3>']
+        out.append('<div class="tbl"><table><tbody>')
+        for k, v in costs.items():
+            out.append(f'<tr><td>{k}</td><td class="num">Rs {v:,.2f}</td>'
+                       f'<td class="num" style="color:var(--faint)">{v/total*100:.1f}%</td></tr>')
+        out.append(f'<tr class="grand"><td>💰 එකක මුළු පිරිවැය / TOTAL COST PER BOTTLE</td>'
+                   f'<td class="num">Rs {total:,.2f}</td><td class="num">100%</td></tr>')
+        out.append(f'<tr class="sub"><td>Ex-factory මිල / Selling price</td>'
+                   f'<td class="num">Rs {price:,.2f}</td><td class="num"></td></tr>')
+        out.append(f'<tr class="sub"><td>ලාභය / Margin</td>'
+                   f'<td class="num">Rs {price-total:,.2f}</td>'
+                   f'<td class="num">{(price-total)/price*100:.1f}%</td></tr>')
+        out.append('</tbody></table></div></div>')
+        return "".join(out)
 
-    s.append('<h3>📊 මාසික P&L — වසර 3</h3><div class="tbl"><table>'
-             '<tr><th>අයිතමය</th>' +
-             "".join(f'<th class="num">{p["year"]}</th>' for p in M["projection"]) +
-             '</tr>')
-    lines = [
-        ("ධාරිතාව භාවිතය", lambda p: f'{p["utilisation"]*100:.0f}%', False),
-        ("PET බෝතල් / මාස", lambda p: f'{p["pet_bottles_m"]:,}', False),
-        ("19 L බෝතල් / මාස", lambda p: f'{p["v19_m"]:,}', False),
-        ("ආදායම / මාස", lambda p: f'{p["revenue_m"]:,.0f}', False),
-        ("Variable පිරිවැය", lambda p: f'{p["variable_m"]:,.0f}', False),
-        ("**Contribution**", lambda p: f'{p["contribution_m"]:,.0f}', True),
-        ("Fixed පිරිවැය", lambda p: f'{p["fixed_m"]:,.0f}', False),
-        ("**ලාභය (බදු ට පෙර) / මාස**", lambda p: f'{p["pbt_m"]:,.0f}', True),
-        ("බදු (30%)", lambda p: f'{p["pbt_m"]*M["tax_rate"]:,.0f}', False),
-        ("**ශුද්ධ ලාභය / මාස**", lambda p: f'{p["pat_m"]:,.0f}', True),
-        ("**ශුද්ධ ලාභය / වසර**", lambda p: f'{p["pat_y"]:,.0f}', True),
-    ]
-    for nm, fn, bold in lines:
-        cls = ' class="sub"' if bold else ''
-        label = nm.replace("**", "")
-        s.append(f'<tr{cls}><td>{"<b>" if bold else ""}{label}{"</b>" if bold else ""}</td>' +
-                 "".join(f'<td class="num">{fn(p)}</td>' for p in M["projection"]) + '</tr>')
-    s.append('</table></div>')
+    for sk in M["skus"]:
+        s.append(cost_card(sk["sku"], "💧", sk["costs"], sk["ex_factory_price"]))
+    s.append(cost_card(M["sku19"]["sku"] + " — returnable", "🫙",
+                       M["sku19"]["costs"], M["sku19"]["ex_factory_price"], "land"))
 
-    s.append('<h3>💰 ආයෝජනය ආපසු ලැබීම / Cumulative payback</h3><div class="card">' +
-             bar_chart([("Year 1", y1["pat_y"]),
-                        ("Year 1–2", y1["pat_y"] + y2["pat_y"]),
-                        ("Year 1–3", y1["pat_y"] + y2["pat_y"] + y3["pat_y"]),
-                        ("අවශ්‍ය මුදල් (cash)", M["cash_investment"])], "ol") +
-             '</div>')
-
-    s.append('<div class="note"><b>✅ Break-even ඇයි ආරක්ෂිත:</b> '
-             f'ධාරිතාවෙන් <b>{M["breakeven_pct"]*100:.0f}%</b> පමණක් විකුණුවද '
-             f'(බෝතල් {M["breakeven_pet"]:,}/මාස) ව්‍යාපාරය පාඩු නොලබයි. '
-             f'Year 1 ඉලක්කය {y1["utilisation"]*100:.0f}% බැවින් ආරක්ෂිත පරතරයක් ඇත.</div>')
-
-    s.append('<h3>🎚️ Sensitivity — ධාරිතාව අනුව ලාභය</h3>')
-    s.append('<p style="color:var(--muted);font-size:12.5px;margin:0 0 8px">'
-             'ඔබ සැබවින්ම කීයක් විකුණයිද කියා නොදනී. එබැවින් අවස්ථා කිහිපයක්:</p>')
-    s.append('<div class="tbl"><table><tr><th>ධාරිතාව භාවිතය</th><th class="num">බෝතල්/මාස</th>'
-             '<th class="num">ආදායම/මාස</th><th class="num">Contribution/මාස</th>'
-             '<th class="num">ශුද්ධ ලාභය/වසර</th><th>තත්ත්වය</th></tr>')
-    for r in M["sensitivity"]:
-        if r["pat_y"] <= 0:
-            tag, cls = "🔴 පාඩු", "p-crit"
-        elif r["pat_y"] < 20_000_000:
-            tag, cls = "🟡 සුළු ලාභ", "p-mand"
-        else:
-            tag, cls = "🟢 ලාභදායී", "p-high"
-        row = ' class="land"' if abs(r["util"] - 0.25) < 0.001 else ''
-        s.append(f'<tr{row}><td><b>{r["util"]*100:.0f}%</b></td>'
-                 f'<td class="num">{r["bottles"]:,}</td>'
-                 f'<td class="num">{r["revenue_m"]:,.0f}</td>'
-                 f'<td class="num">{r["contribution_m"]:,.0f}</td>'
-                 f'<td class="num"><b>{r["pat_y"]:,.0f}</b></td>'
-                 f'<td><span class="pill {cls}">{tag}</span></td></tr>')
-    s.append('</table></div>')
-    s.append('<div class="note ol"><b>🟢 හොඳ පුවත:</b> ධාරිතාවෙන් '
-             f'<b>{M["breakeven_pct"]*100:.0f}%</b> පමණක් විකුණුවද පාඩු නැත '
-             f'(බෝතල් {M["breakeven_pet"]:,}/මාස). '
-             'නමුත් 15% ට වඩා අඩු නම් පාඩු ලැබේ — එබැවින් '
-             '<b>බෙදාහැරීමේ ජාලය මුලින්ම ශක්තිමත් කරගන්න.</b></div>')
-
-    s.append('<h3>💸 මිල පීඩනය — තරඟකරුවන් මිල අඩු කළොත්?</h3>')
-    s.append('<div class="tbl"><table><tr><th>මිල වෙනස</th><th class="num">Ex-factory (blended)</th>'
-             '<th class="num">Contribution/බෝතලය</th><th class="num">Margin</th>'
-             '<th class="num">Break-even බෝතල්/මාස</th></tr>')
-    for r in M["price_sens"]:
-        sign = "+" if r["delta"] > 0 else ""
-        be = f'{r["breakeven"]:,}' if r["breakeven"] else "⛔ කළ නොහැක"
-        row = ' class="land"' if r["delta"] == 0 else ''
-        s.append(f'<tr{row}><td><b>{sign}{r["delta"]*100:.0f}%</b></td>'
-                 f'<td class="num">Rs {r["price"]:,.2f}</td>'
-                 f'<td class="num">Rs {r["contribution"]:,.2f}</td>'
-                 f'<td class="num">{r["margin"]:.0f}%</td>'
-                 f'<td class="num">{be}</td></tr>')
-    s.append('</table></div>')
-    s.append('<div class="note am"><b>⚠️ තරඟකාරී මිල යුද්ධය:</b> විශාල බ්‍රෑන්ඩ් මිල '
-             '10–15% ක් අඩු කළහොත් ඔබේ margin සැලකිය යුතු ලෙස අඩු වේ. '
-             '<b>ආරක්ෂාව:</b> (1) 19L contract sales — මිල යුද්ධයෙන් ඔබ්බට, '
-             '(2) කඳුකර මූලාශ්‍රය = premium positioning, '
-             '(3) Phase 2 blow moulding = ඒකක පිරිවැය 30–40% අඩුයි.</div>')
-
-    s.append('<h3>📈 ලාභ වැඩි කරන ක්‍රම 6</h3><div class="grid g3">')
-    for t, d in [("19 L රේඛාව වැඩි කරන්න",
-                  f'Margin {M["sku19"]["margin_pct"]:.0f}% — PET වලට වඩා දෙගුණයක්. '
-                  'කාර්යාල/හෝටල් contract එකක් = ස්ථාවර ආදායමක්'),
-                 ("Phase 2: Blow moulding",
-                  'බෝතල් තමන්ම හැදුවහොත් ඒකක පිරිවැය 30–40% අඩු වේ '
-                  '(preform Rs 8–10 vs බෝතලය Rs 12.50–23)'),
-                 ("2 වන shift එක",
-                  'Fixed පිරිවැය වෙනස් නොවී නිෂ්පාදනය දෙගුණ වේ → ඒකක පිරිවැය අඩුයි'),
-                 ("උඩරට hotel/tourism",
-                  'බණ්ඩාරවෙල–එල්ල–හපුතලේ සංචාරක කලාපය. Premium මිලට විකිණිය හැක'),
-                 ("Private label",
-                  'හෝටල්/සුපිරි වෙළඳසැල් සඳහා ඔවුන්ගේ ලේබලයෙන් — marketing පිරිවැයක් නැත'),
-                 ("අපනයනය",
-                  'Maldives, Middle East — VAT zero-rated; ඉහළ මිල')]:
-        s.append(f'<div class="card"><b>{t}</b><div style="color:var(--muted);font-size:12.5px;'
-                 f'margin-top:4px">{d}</div></div>')
-    s.append('</div></section>')
-
-    # ================= GROWTH =================
-    s.append('<section id="growth"><h2><span class="n">9</span>🚀 ව්‍යාපෘතිය ඉක්මනින් වර්ධනය කිරීම</h2>'
-             '<p class="lead">අවදානම අඩුවෙන්, වේගයෙන් · <b>Fast expansion plan — phase by phase</b></p>')
-    s.append('<div class="tl">')
-    for ph, ttl, body in [
-        ("Phase 1", "වසර 1 — පදනම + වෙළඳපොළට පිවිසීම",
-         "6,000 BPH · බෝතල් මිලදී ගැනීම · PET 500ml/1L/1.5L + 19L රේඛාව · "
-         "බණ්ඩාරවෙල–බදුල්ල–හපුතලේ–එල්ල බෙදාහැරීම · වසර 1 සාමාන්‍යය 25% ධාරිතාව (වසර අවසානයේ 40%) · "
-         "<b>ආයෝජනය Rs " + m(REC["total_investment"]) + "</b> (Option A — Lean Start)"),
-        ("Phase 2", "වසර 2 — ඒකක පිරිවැය අඩු කිරීම",
-         "PET blow moulding යන්ත්‍රය එකතු කිරීම → බෝතල් පිරිවැය 30–40% අඩු වේ · "
-         "නුවරඑළිය–මහනුවර දක්වා ව්‍යාප්තිය · වසර 2 ඉලක්කය 50% ධාරිතාව · "
-         "අමතර ආයෝජනය Rs 8M–18M"),
-        ("Phase 3", "වසර 3 — පරිමාව දෙගුණ කිරීම",
-         "2 වන shift · දෙවන monoblock · 100% ධාරිතාව · කොළඹ වෙළඳපොළ · "
-         "Private label contracts · අමතර ආයෝජනය Rs 25M–45M"),
-        ("Phase 4", "වසර 4+ — අපනයනය + premium",
-         "Maldives, Middle East (UAE/Qatar) · ISO 22000 / FSSC 22000 · "
-         "Halal · උල්පතක් සොයාගතහොත් premium Natural Mineral Water (SLS 1038) දෙවන බ්‍රෑන්ඩ් එකක් ලෙස"),
-    ]:
-        s.append(f'<div class="tl-i"><div class="tl-m">{ph}</div>'
-                 f'<div class="tl-c"><b>{ttl}</b><div class="t">{body}</div></div></div>')
-    s.append('</div>')
-
-    s.append('<h3>⚡ ඉක්මන් වර්ධනයට තීරණාත්මක කරුණු 7</h3><div class="tbl"><table>'
-             '<tr><th>#</th><th>ක්‍රියාමාර්ගය</th><th>ඇයි වැදගත්</th></tr>')
-    for i, (a, b) in enumerate([
-        ("ළිඳ 2ක් කණින්න", "එක ළිඳක් අසාර්ථක වුවහොත් කර්මාන්ත ශාලාව නවතී. දෙවන ළිඳ = ආරක්ෂාව + ධාරිතාව"),
-        ("19 L contract sales මුලින්ම", "ස්ථාවර මාසික ආදායමක් → cash flow ස්ථාවරයි → ණය අවශ්‍යතාව අඩුයි"),
-        ("බෙදාහරින්නන් 6–8ක් එකවර", "එක් අයෙකු මත රඳා පැවතීම අවදානමකි. ප්‍රදේශ අනුව බෙදන්න"),
-        ("Trademark මුලින්ම", "බ්‍රෑන්ඩ් එක වර්ධනය වූ පසු නම අහිමි වීම = සියල්ල අහිමි වීම"),
-        ("QR → lab report", "විනිවිදභාවය = වෙළඳ ලකුණ. කඳුකර මූලාශ්‍රය = විශාලතම වාසිය"),
-        ("Phase 2 blow moulding කල් දමන්න", "ආරම්භක CAPEX අඩු කරයි; විකුණුම් තහවුරු වූ පසු ආයෝජනය කරන්න"),
-        ("Working capital මාස 6ක්", "Retail credit 30–60 දින. Cash flow කඩා වැටීම = ව්‍යාපාරය මිය යයි"),
-    ], start=1):
-        s.append(f'<tr><td class="num"><b>{i}</b></td><td><b>{a}</b></td><td>{b}</td></tr>')
-    s.append('</table></div></section>')
-
+    s.append('<h3>📊 පිරිවැය සංසන්දනය <span class="en">All five side by side</span></h3>')
+    s.append('<div class="tbl scroll"><table><thead><tr>'
+             '<th>නිෂ්පාදනය</th>'
+             + "".join(f'<th class="num">{k}</th>' for k in M["skus"][0]["costs"])
+             + '<th class="num">මුළු</th></tr></thead><tbody>')
+    keys = list(M["skus"][0]["costs"])
+    for sk in M["skus"]:
+        cells = "".join(f'<td class="num">{sk["costs"].get(k, 0):,.2f}</td>' for k in keys)
+        s.append(f'<tr><td><b>{sk["sku"]}</b></td>{cells}'
+                 f'<td class="num"><b>{sk["variable_cost"]:,.2f}</b></td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<div class="note ol"><b>📌 5 L ගැන:</b> 5 L බෝතලයක PET පිරිවැය '
+             'Rs 42.00 ක් වුවද, ලීටරයකට පිරිවැය ඉතා අඩුය '
+             f'(Rs {76.80/5:,.2f}/L, 500 ml හි Rs {26.70/0.5:,.2f}/L ට සාපේක්ෂව). '
+             'එබැවින් 5 L <b>පවුල් සහ කාර්යාල වෙළඳපොළට</b> ඉතා ලාභදායීයි.</div>')
+    s.append('</section>')
+    # ============ 9. MATERIALS AND LABELS ============
+    s.append('<section id="materials"><h2><span class="n">9</span>🏷️ අමුද්‍රව්‍ය සහ ලේබල් Qty</h2>'
+             '<p class="lead">නිෂ්පාදන 5ම — මිලදී ගත යුතු ප්‍රමාණය wastage සහිතව · '
+             '<b>What to buy each month for all five products, wastage included</b></p>')
+    s.append('<div class="tbl scroll"><table><thead><tr>'
+             '<th>නිෂ්පාදනය / Product</th><th class="num">බෝතල්/මාස</th>'
+             '<th class="num">× 1.03</th><th class="num">මූඩි / Caps</th>'
+             '<th class="num">ලේබල් / Labels × 1.04</th>'
+             '<th class="num">Shrink film × 1.05</th></tr></thead><tbody>')
+    t = [0, 0, 0, 0, 0]
+    for sk in M["skus"]:
+        base = round(M["nameplate_month"] * sk["share"])
+        b = round(base * sk["bottle_qty_factor"])
+        cp = round(base * sk["cap_qty_factor"])
+        lb = round(base * sk["label_qty_factor"])
+        fm = round(base * sk["film_qty_factor"])
+        for i, v in enumerate((base, b, cp, lb, fm)):
+            t[i] += v
+        s.append(f'<tr><td><b>💧 {sk["sku"]}</b></td><td class="num">{base:,}</td>'
+                 f'<td class="num">{b:,}</td><td class="num">{cp:,}</td>'
+                 f'<td class="num">{lb:,}</td><td class="num">{fm:,}</td></tr>')
+    s.append(f'<tr class="land"><td><b>🫙 19 L (returnable)</b></td>'
+             f'<td class="num">80,000</td><td class="num">—</td>'
+             f'<td class="num">82,400</td><td class="num">83,200</td>'
+             f'<td class="num">—</td></tr>')
+    s.append(f'<tr class="grand"><td>මුළු / TOTAL (100% ධාරිතාව)</td>'
+             f'<td class="num">{t[0]:,}</td><td class="num">{t[1]:,}</td>'
+             f'<td class="num">{t[2]:,}</td><td class="num">{t[3]:,}</td>'
+             f'<td class="num">{t[4]:,}</td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<div class="note ol"><b>📌 Wastage නීති:</b> බෝතල් <b>× 1.03</b> (3%) · '
+             'මූඩි <b>× 1.03</b> (3%) · ලේබල් <b>× 1.04</b> (4% — මුද්‍රණ වැරදි, '
+             'යන්ත්‍ර waste, changeovers) · shrink film <b>× 1.05</b> (5%). '
+             '<br><b>🎨 ලේබල් නිර්මාණ 5ක් අවශ්‍යයි</b> — එක් නිෂ්පාදනයකට එක බැගින්. '
+             'සෑම ලේබලයක්ම <b>FCAU අනුමත</b> විය යුතුය.</div>')
+    s.append('</section>')
     # ================= CHECKLIST =================
     s.append('<section id="checklist"><h2><span class="n">10</span>✅ ලේඛන සහ අවශ්‍යතා ලැයිස්තුව <span class="en" style="font-size:13px;font-weight:600;color:var(--muted)">Documents &amp; requirements</span></h2>'
              f'<p class="lead">අයිතම {len(CL)}ක් · 🔴 Critical {crit} · 🟠 Mandatory {mand} · '

@@ -267,37 +267,61 @@ def check_dashboard(item_count):
         else:
             ok(f"cover photo embedded and unobstructed ({len(raw)/1024:,.0f} KB JPEG)")
 
-    # --- the budget must read as a budget: qty x rate = amount, with totals ---
-    for col in ["ප්‍රමාණය / Qty", "ඒකකය / Unit",
-                "ඒකක මිල / Rate (Rs)", "මුදල / Amount (Rs)"]:
-        if col not in html_src:
-            fail(f"budget table missing column: {col}")
-    if "මුළු Qty / මාස" not in html_src or "මාසික මුදල (Rs)" not in html_src:
-        fail("materials table missing its Qty / monthly-cost columns")
-    ngrp = html_src.count('class="grp"')
-    if ngrp != 7:
-        fail(f"budget has {ngrp} category group rows, expected 7")
-    if 'class="grand cash"' not in html_src:
-        fail("budget is missing the CASH REQUIRED grand-total row")
-    if "A. CAPEX උප මුළු" not in html_src or "E. මුළු ආයෝජනය" not in html_src:
-        fail("budget is missing its lettered A-E total ladder")
-    ok(f"budget columns + 7 category subtotals + A-E total ladder present")
+    # --- the two stages must both be there, and roll up to the same total ---
+    for anchor, label in [("stage1", "Stage 1"), ("stage2", "Stage 2"),
+                          ("total", "roll-up")]:
+        if f'id="{anchor}"' not in html_src:
+            fail(f"{label} section missing from the dashboard")
+    plain = re.sub(r"<[^>]+>", "", html_src)   # the rung letters sit inside <b>
+    for rung in ["A. අදියර 1", "B. අදියර 2", "C. CAPEX උප මුළු", "D. Contingency",
+                 "E. මුළු CAPEX", "F. Working capital", "G. 💰 මුළු ආයෝජනය",
+                 "CASH REQUIRED"]:
+        if rung not in plain:
+            fail(f"roll-up is missing rung: {rung}")
+    if html_src.count('class="grand cash"') < 3:
+        fail("expected a CASH OUT row in each stage plus the roll-up")
+    ok("Stage 1 + Stage 2 budgets and the C-G roll-up all present")
 
-    # --- no stale utilisation labels (the ramp is 25/50/75/100) ---
-    for stale in ["Year 1 (40%)", "Year 2 (70%)", "Year 3 (100%)"]:
-        if stale in html_src:
-            fail(f"stale utilisation label still rendered: {stale}")
-    ok("utilisation labels match the model ramp (25/50/75/100)")
+    # --- each stage table must show Qty | Unit | Rate | Amount ---
+    for col in [">Qty</th>", "ඒකකය / Unit", "ඒකක මිල / Rate (Rs)", "මුදල / Amount (Rs)"]:
+        if col not in html_src:
+            fail(f"stage budget table missing column: {col}")
+    ok("stage tables show Qty | Unit | Rate | Amount")
+
+    # --- all five products, each with its own cost card ---
+    for prod in ["500 ml", "1 L", "1.5 L", "5 L", "19 L"]:
+        if f'>{prod}<' not in html_src and f'{prod} ' not in html_src:
+            fail(f"product {prod} not rendered")
+    if "TOTAL COST PER BOTTLE" not in html_src:
+        fail("no per-bottle cost total rendered")
+    n_cards = html_src.count("TOTAL COST PER BOTTLE")
+    if n_cards != 5:
+        fail(f"{n_cards} per-product cost cards rendered, expected 5")
+    ok("all 5 products present with 5 separate cost cards")
+
+    # --- the user asked for NO multi-year profit projections ---
+    for gone in ['id="profit"', 'id="growth"', "Payback", "Sensitivity", "Break-even"]:
+        if gone in html_src:
+            fail(f"removed section/label still present: {gone}")
+    ok("no yearly profit / payback / break-even sections (as requested)")
+
+    # --- nav order must match the rendered section order ---
+    dom = re.findall(r'<section id="([a-z0-9]+)"', html_src)
+    nav = re.findall(r'<a href="#([a-z0-9]+)"', html_src)
+    if dom != nav:
+        fail(f"nav order {nav} does not match DOM order {dom}")
+    else:
+        ok(f"nav matches section order ({len(dom)} sections)")
 
     # the model numbers must be present and non-trivial
     for token, label in [("Mr. Thilakarathna", "investor name"),
                          ("Bandarawela", "location"),
                          ("SLS 894", "product standard"),
-                         ("Break-even", "break-even block"),
+                         ("5 L", "the 5 L product"),
                          ("LKR", None)]:
         if label and token not in html_src:
             fail(f"dashboard missing expected content: {label} ('{token}')")
-    ok("dashboard contains investor, location, SLS 894 and break-even content")
+    ok("dashboard contains investor, location, SLS 894 and all five products")
 
     # the dashboard must also be the site root, so "/" shows it
     idx = os.path.join(ROOT, "site", "index.html")
