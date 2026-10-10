@@ -17,6 +17,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_dashboard import plain as de_emoji  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "build"))
 
@@ -271,11 +274,15 @@ def check_dashboard(item_count):
     for anchor, label in [("budgets", "six budget documents"), ("total", "roll-up")]:
         if f'id="{anchor}"' not in html_src:
             fail(f"{label} section missing from the dashboard")
-    plain = re.sub(r"<[^>]+>", "", html_src)   # the rung letters sit inside <b>
+    # assert on the text the reader actually sees: tags stripped AND the
+    # pictographs removed by build_dashboard.plain(), which now runs on output
+    # whitespace is normalised too: removing a pictograph leaves a double
+    # space, which HTML collapses on screen but would break a substring test
+    seen = re.sub(r"\s+", " ", de_emoji(re.sub(r"<[^>]+>", "", html_src)))
     for rung in ["A. අදියර 1", "B. අදියර 2", "C. CAPEX උප මුළු", "D. Contingency",
-                 "E. මුළු CAPEX", "F. Working capital", "G. 💰 මුළු ආයෝජනය",
+                 "E. මුළු CAPEX", "F. Working capital", "G. මුළු ආයෝජනය",
                  "CASH REQUIRED"]:
-        if rung not in plain:
+        if rung not in seen:
             fail(f"roll-up is missing rung: {rung}")
     if 'class="grand cash"' not in html_src:
         fail("expected a CASH REQUIRED row in the roll-up")

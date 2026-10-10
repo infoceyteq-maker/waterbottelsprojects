@@ -16,11 +16,12 @@ Plus a landing page (index.html) that links all of them.
 Everything is derived from build/dashboard_model.py, so the seven pages and the
 main dashboard can never disagree.
 """
+import html
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from build_dashboard import CSS, ASSET          # noqa: E402
+from build_dashboard import CSS, ASSET, plain   # noqa: E402
 from dashboard_model import build_model         # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,6 +36,11 @@ PAGES = [
     ("6-sales-marketing.html", "6", "අලෙවි සහ නාමකරණ", "Sales & marketing"),
     ("7-final-summary.html", "7", "අවසන් සාරාංශය", "Final summary"),
 ]
+
+
+def esc(t):
+    """& is not valid raw in HTML text."""
+    return html.escape(str(t), quote=False)
 
 
 def m(n):
@@ -56,27 +62,25 @@ def cover_bg():
 
 
 def shell(M, num, title_si, title_en, subtitle, body):
-    nav = ['<div class="brand"><div class="logo">💧</div>'
-           '<h1>බෝතල් ජල කර්මාන්ත ශාලාව'
-           '<span style="display:block;font-size:11.5px;font-weight:500;'
-           'color:var(--muted);margin-top:3px">Bottled Drinking Water Plant</span></h1>'
-           f'<p>{M["location"]}<br><b>ආයෝජක / Investor:<br>{M["investor"]}</b></p></div>',
-           f'<div class="nsec">පිටු {len(PAGES)} / The {len(PAGES)} pages</div>']
-    for fname, n, si, en in PAGES:
-        on = ' class="on"' if n == num else ""
-        nav.append(f'<a href="{fname}"{on}>📄 පිටුව {n} — {si}'
-                   f'<span class="en">{en}</span></a>')
+    """One column: a slim top bar, a masthead, then every block stacked."""
+    n = len(PAGES)
+    nav = ['<div class="brand"><h1>බෝතල් ජල කර්මාන්ත ශාලාව'
+           '<span>Bottled Drinking Water Plant</span></h1>'
+           f'<p>{M["location"]}<br><b>ආයෝජක / Investor: '
+           f'{M["investor"]}</b></p></div>',
+           f'<div class="nsec">පිටු {n} / The {n} pages</div>']
+    for fname, pn, si, en in PAGES:
+        on = ' class="on"' if pn == num else ""
+        nav.append(f'<a href="{fname}"{on}><b>{pn.zfill(2)}</b>{si}</a>')
     nav.append('<div class="nsec">අමතර / Also</div>')
-    nav.append('<a href="dashboard.html">📊 සම්පූර්ණ Dashboard'
-               '<span class="en">The full panel</span></a>')
-    nav.append('<a href="docs.html">📚 ලේඛන පැකේජය'
-               '<span class="en">21 documents</span></a>')
+    nav.append('<a href="dashboard.html"><b>&mdash;</b>සම්පූර්ණ Dashboard</a>')
+    nav.append('<a href="docs.html"><b>&mdash;</b>ලේඛන පැකේජය</a>')
 
-    return f"""<!doctype html>
+    doc = f"""<!doctype html>
 <html lang="si"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title_si} — {title_en} | Bandarawela Water Plant</title>
+<title>{esc(title_si)} — {esc(title_en)} | Bandarawela Water Plant</title>
 <style>{CSS}</style>
 </head><body>
 <div id="wrap">
@@ -84,24 +88,26 @@ def shell(M, num, title_si, title_en, subtitle, body):
 <main id="main">
 <div class="hero" style="{cover_bg()}">
   <div class="hc">
-    <div class="kicker">පිටුව {num} &nbsp;·&nbsp; Page {num} of 5</div>
-    <h1>{title_si}<br><span style="font-size:19px;font-weight:600;color:#cbd5ce">{title_en}</span></h1>
+    <div class="kicker">පිටුව {num} &nbsp;/&nbsp; Page {num} of {n}</div>
+    <h1>{title_si}<br><span class="en">{esc(title_en)}</span></h1>
     <p class="hsub">{subtitle}</p>
   </div>
 </div>
 <div class="inner">
 {body}
 <footer>
-  💧 {M["location"]} · ආයෝජක / Investor: <b>{M["investor"]}</b><br>
+  {M["location"]} · ආයෝජක / Investor: <b>{M["investor"]}</b><br>
   නිෂ්පාදනය / Product: <b>Bottled Drinking Water (SLS 894)</b> ·
   නිෂ්පාදන / Products: 500 ml · 1 L · 1.5 L · 5 L · 19 L<br>
-  සියලු මුදල් අගයන් <b>උපකල්පිත (indicative)</b> — quotation 3ක් ලබාගෙන තහවුරු කරගන්න.<br>
+  සියලු මුදල් අගයන් <b>උපකල්පිත (indicative)</b> —
+  quotation 3ක් ලබාගෙන තහවුරු කරගන්න.<br>
   සකස් කළ දිනය / Prepared: 2026-10-10
 </footer>
 </div>
 </main>
 </div>
 </body></html>"""
+    return plain(doc)
 
 
 def table(head, rows, total=None, total_label="මුළු / TOTAL"):
