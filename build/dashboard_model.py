@@ -119,50 +119,61 @@ FIXED_Y1 = {
 }
 
 # CAPEX - everything needed up to the point of manufacturing (LKR)
+# (name, qty, unit, unit_rate_lkr, category, in_kind)  ->  amount = qty * rate
+# qty x rate is the source of truth for every amount, so the budget table can
+# show Quantity | Unit | Rate | Amount and total itself.
 CAPEX = [
-    ("Land (Mr. Thilakarathna's contribution - in kind)", 12000000, "land", True),
-    ("Factory building shell + civil works (approx. 18,000 sq ft)", 26000000, "building", False),
-    ("Cleanroom filling room (ISO 8 / Class 100,000)", 6000000, "building", False),
-    ("Warehouse, offices, racking", 8000000, "building", False),
-    ("Raw tank + sand filter (MGSF) + carbon filter (ACF) + softener", 4500000, "plant", False),
-    ("Reverse Osmosis plant (10 m3/hr) + membranes", 9000000, "plant", False),
-    ("Ozone generator + UV sterilizer + 0.2 micron sterile filter", 2500000, "plant", False),
-    ("CIP system + SS316L piping + treated water tanks", 4500000, "plant", False),
-    ("Re-mineralisation dosing + antiscalant dosing", 700000, "plant", False),
-    ("Rinsing-Filling-Capping monoblock (6,000 BPH)", 13000000, "plant", False),
-    ("Infeed conveyor + cap sorter + reject system", 2500000, "plant", False),
-    ("Date / batch coder (inkjet)", 1200000, "plant", False),
-    ("Shrink sleeve labelling machine + heat tunnel", 4500000, "plant", False),
-    ("Shrink wrap multi-packer", 2800000, "plant", False),
-    ("Palletizer + stretch wrapper", 1500000, "plant", False),
-    ("19 L / 5 gallon line (wash-fill-cap)", 7000000, "plant", False),
-    ("Quality control laboratory (micro + chemical)", 3500000, "plant", False),
-    ("CEB 3-phase connection + main panel + MCC", 3500000, "utility", False),
-    ("Oil-free food-grade air compressor + dryer", 3200000, "utility", False),
-    ("Water chiller", 2000000, "utility", False),
-    ("Standby generator 250 kVA", 7500000, "utility", False),
-    ("Effluent treatment plant (ETP) + soakaway", 2200000, "env", False),
-    ("Fire systems, extinguishers, emergency lighting", 900000, "env", False),
-    ("Pest control setup + waste management", 400000, "env", False),
-    ("Delivery vehicles (3 lorries / vans)", 18000000, "logistics", False),
-    ("Forklift + pallets + pallet trucks", 2500000, "logistics", False),
-    ("Legal (NDA, MOU, shareholders agreement, land contracts)", 900000, "pre", False),
-    ("Feasibility study + financial model", 350000, "pre", False),
-    ("Hydrogeological survey + borewell drilling", 4500000, "pre", False),
-    ("Water testing (SLS 614 + bromide + heavy metals, 4 rounds)", 500000, "pre", False),
-    ("Architect + structural engineer + building approvals", 1800000, "pre", False),
-    ("FCAU registration + SLSI audit + HACCP/GMP consultancy", 1800000, "pre", False),
-    ("CEA EPL + environmental consultant", 600000, "pre", False),
-    ("Trademark + branding + label design", 900000, "pre", False),
-    ("Staff training (SLSI, GMP, machine operation)", 500000, "pre", False),
-    ("Insurance + medical certificates + initial pest control", 700000, "pre", False),
+    ("Land (Mr. Thilakarathna's contribution - in kind)",        400, "perches",    30000, "land",     True),
+    ("Factory building shell + civil works (approx. 18,000 sq ft)", 1, "lot",    26000000, "building", False),
+    ("Cleanroom filling room (ISO 8 / Class 100,000)",             1, "lot",      6000000, "building", False),
+    ("Warehouse, offices, racking",                                1, "lot",      8000000, "building", False),
+    ("Raw tank + sand filter (MGSF) + carbon filter (ACF) + softener", 1, "set",  4500000, "plant",    False),
+    ("Reverse Osmosis plant (10 m3/hr) + membranes",               1, "plant",    9000000, "plant",    False),
+    ("Ozone generator + UV sterilizer + 0.2 micron sterile filter", 1, "set",     2500000, "plant",    False),
+    ("CIP system + SS316L piping + treated water tanks",           1, "lot",      4500000, "plant",    False),
+    ("Re-mineralisation dosing + antiscalant dosing",              2, "skids",     350000, "plant",    False),
+    ("Rinsing-Filling-Capping monoblock (6,000 BPH)",              1, "machine", 13000000, "plant",    False),
+    ("Infeed conveyor + cap sorter + reject system",               1, "set",      2500000, "plant",    False),
+    ("Date / batch coder (inkjet)",                                2, "units",     600000, "plant",    False),
+    ("Shrink sleeve labelling machine + heat tunnel",              1, "line",     4500000, "plant",    False),
+    ("Shrink wrap multi-packer",                                   1, "machine",  2800000, "plant",    False),
+    ("Palletizer + stretch wrapper",                               1, "set",      1500000, "plant",    False),
+    ("19 L / 5 gallon line (wash-fill-cap)",                       1, "line",     7000000, "plant",    False),
+    ("Quality control laboratory (micro + chemical)",              1, "lab",      3500000, "plant",    False),
+    ("CEB 3-phase connection + main panel + MCC",                  1, "lot",      3500000, "utility",  False),
+    ("Oil-free food-grade air compressor + dryer",                 2, "units",    1600000, "utility",  False),
+    ("Water chiller",                                              1, "unit",     2000000, "utility",  False),
+    ("Standby generator 250 kVA",                                  1, "unit",     7500000, "utility",  False),
+    ("Effluent treatment plant (ETP) + soakaway",                  1, "plant",    2200000, "env",      False),
+    ("Fire systems, extinguishers, emergency lighting",            1, "lot",       900000, "env",      False),
+    ("Pest control setup + waste management",                      1, "lot",       400000, "env",      False),
+    ("Delivery vehicles (3 lorries / vans)",                       3, "vehicles", 6000000, "logistics", False),
+    ("Forklift + pallets + pallet trucks",                         1, "set",      2500000, "logistics", False),
+    ("Legal (NDA, MOU, shareholders agreement, land contracts)",   1, "lot",       900000, "pre",      False),
+    ("Feasibility study + financial model",                        1, "study",     350000, "pre",      False),
+    ("Hydrogeological survey + borewell drilling",                 2, "wells",    2250000, "pre",      False),
+    ("Water testing (SLS 614 + bromide + heavy metals, 4 rounds)",  4, "rounds",    125000, "pre",      False),
+    ("Architect + structural engineer + building approvals",       1, "lot",      1800000, "pre",      False),
+    ("FCAU registration + SLSI audit + HACCP/GMP consultancy",     1, "lot",      1800000, "pre",      False),
+    ("CEA EPL + environmental consultant",                         1, "lot",       600000, "pre",      False),
+    ("Trademark + branding + label design",                        1, "lot",       900000, "pre",      False),
+    ("Staff training (SLSI, GMP, machine operation)",              1, "lot",       500000, "pre",      False),
+    ("Insurance + medical certificates + initial pest control",    1, "lot",       700000, "pre",      False),
 ]
+
+
+def capex_rows(items=None):
+    """Normalise to (name, qty, unit, rate, amount, category, in_kind)."""
+    rows = []
+    for name, qty, unit, rate, cat, inkind in (items or CAPEX):
+        rows.append((name, qty, unit, rate, qty * rate, cat, inkind))
+    return rows
 CONTINGENCY_PCT = 0.15
 WORKING_CAPITAL = 28000000
 
 # Capacity ramp - CONSERVATIVE. A brand-new bottled water brand does not hit
-# 40% of nameplate in year 1; it ramps. Year 1 average of 25% assumes a slow
-# first quarter building up to ~40% by year end.
+# A brand-new brand ramps. Year 1 averages 25% of nameplate, starting slow in
+# Q1 and reaching roughly 40% by year end.
 YEARS = [
     {"year": "Year 1", "utilisation": 0.25, "fixed_growth": 1.00, "v19l": 12000},
     {"year": "Year 2", "utilisation": 0.50, "fixed_growth": 1.18, "v19l": 30000},
@@ -231,6 +242,7 @@ def build_model():
         s["label_qty_factor"] = 1.04          # 4% label wastage
         s["cap_qty_factor"] = 1.03            # 3% cap wastage
         s["bottle_qty_factor"] = 1.03         # 3% bottle wastage
+        s["film_qty_factor"] = 1.05           # 5% shrink-film wastage
 
     SKU_19L["variable_cost"] = round(sum(SKU_19L["costs"].values()), 2)
     SKU_19L["contribution"] = round(SKU_19L["ex_factory_price"] - SKU_19L["variable_cost"], 2)
@@ -240,8 +252,8 @@ def build_model():
     blend_price = round(sum(s["share"] * s["ex_factory_price"] for s in SKUS), 2)
     blend_contribution = round(blend_price - blend_variable, 2)
 
-    subtotal = sum(c[1] for c in CAPEX)
-    land_value = sum(c[1] for c in CAPEX if c[2] == "land")
+    subtotal = sum(qty * rate for _, qty, _, rate, _, _ in CAPEX)
+    land_value = sum(qty * rate for _, qty, _, rate, cat, _ in CAPEX if cat == "land")
     contingency = round(subtotal * CONTINGENCY_PCT)
     total_capex = subtotal + contingency
     cash_capex = total_capex - land_value
@@ -256,23 +268,27 @@ def build_model():
     scenarios = []
     for sc in SCENARIOS:
         items = []
-        for name, amt, cat, inkind in CAPEX:
+        for name, qty, unit, rate, cat, inkind in CAPEX:
             if name in sc["drop"]:
                 continue
-            amt2 = sc["reduce"].get(name, amt)
-            if amt2 == 0:
-                continue
-            items.append((name, amt2, cat, inkind))
-        sub = sum(i[1] for i in items)
+            amt = qty * rate
+            if name in sc["reduce"]:
+                amt = sc["reduce"][name]
+                if amt == 0:
+                    continue
+                rate = amt / qty          # qty is unchanged, so the rate moves
+            items.append((name, qty, unit, rate, amt, cat, inkind))
+        sub = sum(i[4] for i in items)
         cont = round(sub * CONTINGENCY_PCT)
         tc = sub + cont
-        cc = tc - sum(i[1] for i in items if i[2] == "land")
+        cc = tc - sum(i[4] for i in items if i[5] == "land")
         scenarios.append({
             "name": sc["name"], "tag": sc["tag"], "note": sc["note"],
             "subtotal": sub, "contingency": cont, "total_capex": tc,
             "working_capital": sc["wc"], "cash_capex": cc,
             "total_investment": tc + sc["wc"], "cash_investment": cc + sc["wc"],
             "items_dropped": len(sc["drop"]),
+            "rows": items,
         })
 
     proj = []
@@ -358,7 +374,7 @@ def build_model():
         "blend_margin_pct": round(blend_contribution / blend_price * 100, 1),
         "fixed_y1": FIXED_Y1,
         "fixed_total_y1": sum(FIXED_Y1.values()),
-        "capex": CAPEX,
+        "capex": capex_rows(),
         "capex_subtotal": subtotal,
         "land_value": land_value,
         "contingency": contingency,

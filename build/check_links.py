@@ -253,6 +253,42 @@ def check_dashboard(item_count):
     else:
         ok("dashboard HTML tags balanced")
 
+    # --- the cover photo must not be hidden behind the placeholder tile ---
+    hero = html_src[html_src.index('<div class="hero"'):html_src.index('<div class="hc">')]
+    if 'background-image:url("data:image/jpeg;base64,' not in hero:
+        fail("hero has no cover image - assets/cover.jpg missing or not embedded")
+    elif "nofallback" in hero:
+        fail("the placeholder tile renders OVER the cover photo - the image is invisible")
+    else:
+        import base64
+        raw = base64.b64decode(re.search(r"base64,([A-Za-z0-9+/=]+)", hero).group(1))
+        if raw[:3] != b"\xff\xd8\xff" or raw[-2:] != b"\xff\xd9":
+            fail(f"embedded cover is not a complete JPEG ({len(raw)} bytes)")
+        else:
+            ok(f"cover photo embedded and unobstructed ({len(raw)/1024:,.0f} KB JPEG)")
+
+    # --- the budget must read as a budget: qty x rate = amount, with totals ---
+    for col in ["ප්‍රමාණය / Qty", "ඒකකය / Unit",
+                "ඒකක මිල / Rate (Rs)", "මුදල / Amount (Rs)"]:
+        if col not in html_src:
+            fail(f"budget table missing column: {col}")
+    if "මුළු Qty / මාස" not in html_src or "මාසික මුදල (Rs)" not in html_src:
+        fail("materials table missing its Qty / monthly-cost columns")
+    ngrp = html_src.count('class="grp"')
+    if ngrp != 7:
+        fail(f"budget has {ngrp} category group rows, expected 7")
+    if 'class="grand cash"' not in html_src:
+        fail("budget is missing the CASH REQUIRED grand-total row")
+    if "A. CAPEX උප මුළු" not in html_src or "E. මුළු ආයෝජනය" not in html_src:
+        fail("budget is missing its lettered A-E total ladder")
+    ok(f"budget columns + 7 category subtotals + A-E total ladder present")
+
+    # --- no stale utilisation labels (the ramp is 25/50/75/100) ---
+    for stale in ["Year 1 (40%)", "Year 2 (70%)", "Year 3 (100%)"]:
+        if stale in html_src:
+            fail(f"stale utilisation label still rendered: {stale}")
+    ok("utilisation labels match the model ramp (25/50/75/100)")
+
     # the model numbers must be present and non-trivial
     for token, label in [("Mr. Thilakarathna", "investor name"),
                          ("Bandarawela", "location"),

@@ -90,11 +90,13 @@ header.top .sub{color:var(--muted);font-size:14px}
 
 section{margin-bottom:46px;scroll-margin-top:20px}
 section>h2{font-size:21px;margin:0 0 5px;display:flex;align-items:flex-start;gap:11px;letter-spacing:-.2px}
-section>h2 .n{width:27px;height:27px;border-radius:9px;background:var(--ink);color:#fff;
+section>h2 .n{width:27px;height:27px;border-radius:9px;
+  background:linear-gradient(135deg,var(--emerald),var(--olive));color:#fff;
   font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 27px;
   font-weight:700;margin-top:2px}
 section>.lead{color:var(--muted);font-size:13.5px;margin:0 0 18px;padding-left:38px}
-h3{font-size:15.5px;margin:28px 0 11px;color:var(--ink)}
+h3{font-size:15.5px;margin:28px 0 11px;color:var(--emerald-d);
+  padding-left:11px;border-left:3px solid var(--emerald)}
 h3 .en{font-weight:500;color:var(--muted);font-size:12.5px}
 
 .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;
@@ -107,11 +109,11 @@ h3 .en{font-weight:500;color:var(--muted);font-size:12.5px}
 
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;
   position:relative;overflow:hidden;box-shadow:var(--sh)}
-.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--emerald)}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--emerald)}
 .kpi.ol::before{background:var(--olive)}
 .kpi.am::before{background:var(--amber)}
 .kpi.bl::before{background:var(--blue)}
-.kpi .l{font-size:11px;color:var(--muted);letter-spacing:.3px;font-weight:600;line-height:1.4}
+.kpi .l{font-size:11px;color:var(--olive-d);letter-spacing:.3px;font-weight:600;line-height:1.4}
 .kpi .v{font-size:25px;font-weight:750;margin:7px 0 3px;letter-spacing:-.7px;color:var(--ink)}
 .kpi .v.sm{font-size:19px}
 .kpi .h{font-size:11.5px;color:var(--faint);line-height:1.45}
@@ -121,16 +123,24 @@ table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surfac
 .tbl{border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
 .scroll{overflow-x:auto}
 th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
-th{background:var(--surface2);color:var(--muted);font-weight:700;font-size:11px;
+th{background:var(--olive-l);color:var(--olive-d);font-weight:700;font-size:11px;
   text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;
-  border-bottom:1px solid var(--border2)}
+  border-bottom:2px solid #cfe0a8}
 tbody tr:last-child td{border-bottom:none}
-tbody tr:hover{background:var(--surface2)}
+tbody tr:hover{background:var(--emerald-l)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-tr.tot td{background:var(--bg2)!important;font-weight:750;color:var(--ink);
-  border-top:2px solid var(--ink2)}
-tr.sub td{background:var(--surface2)!important;font-weight:700}
+tr.tot td{background:var(--olive-l)!important;font-weight:750;color:var(--olive-d);
+  border-top:2px solid var(--olive)}
+tr.sub td{background:var(--surface2)!important;font-weight:700;color:var(--olive-d)}
 tr.land td{background:var(--emerald-l)!important}
+tr.grp td{background:linear-gradient(90deg,var(--emerald-l),var(--surface2))!important;
+  font-weight:750;color:var(--emerald-d);font-size:12px;text-transform:uppercase;
+  letter-spacing:.6px;border-bottom:1px solid #a7f3d0;padding:8px 13px}
+tr.grand td{background:linear-gradient(90deg,var(--emerald),var(--olive))!important;
+  color:#fff!important;font-weight:800;font-size:14px;border-top:2px solid var(--emerald-d)}
+tr.grand td .num,tr.grand td.num{color:#fff!important}
+tr.grand.cash td{background:linear-gradient(90deg,var(--olive-d),var(--emerald-d))!important;
+  font-size:15px}
 
 .bar{height:8px;border-radius:4px;background:var(--bg3);overflow:hidden;min-width:60px}
 .bar>i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--emerald),var(--olive))}
@@ -140,7 +150,7 @@ tr.land td{background:var(--emerald-l)!important}
 .bar-chart{display:flex;flex-direction:column;gap:10px}
 .bc-row{display:grid;grid-template-columns:200px 1fr 115px;gap:12px;align-items:center;font-size:12.5px}
 .bc-row .lbl{color:var(--ink2)}
-.bc-row .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:650;color:var(--ink)}
+.bc-row .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--olive-d)}
 
 .pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap}
 .p-crit{background:var(--red-l);color:var(--red)}
@@ -149,12 +159,12 @@ tr.land td{background:var(--emerald-l)!important}
 .p-med{background:var(--blue-l);color:var(--blue)}
 .p-low{background:var(--bg2);color:var(--muted)}
 
-.note{border-left:3px solid var(--emerald);background:var(--surface);border:1px solid var(--border);
-  border-left:3px solid var(--emerald);padding:13px 17px;
+.note{background:var(--emerald-l);border:1px solid #a7f3d0;
+  border-left:4px solid var(--emerald);padding:13px 17px;
   border-radius:0 12px 12px 0;font-size:13.5px;margin:16px 0;box-shadow:var(--sh)}
-.note.ol{border-left-color:var(--olive)}
-.note.am{border-left-color:var(--amber)}
-.note.rd{border-left-color:var(--red)}
+.note.ol{background:var(--olive-l);border-color:#dde8c4;border-left-color:var(--olive)}
+.note.am{background:var(--amber-l);border-color:#fde68a;border-left-color:var(--amber)}
+.note.rd{background:var(--red-l);border-color:#fecaca;border-left-color:var(--red)}
 .note b{color:var(--ink)}
 
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
@@ -177,7 +187,7 @@ input[type=search]:focus,select:focus{outline:2px solid var(--emerald);outline-o
 .tl{display:flex;flex-direction:column;gap:0;margin-top:14px}
 .tl-i{display:grid;grid-template-columns:80px 1fr;gap:16px;padding:12px 0;border-bottom:1px dashed var(--border)}
 .tl-i:last-child{border-bottom:none}
-.tl-m{font-weight:700;color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums}
+.tl-m{font-weight:700;color:var(--emerald-d);font-size:13px;font-variant-numeric:tabular-nums}
 .tl-c{font-size:13.5px}
 .tl-c b{color:var(--ink)}
 .tl-c .t{color:var(--muted);font-size:12.5px}
@@ -347,6 +357,7 @@ def hero(M, n_items, rec):
             import base64
             b64 = base64.b64encode(fh.read()).decode("ascii")
         style = f'background-image:url("data:image/jpeg;base64,{b64}")'
+        art = ""  # the fallback tile must NOT render over the real photo
     return f"""<div class="hero" style="{style}">
   {art}
   <div class="hc">
@@ -455,7 +466,7 @@ def build():
     s.append('<div class="card"><h3 style="margin-top:0">🏗️ මුල සිට කළ යුතු දේ / To be built from scratch</h3>'
              '<div class="tbl"><table><tr><th>කොටස</th><th class="num">පිරිවැය (Rs)</th></tr>')
     cats = {}
-    for name, amt, cat, inkind in M["capex"]:
+    for name, qty, unit, rate, amt, cat, inkind in M["capex"]:
         cats[cat] = cats.get(cat, 0) + amt
     for cat, label in [("building", "🏢 ගොඩනැඟිල්ල"), ("plant", "⚙️ යන්ත්‍රෝපකරණ + QC lab"),
                        ("utility", "⚡ Utilities"), ("env", "🌿 පරිසර + ආරක්ෂාව"),
@@ -516,7 +527,7 @@ def build():
     s.append('<div class="grid g3">')
     s.append(kpi("Nameplate (100%, 1 shift)", f'{M["nameplate_month"]:,}',
                  f'{M["capacity_bph"]:,} BPH × {M["shift_hours"]}h × {M["work_days"]}d'))
-    s.append(kpi("Year 1 (40%)", f'{y1["pet_bottles_m"]:,}',
+    s.append(kpi(f'Year 1 ({y1["utilisation"]*100:.0f}%)', f'{y1["pet_bottles_m"]:,}',
                  f'බෝතල්/මාස · {y1["pet_bottles_y"]:,}/වසර', "ol"))
     s.append(kpi("Year 2 (50%)", f'{y2["pet_bottles_m"]:,}',
                  f'බෝතල්/මාස · {y2["pet_bottles_y"]:,}/වසර', "ol"))
@@ -556,33 +567,43 @@ def build():
     # ================= MATERIALS =================
     s.append('<section id="materials"><h2><span class="n">5</span>🏷️ අමුද්‍රව්‍ය සහ ලේබල් Qty</h2>'
              '<p class="lead">සෑම මාසයකම මිලදී ගත යුතු ප්‍රමාණය (wastage සහිතව) · <b>Raw material &amp; label quantities to buy each month</b></p>')
-    s.append('<h3>PET රේඛාව — මාසික අවශ්‍යතා</h3>')
-    for label, yr in [("Year 1 (40%)", y1), ("Year 2 (70%)", y2), ("Year 3 (100%)", y3)]:
-        s.append(f'<h3 style="font-size:13.5px;color:var(--muted)">{label} — '
-                 f'බෝතල් {yr["pet_bottles_m"]:,}</h3>')
-        s.append('<div class="tbl"><table><tr><th>අමුද්‍රව්‍යය</th><th class="num">500 ml</th>'
-                 '<th class="num">1 L</th><th class="num">1.5 L</th><th class="num">මුළු</th></tr>')
-        rows = [("බෝතල් (PET, SLS 1336)", "bottle_qty_factor"),
-                ("මූඩි / Caps", "cap_qty_factor"),
-                ("ලේබල් / Shrink sleeves", "label_qty_factor")]
-        for nm, key in rows:
-            tot = 0
-            cells = []
+    # cost key inside each SKU's cost dict, for the qty x rate = amount columns
+    RATE_KEY = {
+        "බෝතල් / PET bottles (SLS 1336)": ("bottle_qty_factor", "PET bottle (purchased, SLS 1336 marked)"),
+        "මූඩි / Caps (PCO 1881)": ("cap_qty_factor", "Cap (PCO 1881)"),
+        "ලේබල් / Shrink sleeve labels": ("label_qty_factor", "Shrink sleeve label"),
+        "Shrink film / multipack": ("film_qty_factor", "Shrink film / packing"),
+    }
+    for yr in M["projection"]:
+        s.append(f'<h3 style="font-size:13.5px">{yr["year"]} '
+                 f'({yr["utilisation"]*100:.0f}% ධාරිතාව) — බෝතල් '
+                 f'{yr["pet_bottles_m"]:,}/මාස</h3>')
+        s.append('<div class="tbl scroll"><table><thead><tr>'
+                 '<th>අමුද්‍රව්‍යය / Material</th>'
+                 '<th class="num">500 ml</th><th class="num">1 L</th><th class="num">1.5 L</th>'
+                 '<th class="num">මුළු Qty / මාස</th><th class="num">මාසික මුදල (Rs)</th>'
+                 '</tr></thead><tbody>')
+        grand = 0
+        for nm, (qkey, ckey) in RATE_KEY.items():
+            cells, tot, cost = [], 0, 0.0
             for sk in M["skus"]:
-                q = round(yr["pet_bottles_m"] * sk["share"] * sk[key])
-                cells.append(q)
-                tot += q
-            s.append(f'<tr><td><b>{nm}</b></td>' +
-                     "".join(f'<td class="num">{c:,}</td>' for c in cells) +
-                     f'<td class="num"><b>{tot:,}</b></td></tr>')
-        film = round(yr["pet_bottles_m"] * 1.05)
-        s.append(f'<tr><td>Shrink film / multipack ඒකක</td>'
-                 f'<td class="num" colspan="3">මුළු බෝතල් × 1.05</td>'
-                 f'<td class="num">{film:,}</td></tr>')
-        s.append(f'<tr><td>Pallets (60 බෝතල්/pallet)</td>'
+                q = round(yr["pet_bottles_m"] * sk["share"] * sk[qkey])
+                cells.append(q); tot += q
+                cost += q * sk["costs"][ckey]
+            grand += cost
+            s.append(f'<tr><td><b>{nm}</b></td>'
+                     + "".join(f'<td class="num">{c:,}</td>' for c in cells)
+                     + f'<td class="num"><b>{tot:,}</b></td>'
+                       f'<td class="num">{cost:,.0f}</td></tr>')
+        pallets = round(yr["pet_bottles_m"] / 60)
+        grand += pallets * 2200
+        s.append(f'<tr><td>Pallets (60 බෝතල්/pallet @ Rs 2,200)</td>'
                  f'<td class="num" colspan="3">—</td>'
-                 f'<td class="num">{round(yr["pet_bottles_m"]/60):,}</td></tr>')
-        s.append('</table></div>')
+                 f'<td class="num">{pallets:,}</td><td class="num">{pallets*2200:,}</td></tr>')
+        s.append(f'<tr class="tot"><td>PET රේඛාව — මාසික මුළු / Monthly total</td>'
+                 f'<td class="num" colspan="3"></td><td class="num"></td>'
+                 f'<td class="num">{grand:,.0f}</td></tr>')
+        s.append('</tbody></table></div>')
 
     s.append('<div class="note ol"><b>📌 ලේබල් ගණනය කිරීමේ නීතිය:</b> '
              'ලේබල් 1ක් = බෝතල් 1ක්. නමුත් මුද්‍රණ වැරදි, යන්ත්‍ර waste, '
@@ -624,28 +645,65 @@ def build():
                  "බෝතල්, ලේබල්, වැටුප්, විදුලිය", "bl"))
     s.append('</div>')
 
-    s.append('<h3>📋 සම්පූර්ණ CAPEX ලැයිස්තුව</h3><div class="tbl scroll"><table>'
-             '<tr><th>අයිතමය</th><th class="num">පිරිවැය (LKR)</th><th class="num">%</th></tr>')
-    for name, amt, cat, inkind in M["capex"]:
-        cls = ' class="land"' if inkind else ''
-        tag = ' <span class="pill p-high">ඉඩම — ආයෝජකයාගේ</span>' if inkind else ''
-        pct = amt / M["total_capex"] * 100
-        s.append(f'<tr{cls}><td>{name}{tag}</td><td class="num">{amt:,}</td>'
-                 f'<td class="num">{pct:.1f}%</td></tr>')
-    s.append(f'<tr class="sub"><td>උප මුළු / Subtotal</td>'
+    CAT_LBL = [("land", "🏞️ ඉඩම / Land"),
+               ("building", "🏢 ගොඩනැඟිලි / Building & civil"),
+               ("plant", "⚙️ යන්ත්‍රෝපකරණ / Plant & machinery"),
+               ("utility", "⚡ උපයෝගිතා / Utilities"),
+               ("env", "🌿 පරිසර + ආරක්ෂාව / Environment & safety"),
+               ("logistics", "🚚 ප්‍රවාහන + ගබඩා / Logistics"),
+               ("pre", "📄 ලියාපදිංචි + උපදේශන / Registration & consultancy")]
+
+    s.append('<h3>📋 සම්පූර්ණ CAPEX අයවැය '
+             '<span class="en">Quantity x Rate = Amount</span></h3>')
+    s.append('<div class="tbl scroll"><table id="capex"><thead><tr>'
+             '<th style="width:34px">#</th><th>අයිතමය / Item</th>'
+             '<th class="num">ප්‍රමාණය / Qty</th><th>ඒකකය / Unit</th>'
+             '<th class="num">ඒකක මිල / Rate (Rs)</th>'
+             '<th class="num">මුදල / Amount (Rs)</th>'
+             '<th class="num">%</th></tr></thead><tbody>')
+    n = 0
+    for ckey, clbl in CAT_LBL:
+        rows = [r for r in M["capex"] if r[5] == ckey]
+        if not rows:
+            continue
+        s.append(f'<tr class="grp"><td colspan="7">{clbl}</td></tr>')
+        for name, qty, unit, rate, amt, cat, inkind in rows:
+            n += 1
+            cls = ' class="land"' if inkind else ''
+            tag = ' <span class="pill p-high">ආයෝජකයාගේ / in-kind</span>' if inkind else ''
+            pct = amt / M["total_capex"] * 100
+            s.append(f'<tr{cls}><td class="num">{n}</td><td>{name}{tag}</td>'
+                     f'<td class="num">{qty:,}</td><td>{unit}</td>'
+                     f'<td class="num">{rate:,.0f}</td>'
+                     f'<td class="num"><b>{amt:,}</b></td>'
+                     f'<td class="num">{pct:.1f}%</td></tr>')
+        s.append(f'<tr class="sub"><td></td><td>{clbl.split("/")[0].strip()} — '
+                 f'උප මුළු / Subtotal</td><td class="num"></td><td></td><td class="num"></td>'
+                 f'<td class="num">{sum(r[4] for r in rows):,}</td>'
+                 f'<td class="num">{sum(r[4] for r in rows)/M["total_capex"]*100:.1f}%</td></tr>')
+    s.append(f'<tr class="tot"><td></td><td>A. CAPEX උප මුළු / CAPEX subtotal '
+             f'({n} අයිතම්)</td><td class="num"></td><td></td><td class="num"></td>'
              f'<td class="num">{M["capex_subtotal"]:,}</td><td class="num"></td></tr>')
-    s.append(f'<tr><td>Contingency (15%)</td><td class="num">{M["contingency"]:,}</td>'
-             f'<td class="num"></td></tr>')
-    s.append(f'<tr class="tot"><td>මුළු CAPEX</td><td class="num">{M["total_capex"]:,}</td>'
-             f'<td class="num">100%</td></tr>')
-    s.append(f'<tr><td>Working capital (මාස 3)</td><td class="num">{M["working_capital"]:,}</td>'
-             f'<td class="num"></td></tr>')
-    s.append(f'<tr class="tot"><td>💰 මුළු ආයෝජනය / TOTAL INVESTMENT</td>'
+    s.append(f'<tr><td></td><td>B. Contingency @ 15% '
+             '<span style="color:var(--muted);font-size:11.5px">ඉදිකිරීම් මිල ඉහළ යාමට</span></td>'
+             f'<td class="num"></td><td></td><td class="num"></td>'
+             f'<td class="num">{M["contingency"]:,}</td><td class="num"></td></tr>')
+    s.append(f'<tr class="tot"><td></td><td>C. මුළු CAPEX / TOTAL CAPEX (A + B)</td>'
+             f'<td class="num"></td><td></td><td class="num"></td>'
+             f'<td class="num">{M["total_capex"]:,}</td><td class="num">100%</td></tr>')
+    s.append(f'<tr><td></td><td>D. Working capital (මාස 3) '
+             '<span style="color:var(--muted);font-size:11.5px">බෝතල්, ලේබල්, වැටුප්, විදුලිය</span></td>'
+             f'<td class="num"></td><td></td><td class="num"></td>'
+             f'<td class="num">{M["working_capital"]:,}</td><td class="num"></td></tr>')
+    s.append(f'<tr class="grand"><td></td><td>💰 E. මුළු ආයෝජනය / TOTAL INVESTMENT (C + D)</td>'
+             f'<td class="num"></td><td></td><td class="num"></td>'
              f'<td class="num">{M["total_investment"]:,}</td><td class="num"></td></tr>')
-    s.append(f'<tr class="land"><td><b>Mr. Thilakarathna ගේ මුදල් අවශ්‍යතාව</b> '
-             f'(ඉඩම් වටිනාකම Rs {M["land_value"]:,} අඩු කිරීමෙන් පසු)</td>'
-             f'<td class="num"><b>{M["cash_investment"]:,}</b></td><td class="num"></td></tr>')
-    s.append('</table></div>')
+    s.append(f'<tr class="grand cash"><td></td><td><b>Mr. Thilakarathna ගේ මුදල් අවශ්‍යතාව / '
+             'CASH REQUIRED</b> <span style="font-size:11.5px">(E − ඉඩම් වටිනාකම '
+             f'Rs {M["land_value"]:,})</span></td>'
+             f'<td class="num"></td><td></td><td class="num"></td>'
+             f'<td class="num">{M["cash_investment"]:,}</td><td class="num"></td></tr>')
+    s.append('</tbody></table></div>')
 
     s.append('<h3>📊 කාණ්ඩ අනුව බෙදීම</h3><div class="card">' +
              bar_chart([(lbl, cats[c]) for c, lbl in
@@ -790,7 +848,7 @@ def build():
     s.append('<div class="note"><b>✅ Break-even ඇයි ආරක්ෂිත:</b> '
              f'ධාරිතාවෙන් <b>{M["breakeven_pct"]*100:.0f}%</b> පමණක් විකුණුවද '
              f'(බෝතල් {M["breakeven_pet"]:,}/මාස) ව්‍යාපාරය පාඩු නොලබයි. '
-             'Year 1 ඉලක්කය 40% බැවින් ආරක්ෂිත පරතරයක් ඇත.</div>')
+             f'Year 1 ඉලක්කය {y1["utilisation"]*100:.0f}% බැවින් ආරක්ෂිත පරතරයක් ඇත.</div>')
 
     s.append('<h3>🎚️ Sensitivity — ධාරිතාව අනුව ලාභය</h3>')
     s.append('<p style="color:var(--muted);font-size:12.5px;margin:0 0 8px">'
@@ -865,11 +923,11 @@ def build():
     for ph, ttl, body in [
         ("Phase 1", "වසර 1 — පදනම + වෙළඳපොළට පිවිසීම",
          "6,000 BPH · බෝතල් මිලදී ගැනීම · PET 500ml/1L/1.5L + 19L රේඛාව · "
-         "බණ්ඩාරවෙල–බදුල්ල–හපුතලේ–එල්ල බෙදාහැරීම · ඉලක්කය 40% ධාරිතාව · "
+         "බණ්ඩාරවෙල–බදුල්ල–හපුතලේ–එල්ල බෙදාහැරීම · වසර 1 සාමාන්‍යය 25% ධාරිතාව (වසර අවසානයේ 40%) · "
          "<b>ආයෝජනය Rs " + m(REC["total_investment"]) + "</b> (Option A — Lean Start)"),
         ("Phase 2", "වසර 2 — ඒකක පිරිවැය අඩු කිරීම",
          "PET blow moulding යන්ත්‍රය එකතු කිරීම → බෝතල් පිරිවැය 30–40% අඩු වේ · "
-         "නුවරඑළිය–මහනුවර දක්වා ව්‍යාප්තිය · ඉලක්කය 70% · "
+         "නුවරඑළිය–මහනුවර දක්වා ව්‍යාප්තිය · වසර 2 ඉලක්කය 50% ධාරිතාව · "
          "අමතර ආයෝජනය Rs 8M–18M"),
         ("Phase 3", "වසර 3 — පරිමාව දෙගුණ කිරීම",
          "2 වන shift · දෙවන monoblock · 100% ධාරිතාව · කොළඹ වෙළඳපොළ · "
