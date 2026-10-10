@@ -15,9 +15,9 @@
 | ව්‍යුහය / Structure | නිර්දේශය / Suitability | හේතුව / Reason |
 |---|---|---|
 | **Private Limited Company (Pvt) Ltd** | ✅ **නිර්දේශිත / Recommended** | ආයෝජක හවුල්කාරිත්වයකට කොටස් නිකුත් කළ හැක; වගකීම සීමිතයි; FCAU/බැංකු/BOI සඳහා පිළිගනී |
-| Partnership (සාමාන්‍ය හවුල්) | ❌ | අසීමිත වගකීම; FCAU හා බැංකු විසින් දුර්වල ලෙස සලකයි |
-| Sole Proprietorship (තනි පුද්ගල) | ❌ | ආයෝජකයෙකුට කොටස් දිය නොහැක |
-| Branch / Subsidiary of foreign co. | ⚠️ | විදේශ ආයෝජකයෙකු නම් පමණක්; BOI අවශ්‍ය විය හැක |
+| Partnership (සාමාන්‍ය හවුල්) | ❌ Not recommended / නිර්දේශ නොකරයි | අසීමිත වගකීම; FCAU හා බැංකු විසින් දුර්වල ලෙස සලකයි |
+| Sole Proprietorship (තනි පුද්ගල) | ❌ Not recommended / නිර්දේශ නොකරයි | ආයෝජකයෙකුට කොටස් දිය නොහැක |
+| Branch / Subsidiary of foreign co. | ⚠️ Case-dependent / විශේෂ අවස්ථාවක පමණි | විදේශ ආයෝජකයෙකු නම් පමණක්; BOI අවශ්‍ය විය හැක |
 
 > **නීතිමය අවශ්‍යතා / Statutory minimums for a Pvt Ltd:**
 > - අවම අධ්‍යක්ෂවරුන් **1** ක්. අධ්‍යක්ෂවරුන් 1ක් පමණක් නම් හෝ 1කට වැඩි නම් — **අවම වශයෙන් එක් අධ්‍යක්ෂවරයෙකු ශ්‍රී ලංකාවේ සාමාන්‍යයෙන් පදිංචි (ordinarily resident) විය යුතුය.**
@@ -108,7 +108,7 @@
 2. **Share classes** — Ordinary / Preference shares; dividend rights.
 3. **Pre-emption rights** — නව කොටස් පළමුව දැනට සිටින කොටස්හිමියන්ට.
 4. **Transfer restrictions** — කොටස් විකිණීමට අනෙක් කොටස්හිමියාගේ අවසරය.
-5. **Quorum & reserved matters** — අධ්‍යක්ෂ මණ්ඩලයේ quorum; ආයෝජකයාගේ අනුමැතිය අවශ්‍ය තීරණ (LKR ___ ට වැඩි වියදම්, ණය, නිලධාරී පත්වීම්).
+5. **Quorum & reserved matters** — අධ්‍යක්ෂ මණ්ඩලයේ quorum; ආයෝජකයාගේ අනුමැතිය අවශ්‍ය තීරණ (LKR **[To agree / එකඟ විය යුතු]** ට වැඩි වියදම්, ණය, නිලධාරී පත්වීම්).
 6. **Deadlock resolution** — විසඳිය නොහැකි අවස්ථා.
 7. **Exit / Tag-along / Drag-along** — ආයෝජකයාට පිටවීමේ මාර්ගය.
 8. **Non-compete & confidentiality.**

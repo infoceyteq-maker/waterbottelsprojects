@@ -10,6 +10,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dashboard_model import build_model, load_checklist  # noqa: E402
+from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
+                              fill_empty_table_cells, highlight_prompts,
+                              mark_bilingual_pairs)  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "site", "dashboard.html")
@@ -78,7 +81,8 @@ function filt(){
     const show=okQ&&okP&&okR&&okS;
     tr.classList.toggle('hidden',!show); if(show)shown++;
   });
-  const c=document.getElementById('count'); if(c) c.textContent=shown+' අයිතම දැක්වේ';
+  const c=document.getElementById('count');
+  if(c) c.textContent=document.documentElement.lang==='en' ? shown+' items shown' : shown+' අයිතම දැක්වේ';
 }
 function resetAll(){
   if(!confirm('සියලු ලකුණු ඉවත් කරන්නද? / Clear all ticks?'))return;
@@ -87,6 +91,7 @@ function resetAll(){
     const cb=tr.querySelector('.chk'); if(cb)cb.checked=false;});
   updateProgress();
 }
+document.addEventListener('wb-language-change',()=>filt());
 document.addEventListener('DOMContentLoaded',()=>{
   Object.keys(state).forEach(paintRow);
   updateProgress();
@@ -102,37 +107,42 @@ document.addEventListener('DOMContentLoaded',()=>{
   window.addEventListener('scroll',spy,{passive:true}); spy();
 });
 """
+JS += "\n" + LANGUAGE_JS
 
 PAGE = """<!doctype html>
 <html lang="si"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>💧 බෝතල් ජල කර්මාන්ත ශාලාව — ව්‍යාපෘති Dashboard | Bandarawela Bottled Water Plant</title>
+__LANG_BOOTSTRAP__
+<title>බෝතල් ජල කර්මාන්ත ශාලාව — ව්‍යාපෘති Dashboard | Bottled Drinking Water Plant</title>
 <style>__CSS__</style>
-</head><body>
+</head><body class="dashboard-page">
 <div id="wrap">
 <nav id="nav">
   <div class="brand">
     <div class="logo">💧</div>
-    <h1>බෝතල් ජල කර්මාන්ත ශාලාව
-      <span style="display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:3px">Bottled Drinking Water Plant</span></h1>
-    <p>__LOCATION__<br><b>ආයෝජක / Investor:<br>__INVESTOR__</b></p>
+    <h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span>
+      <span class="en">Bottled Drinking Water Plant</span></h1>
+    <p>__LOCATION__<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: __INVESTOR__</b></p>
+    __LANGUAGE_SWITCH__
   </div>
-  <div class="nsec">දළ විශ්ලේෂණය / Overview</div>
-  <a href="#dash">📊 සාරාංශය<span class="en">Summary &amp; the 5 products</span></a>
-  <a href="#project">🏭 ව්‍යාපෘතිය<span class="en">What exists today</span></a>
-  <a href="#process">💧 පිරිපහදු ක්‍රියාවලිය<span class="en">Treatment train</span></a>
-  <a href="#production">📦 නිෂ්පාදන 5<span class="en">Bottle quantities</span></a>
-  <div class="nsec">පිරිවැය / The cost</div>
-  <a href="#budgets">💰 අයවැය ලේඛන 6<span class="en">The six budget documents</span></a>
-  <a href="#total">🧾 මුළු ආයෝජනය<span class="en">Everything added up</span></a>
-  <a href="#unitcost">🧮 බෝතලයක පිරිවැය<span class="en">Cost per bottle, all 5</span></a>
-  <div class="nsec">පිටු 4 / The four pages</div>
-  <a href="index.html">📄 පිටු 4 — වෙන වෙනම<span class="en">Setup · production · stock · process</span></a>
-  <div class="nsec">ක්‍රියාත්මක කිරීම / Execution</div>
-  <a href="#checklist">✅ ලේඛන ලැයිස්තුව<span class="en">160-item checklist</span></a>
-  <a href="#timeline">🗓️ කාලසටහන<span class="en">Timeline</span></a>
-  <a href="#risks">⚠️ අවදානම්<span class="en">Top risks</span></a>
+  <div class="nav-links">
+  <div class="nsec"><span class="si">දළ විශ්ලේෂණය</span><span class="en">Overview</span></div>
+  <a href="#dash"><span class="si">📊 සාරාංශය</span><span class="en">Summary &amp; the 5 products</span></a>
+  <a href="#project"><span class="si">🏭 ව්‍යාපෘතිය</span><span class="en">What exists today</span></a>
+  <a href="#process"><span class="si">💧 පිරිපහදු ක්‍රියාවලිය</span><span class="en">Treatment train</span></a>
+  <a href="#production"><span class="si">📦 නිෂ්පාදන 5</span><span class="en">Bottle quantities</span></a>
+  <div class="nsec"><span class="si">පිරිවැය</span><span class="en">The cost</span></div>
+  <a href="#budgets"><span class="si">💰 අයවැය ලේඛන 6</span><span class="en">The six budget documents</span></a>
+  <a href="#total"><span class="si">🧾 මුළු ආයෝජනය</span><span class="en">Everything added up</span></a>
+  <a href="#unitcost"><span class="si">🧮 බෝතලයක පිරිවැය</span><span class="en">Cost per bottle, all 5</span></a>
+  <div class="nsec"><span class="si">ව්‍යාපෘති කොටස්</span><span class="en">Project sections</span></div>
+  <a href="index.html"><span class="si">📄 ව්‍යාපෘති කොටස් — වෙන වෙනම</span><span class="en">Budget · Process · Management · Sales · Summary</span></a>
+  <div class="nsec"><span class="si">ක්‍රියාත්මක කිරීම</span><span class="en">Execution</span></div>
+  <a href="#checklist"><span class="si">✅ ලේඛන ලැයිස්තුව</span><span class="en">160-item checklist</span></a>
+  <a href="#timeline"><span class="si">🗓️ කාලසටහන</span><span class="en">Timeline</span></a>
+  <a href="#risks"><span class="si">⚠️ අවදානම්</span><span class="en">Top risks</span></a>
+  </div>
 </nav>
 <main id="main">
 __HERO__
@@ -155,8 +165,18 @@ __BODY__
 </body></html>"""
 
 
+def bilingual_label(label):
+    """Split the existing ``Sinhala / English`` short labels for the switcher."""
+    text = str(label)
+    if " / " in text:
+        si, en = text.split(" / ", 1)
+        if re.search(r"[\u0D80-\u0DFF]", si):
+            return f'<span class="si">{si}</span><span class="en">{en}</span>'
+    return text
+
+
 def kpi(label, value, hint="", cls=""):
-    return (f'<div class="kpi {cls}"><div class="l">{label}</div>'
+    return (f'<div class="kpi {cls}"><div class="l">{bilingual_label(label)}</div>'
             f'<div class="v">{value}</div><div class="h">{hint}</div></div>')
 
 
@@ -195,22 +215,21 @@ def hero(M, n_items, rec):
     return f"""<div class="hero" style="{style}">
   {art}
   <div class="hc">
-    <div class="kicker">බණ්ඩාරවෙල · ඌව කඳුකරය &nbsp;·&nbsp; Bandarawela, Uva Highlands</div>
-    <h1>කඳුකර නියම ජලයෙන් බෝතල් කරන ලද පානීය ජලය<br>
-      <span class="en">
-      Bottled Drinking Water from the Uva Highlands</span></h1>
+    <div class="kicker"><span class="si">බණ්ඩාරවෙල · ඌව කඳුකරය</span><span class="en">Bandarawela · Uva Highlands</span></div>
+    <h1><span class="si">කඳුකර නියම ජලයෙන් බෝතල් කරන ලද පානීය ජලය</span>
+      <span class="en">Bottled Drinking Water from the Uva Highlands</span></h1>
     <p class="hsub">
-      Mr. {M["investor"]} ආයෝජනය කරන, {M["location"]} හි පිහිටි,
-      {M["capacity_bph"]:,} BPH ධාරිතාවේ සම්පූර්ණ RO + UV + Ozone පිරිපහදු කර්මාන්ත ශාලාවක්.<br>
-      A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by Mr. {M["investor"]}.
-      Currently only the land exists — building, plant and every approval start from scratch.
+      <span class="si">Mr. {M["investor"]} ආයෝජනය කරන, {M["location"]} හි පිහිටි,
+      {M["capacity_bph"]:,} BPH ධාරිතාවේ සම්පූර්ණ RO + UV + Ozone පිරිපහදු කර්මාන්ත ශාලාවක්.</span>
+      <span class="en">A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by Mr. {M["investor"]}.
+      Currently only the land exists — building, plant and every approval start from scratch.</span>
     </p>
     <div class="chips">
-      <span class="chip">🏞️ ඉඩම ඇත / <b>Land owned</b></span>
-      <span class="chip">🏗️ ගොඩනැඟිල්ල + යන්ත්‍ර = මුල සිට / <b>From scratch</b></span>
-      <span class="chip">💰 ආයෝජනය / <b>Rs {rec["total_investment"]/1e6:,.1f}M</b></span>
-      <span class="chip">🧾 බෝතලයක ලාභය / <b>Rs {M["blend_contribution"]:.2f}</b></span>
-      <span class="chip">📄 ලේඛන / <b>{n_items} items</b></span>
+      <span class="chip">🏞️ <span class="si">ඉඩම ඇත</span><span class="en"><b>Land owned</b></span></span>
+      <span class="chip">🏗️ <span class="si">ගොඩනැඟිල්ල + යන්ත්‍ර = මුල සිට</span><span class="en"><b>From scratch</b></span></span>
+      <span class="chip"><span class="si">💰 ආයෝජනය</span><span class="en"><b>Investment</b></span> <b>Rs {rec["total_investment"]/1e6:,.1f}M</b></span>
+      <span class="chip"><span class="si">🧾 බෝතලයක ලාභය</span><span class="en"><b>Contribution per bottle</b></span> <b>Rs {M["blend_contribution"]:.2f}</b></span>
+      <span class="chip"><span class="si">📄 ලේඛන</span><span class="en"><b>Documents</b></span> <b>{n_items}</b></span>
     </div>
   </div>
 </div>"""
@@ -242,7 +261,7 @@ def build():
     s = []
 
     # ================= 1. SUMMARY =================
-    s.append('<section id="dash"><h2><span class="n">1</span>📊 සාරාංශය — එක බැල්මකින්</h2>'
+    s.append('<section id="dash"><h2><span class="n">1</span>📊 <span class="si">සාරාංශය — එක බැල්මකින්</span><span class="en">Summary — at a glance</span></h2>'
              '<p class="lead">ආයෝජකයා, ඉඩම, නිෂ්පාදන 5 සහ ප්‍රධාන පිරිවැය · '
              '<b>The investor, the land, the five products, and the two headline costs</b></p>')
     s.append('<div class="grid g4">')
@@ -260,7 +279,7 @@ def build():
                  f'ඉඩම් වටිනාකම Rs {m(M["land_value"])} අඩු කිරීමෙන් පසු', "bl"))
     s.append('</div>')
 
-    s.append('<h3>🍶 නිෂ්පාදන 5ක් — වෙන වෙනම <span class="en">The five products, separately</span></h3>')
+    s.append('<h3><span class="si">🍶 නිෂ්පාදන 5ක් — වෙන වෙනම</span><span class="en">The five products, separately</span></h3>')
     s.append('<div class="tbl scroll"><table><thead><tr>'
              '<th>නිෂ්පාදනය / Product</th><th class="num">Mix %</th>'
              '<th class="num">එකක පිරිවැය / Cost</th>'
@@ -291,7 +310,7 @@ def build():
              'No multi-year profit projections here — we will do those separately later.</div>')
     s.append('</section>')
     # ================= PROJECT =================
-    s.append('<section id="project"><h2><span class="n">2</span>🏭 ව්‍යාපෘතිය — දැන් තිබෙන්නේ මොනවාද?</h2>'
+    s.append('<section id="project"><h2><span class="n">2</span>🏭 <span class="si">ව්‍යාපෘතිය — දැන් තිබෙන්නේ මොනවාද?</span><span class="en">Project — what exists today?</span></h2>'
              '<p class="lead">දැනට ඇති දේ සහ මුල සිට ගොඩනැගිය යුතු දේ · <b>What exists today vs. what must be built from scratch</b></p>')
     s.append('<div class="grid g2">')
     s.append('<div class="card"><h3 style="margin-top:0">✅ දැනට තිබෙන දේ / What exists today</h3>'
@@ -329,7 +348,7 @@ def build():
     s.append('</section>')
 
     # ================= PROCESS =================
-    s.append('<section id="process"><h2><span class="n">3</span>💧 පිරිපහදු ක්‍රියාවලිය — filtration දාමය</h2>'
+    s.append('<section id="process"><h2><span class="n">3</span>💧 <span class="si">පිරිපහදු ක්‍රියාවලිය — filtration දාමය</span><span class="en">Water treatment process — filtration train</span></h2>'
              '<p class="lead">නළ ළිඳේ සිට බෝතලය දක්වා — අනුපිළිවෙළ වැදගත් · <b>Water treatment train — well to bottle</b></p>')
     s.append('<div class="flow">')
     steps = [("🕳️ නළ ළිඳ", ""), ("Raw tank", ""), ("⭐ Sand filter<br>(MGSF)", "key"),
@@ -366,7 +385,7 @@ def build():
     s.append('</div></section>')
 
     # ================= 4. PRODUCTION =================
-    s.append('<section id="production"><h2><span class="n">4</span>📦 නිෂ්පාදන පරිමාව — බෝතල් Qty</h2>'
+    s.append('<section id="production"><h2><span class="n">4</span>📦 <span class="si">නිෂ්පාදන පරිමාව — බෝතල් Qty</span><span class="en">Production volume — bottle quantities</span></h2>'
              '<p class="lead">නිෂ්පාදන 5ම වෙන වෙනම · '
              '<b>All five products, each with its own monthly quantity</b></p>')
     s.append('<div class="grid g4">')
@@ -414,8 +433,8 @@ def build():
              'මිලදී ගත යුතුය.</div>')
     s.append('</section>')
     # ======== 5. THE SIX BUDGET DOCUMENTS ========
-    s.append('<section id="budgets"><h2><span class="n">5</span>💰 අයවැය ලේඛන 6ක් — '
-             'වෙන වෙනම</h2>'
+    s.append('<section id="budgets"><h2><span class="n">5</span>💰 <span class="si">අයවැය ලේඛන 6ක් — වෙන වෙනම</span>'
+             '<span class="en">The six budget documents — separately</span></h2>'
              '<p class="lead">ඔබේ ලේඛන 6ට අනුව වෙන් කර ඇත · '
              '<b>Split into the six budget documents, each one separate</b></p>')
 
@@ -432,14 +451,15 @@ def build():
             capex = 0
         elif key == "hr":
             opex = f'Rs {M["hr_month_total"]:,.0f}'
-        s.append(f'<tr><td><b>{si}</b> <span style="color:var(--muted);font-size:11.5px">'
+        s.append(f'<tr><td><b class="si">{si}</b> <span class="en" style="color:var(--muted);font-size:11.5px">'
                  f'{en}</span></td><td class="num">{len(rows) if rows else "—"}</td>'
                  f'<td class="num">{("Rs "+format(capex,",")) if capex else "—"}</td>'
                  f'<td class="num">{opex or "—"}</td></tr>')
     s.append('</tbody></table></div>')
 
     def doc_table(num, key, emoji_si, en, rows, note):
-        out = [f'<h3>{emoji_si} {en} <span class="en">{en.split(" / ")[-1]}</span></h3>']
+        out = [f'<h3>{emoji_si} <span class="si">{en.split(" / ")[0]}</span> '
+               f'<span class="en">{en.split(" / ")[-1]}</span></h3>']
         if rows:
             out.append('<div class="tbl scroll"><table><thead><tr>'
                        '<th style="width:30px">#</th><th>අයිතමය / Item</th>'
@@ -548,7 +568,7 @@ def build():
                    '"මුළු ආයෝජනය" කොටසේ දක්වා ඇත.</div>')
     s.append('</section>')
     # ---- the combined roll-up ----
-    s.append('<section id="total"><h2><span class="n">7</span>🧾 මුළු ආයෝජනය — එක තැනක</h2>'
+    s.append('<section id="total"><h2><span class="n">7</span>🧾 <span class="si">මුළු ආයෝජනය — එක තැනක</span><span class="en">Total investment — all in one place</span></h2>'
              '<p class="lead">අදියර 1 + අදියර 2 + contingency + working capital · '
              '<b>Everything added up in one place</b></p>')
     s.append('<div class="tbl"><table><tbody>')
@@ -581,8 +601,8 @@ def build():
              'අනුව සැලකිය යුතු ලෙස වෙනස් වේ.</div>')
     s.append('</section>')
     # ============ 8. COST OF ONE BOTTLE, PER PRODUCT ============
-    s.append('<section id="unitcost"><h2><span class="n">8</span>🧮 එක බෝතලයක පිරිවැය — '
-             'නිෂ්පාදන 5ම වෙන වෙනම</h2>'
+    s.append('<section id="unitcost"><h2><span class="n">8</span>🧮 <span class="si">එක බෝතලයක පිරිවැය — නිෂ්පාදන 5ම වෙන වෙනම</span>'
+             '<span class="en">Cost per bottle — all five products separately</span></h2>'
              '<p class="lead">සෑම නිෂ්පාදනයක්ම වෙන වෙනම · '
              '<b>The cost of one bottle, worked out separately for each of the five products</b></p>')
 
@@ -625,7 +645,7 @@ def build():
              'එබැවින් 5 L <b>පවුල් සහ කාර්යාල වෙළඳපොළට</b> ඉතා ලාභදායීයි.</div>')
     s.append('</section>')
     # ================= CHECKLIST =================
-    s.append('<section id="checklist"><h2><span class="n">10</span>✅ ලේඛන සහ අවශ්‍යතා ලැයිස්තුව <span class="en" style="font-size:13px;font-weight:600;color:var(--muted)">Documents &amp; requirements</span></h2>'
+    s.append('<section id="checklist"><h2><span class="n">10</span>✅ <span class="si">ලේඛන සහ අවශ්‍යතා ලැයිස්තුව</span> <span class="en" style="font-size:13px;font-weight:600;color:var(--muted)">Documents &amp; requirements</span></h2>'
              f'<p class="lead">අයිතම {len(CL)}ක් · 🔴 Critical {crit} · 🟠 Mandatory {mand} · '
              f'🟡 High {high} — ලකුණු දැමූ පසු browser එකේ සේව් වේ</p>')
     s.append('<div class="card" style="margin-bottom:16px">'
@@ -659,7 +679,7 @@ def build():
             f'<tr data-id="{r["id"]}" data-phase="{r["phase"]}" data-prio="{r["priority"]}">'
             f'<td><input type="checkbox" class="chk" onchange="toggle(\'{r["id"]}\',this)"></td>'
             f'<td style="color:var(--faint);font-size:11.5px">{r["id"]}</td>'
-            f'<td><b>{r["item_en"]}</b><div style="color:var(--muted);font-size:12px">'
+            f'<td><b class="en">{r["item_en"]}</b><div class="si" style="color:var(--muted);font-size:12px">'
             f'{r["item_si"]}</div></td>'
             f'<td style="font-size:12px">{r["authority_or_source"]}</td>'
             f'<td style="font-size:12px">{r["when"]}</td>'
@@ -668,7 +688,7 @@ def build():
     s.append('</tbody></table></div></section>')
 
     # ================= TIMELINE =================
-    s.append('<section id="timeline"><h2><span class="n">11</span>🗓️ කාලසටහන — මාස 14–20</h2>'
+    s.append('<section id="timeline"><h2><span class="n">11</span>🗓️ <span class="si">කාලසටහන — මාස 14–20</span><span class="en">Timeline — 14 to 20 months</span></h2>'
              '<p class="lead">Critical path: ළිඳ → ජල පරීක්ෂණ → ඉදිකිරීම් → FCAU · <b>Timeline — 14 to 20 months</b></p>')
     s.append('<div class="tl">')
     for mth, work in [
@@ -692,7 +712,7 @@ def build():
     s.append('</section>')
 
     # ================= RISKS =================
-    s.append('<section id="risks"><h2><span class="n">12</span>⚠️ ප්‍රධාන අවදානම් 8</h2>'
+    s.append('<section id="risks"><h2><span class="n">12</span>⚠️ <span class="si">ප්‍රධාන අවදානම් 8</span><span class="en">Top eight risks</span></h2>'
              '<p class="lead">ව්‍යාපෘතිය අසාර්ථක කළ හැකි දේ සහ ඒවා වළක්වන ආකාරය · <b>Top 8 risks and how to prevent them</b></p>')
     s.append('<div class="tbl"><table><tr><th style="width:30px">#</th><th>අවදානම</th>'
              '<th class="num">අගය</th><th>වළක්වන ආකාරය</th></tr>')
@@ -725,6 +745,8 @@ def build():
 
     body = "\n".join(s)
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS)
+            .replace("__LANG_BOOTSTRAP__", LANGUAGE_BOOTSTRAP)
+            .replace("__LANGUAGE_SWITCH__", LANGUAGE_SWITCH)
             .replace("__BODY__", body)
             .replace("__HERO__", hero(M, len(CL), REC))
             .replace("__LOCATION__", M["location"])
@@ -732,7 +754,9 @@ def build():
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as fh:
-        fh.write(plain(html))
+        rendered = mark_bilingual_pairs(plain(html))
+        rendered = highlight_prompts(fill_empty_table_cells(rendered))
+        fh.write(rendered)
 
     print(f"[ok] wrote {OUT} ({os.path.getsize(OUT)/1024:,.0f} KB)")
     print(f"     checklist items embedded: {len(CL)}")

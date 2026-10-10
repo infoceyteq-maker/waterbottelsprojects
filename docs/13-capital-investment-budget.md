@@ -12,6 +12,8 @@
 >
 > 📊 **අයිතම-අයිතම 36-අයිතම් CAPEX වගුව + 10-අයිතම් ඒකක පිරිවැය + ලාභ ප්‍රක්ෂේපණය:** `site/dashboard.html`
 > ඉහත දළ පරාස CAPEX **පමණි** — working capital නොවේ. **Dashboard එකේ ගණන් ගැනිය යුතුය.**
+>
+> ⚠️ **පිටු 1–7 සමඟ අයවැය තවම reconcile කර නැත:** Dashboard Option B හි Rs 214,242,500 = CAPEX (15% contingency ඇතුළුව) + Rs 28M working capital; පිටු 1–7 හි Rs 196,532,230 = setup + first production, working capital හැර. පිටු 1–7 ගණනය අනුව cash + buffer **Rs 212,532,230** වන අතර Dashboard Option B cash **Rs 202,242,500** — වෙනස **Rs 10,289,730**. ඇතුළත් අයිතම සහ ගණනය කිරීමේ පරාස එකඟ කර නොමැති නිසා, ආයෝජන තීරණයට පෙර line items reconcile කරන්න.
 
 ---
 
@@ -117,10 +119,10 @@
 
 - [ ] **CAPEX** (සම්පූර්ණ landed cost)
 - [ ] **Working capital** (මාස 3–6 OPEX)
-- [ ] **Payback period** — වසර ___
-- [ ] **IRR** — ___%
-- [ ] **Break-even volume** — බෝතල් ___/මාස
-- [ ] **Break-even utilisation** — ___%
+- [ ] **Payback period** — **[To calculate from the confirmed project cash flow / තහවුරු කළ ව්‍යාපෘති මුදල් ප්‍රවාහයෙන් ගණනය කරන්න]**
+- [ ] **IRR** — **[To calculate after final CAPEX and cash flow / අවසන් CAPEX සහ මුදල් ප්‍රවාහය අනුව ගණනය කරන්න]**
+- [ ] **Break-even volume** — **[To confirm from the finalized operating model / අවසන් මෙහෙයුම් ආකෘතියෙන් තහවුරු කරන්න]**
+- [ ] **Break-even utilisation** — **[To confirm from the finalized operating model / අවසන් මෙහෙයුම් ආකෘතියෙන් තහවුරු කරන්න]**
 - [ ] **Cash flow projection** — වසර 5
 - [ ] **Sensitivity analysis** — PET මිල, විදුලි මිල, ධාරිතාව ±20%
 

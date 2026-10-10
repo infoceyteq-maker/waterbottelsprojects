@@ -19,7 +19,7 @@
 | 6 | **Net quantity** | ml / L — SI ඒකක |
 | 7 | **නිෂ්පාදකයාගේ නම සහ සම්පූර්ණ ලිපිනය** | සමාගම් නම + කර්මාන්ත ශාලා ලිපිනය |
 | 8 | **Batch number / Lot code** | Traceability — වසර 2ක් වාර්තා තබාගන්න |
-| 9 | **Manufacturing Date (MFD)** | |
+| 9 | **Manufacturing Date (MFD)** | **[Enter the production date for each batch before printing / මුද්‍රණයට පෙර එක් එක් batch එකේ නිෂ්පාදන දිනය ඇතුළත් කරන්න]** |
 | 10 | **"Best Before" / Expiry date** | Shelf life validation එකෙන් තහවුරු කරන්න |
 | 11 | **ගබඩා කිරීමේ උපදෙස්** | "සිසිල් වියළි තැනක ගබඩා කරන්න; හිරු එළියෙන් ආරක්ෂා කරන්න" |
 | 12 | **Barcode (EAN-13 / GTIN)** | GS1 Sri Lanka |
@@ -64,7 +64,7 @@
 | **PET 250/500/1000/1500 ml** | සම්පූර්ණ ලේබලය; neck seal |
 | **19 L / 5 gallon** | Handle tag / printed bottle + separate label; **"Refillable — return to supplier"**; bottle deposit info |
 | **Glass (premium)** | සම්පූර්ණ ලේබලය; premium design |
-| **Cartons / multi-packs** | Outer pack label — "Contains ___ × ___ ml"; barcode on outer pack |
+| **Cartons / multi-packs** | Outer pack label — "Contains **[Enter pack count] × [Enter pack size] ml**"; barcode on outer pack |
 | **Export labels** | ගැනුම්කරුගේ රටේ භාෂාව, ආනයන නීති, HS 2201, country of origin |
 
 ---

@@ -106,8 +106,9 @@ def main():
             out.append("|:--:|---|---|---|---|---|---|:--:|---|")
             for r in items:
                 icon = PRIORITY_ICON.get(r["priority"], "")
-                name = f"**{r['item_en']}**<br><sub>{r['item_si']}</sub>"
-                note = r["notes"].replace("|", "/") if r["notes"] else ""
+                name = (f'<span class="en"><strong>{r["item_en"]}</strong></span>'
+                        f'<br><sub class="si">{r["item_si"]}</sub>')
+                note = r["notes"].replace("|", "/") if r["notes"] else "—"
                 out.append(
                     f"| ☐ | `{r['id']}` | {name} | {r['authority_or_source']} | {r['when']} | "
                     f"{r['cost_lkr']} | {r['validity']} | {icon} {r['priority']} | {note} |"

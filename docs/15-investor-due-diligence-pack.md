@@ -95,7 +95,7 @@
 
 ### ආයෝජකයා ඉල්ලනු ඇත:
 - Board seat(s)
-- **Reserved matters** — veto on: capital expenditure above LKR ___, borrowing, related-party transactions, director appointments, salary above LKR ___, changes to business
+- **Reserved matters** — veto on: capital expenditure above LKR **[To agree with both shareholders / කොටස්හිමියන් දෙදෙනා එකඟ විය යුතු]**, borrowing, related-party transactions, director appointments, salary above LKR **[To agree with both shareholders / කොටස්හිමියන් දෙදෙනා එකඟ විය යුතු]**, changes to business
 - **Information rights** — monthly management accounts, bank statements, production/sales reports
 - Anti-dilution
 - Tag-along rights

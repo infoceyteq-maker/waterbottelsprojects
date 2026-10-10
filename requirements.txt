@@ -1,0 +1,2 @@
+# Build dependency for rendering Markdown documentation as HTML.
+Markdown>=3.5,<4
