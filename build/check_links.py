@@ -268,8 +268,7 @@ def check_dashboard(item_count):
             ok(f"cover photo embedded and unobstructed ({len(raw)/1024:,.0f} KB JPEG)")
 
     # --- the two stages must both be there, and roll up to the same total ---
-    for anchor, label in [("stage1", "Stage 1"), ("stage2", "Stage 2"),
-                          ("total", "roll-up")]:
+    for anchor, label in [("budgets", "six budget documents"), ("total", "roll-up")]:
         if f'id="{anchor}"' not in html_src:
             fail(f"{label} section missing from the dashboard")
     plain = re.sub(r"<[^>]+>", "", html_src)   # the rung letters sit inside <b>
@@ -278,15 +277,15 @@ def check_dashboard(item_count):
                  "CASH REQUIRED"]:
         if rung not in plain:
             fail(f"roll-up is missing rung: {rung}")
-    if html_src.count('class="grand cash"') < 3:
-        fail("expected a CASH OUT row in each stage plus the roll-up")
-    ok("Stage 1 + Stage 2 budgets and the C-G roll-up all present")
+    if 'class="grand cash"' not in html_src:
+        fail("expected a CASH REQUIRED row in the roll-up")
+    ok("six budget documents + the A-G roll-up all present")
 
     # --- each stage table must show Qty | Unit | Rate | Amount ---
-    for col in [">Qty</th>", "ඒකකය / Unit", "ඒකක මිල / Rate (Rs)", "මුදල / Amount (Rs)"]:
+    for col in [">Qty</th>", "ඒකකය", "ඒකක මිල", "මුදල"]:
         if col not in html_src:
-            fail(f"stage budget table missing column: {col}")
-    ok("stage tables show Qty | Unit | Rate | Amount")
+            fail(f"budget table missing column: {col}")
+    ok("budget tables show Qty | Unit | Rate | Amount")
 
     # --- all five products, each with its own cost card ---
     for prod in ["500 ml", "1 L", "1.5 L", "5 L", "19 L"]:
@@ -307,7 +306,7 @@ def check_dashboard(item_count):
 
     # --- nav order must match the rendered section order ---
     dom = re.findall(r'<section id="([a-z0-9]+)"', html_src)
-    nav = re.findall(r'<a href="#([a-z0-9]+)"', html_src)
+    nav = re.findall(r'<a href="#([a-z0-9]+)"', html_src)  # ignore page links
     if dom != nav:
         fail(f"nav order {nav} does not match DOM order {dom}")
     else:
@@ -323,16 +322,59 @@ def check_dashboard(item_count):
             fail(f"dashboard missing expected content: {label} ('{token}')")
     ok("dashboard contains investor, location, SLS 894 and all five products")
 
-    # the dashboard must also be the site root, so "/" shows it
+    # "/" must land on the landing page that links all four pages
     idx = os.path.join(ROOT, "site", "index.html")
     if not os.path.exists(idx):
-        fail("site/index.html missing - \"/\" would not show the dashboard")
-    elif os.path.getsize(idx) != os.path.getsize(fp):
-        fail("site/index.html is not a copy of dashboard.html - "
-             "\"/\" shows the docs index, not the dashboard. Re-run build_site.py")
+        fail("site/index.html missing - \"/\" shows nothing")
     else:
-        ok(f"site/index.html == dashboard.html, so \"/\" lands on the dashboard "
-           f"({os.path.getsize(idx)/1024:,.0f} KB)")
+        landing = open(idx, encoding="utf-8").read()
+        missing = [f for f in ("1-setup-budget.html", "2-first-production.html",
+                               "3-first-stock-cost.html", "4-process-documents.html")
+                   if f'href="{f}"' not in landing]
+        if missing:
+            fail(f"landing page does not link: {missing}")
+        else:
+            ok("landing page links all four pages")
+
+    # each of the four pages must exist and be well formed
+    four = ["1-setup-budget.html", "2-first-production.html",
+            "3-first-stock-cost.html", "4-process-documents.html"]
+    from html.parser import HTMLParser
+
+    class Bal(HTMLParser):
+        VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+                "link", "meta", "source", "track", "wbr"}
+
+        def __init__(self):
+            super().__init__()
+            self.st = []
+            self.e = []
+
+        def handle_starttag(self, t, a):
+            if t not in self.VOID:
+                self.st.append(t)
+
+        def handle_endtag(self, t):
+            if t in self.VOID:
+                return
+            if not self.st:
+                self.e.append(f"stray </{t}>")
+            elif self.st[-1] != t:
+                self.e.append(f"<{self.st[-1]}> vs </{t}>")
+            else:
+                self.st.pop()
+
+    for f in four:
+        path = os.path.join(ROOT, "site", f)
+        if not os.path.exists(path):
+            fail(f"{f} missing - run build_pages.py")
+            continue
+        b = Bal()
+        b.feed(open(path, encoding="utf-8").read())
+        if b.st or b.e:
+            fail(f"{f} unbalanced HTML: {b.st[:3]} {b.e[:3]}")
+    if not any(f"site/{f} missing" in str(x) for x in []):
+        ok(f"all four pages built and well formed")
 
 
 def load_csv_rows():

@@ -3,6 +3,10 @@ site/*
 !site/dashboard.html
 !site/index.html
 !site/docs.html
+!site/1-setup-budget.html
+!site/2-first-production.html
+!site/3-first-stock-cost.html
+!site/4-process-documents.html
 
 __pycache__/
 *.pyc

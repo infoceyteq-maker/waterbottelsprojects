@@ -6,10 +6,12 @@
 Runs, in order:
   1. build_checklist.py  -> docs/12-master-document-checklist.md  (from the CSV)
   2. build_dashboard.py  -> site/dashboard.html                   (the panel)
-  3. build_site.py       -> site/*.html + copies the dashboard to site/index.html
-  4. check_links.py      -> self-check; exits non-zero if anything is broken
+  3. build_site.py       -> site/*.html (the 21-document pack)
+  4. build_pages.py      -> the 4 pages + the landing page (index.html)
+  5. check_links.py      -> self-check; exits non-zero if anything is broken
 
-The dashboard is served at "/" because build_site.py publishes it as the root.
+build_pages.py runs last because it owns index.html - the landing page that
+links the four pages, the full dashboard and the document pack.
 Preview:  cd site && python3 -m http.server 8000 --bind 0.0.0.0
 """
 import os
@@ -17,7 +19,8 @@ import subprocess
 import sys
 
 BUILD = os.path.dirname(os.path.abspath(__file__))
-STEPS = ["build_checklist.py", "build_dashboard.py", "build_site.py", "check_links.py"]
+STEPS = ["build_checklist.py", "build_dashboard.py", "build_site.py",
+         "build_pages.py", "check_links.py"]
 
 
 def main():

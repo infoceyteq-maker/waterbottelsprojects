@@ -290,11 +290,11 @@ PAGE = """<!doctype html>
   <a href="#process">💧 පිරිපහදු ක්‍රියාවලිය<span class="en">Treatment train</span></a>
   <a href="#production">📦 නිෂ්පාදන 5<span class="en">Bottle quantities</span></a>
   <div class="nsec">පිරිවැය / The cost</div>
-  <a href="#stage1">💰 අදියර 1 — ෆැක්ටරි ඕපන්<span class="en">Day one to open factory</span></a>
-  <a href="#stage2">🏭 අදියර 2 — නිෂ්පාදනයට<span class="en">Open factory to manufacturing</span></a>
+  <a href="#budgets">💰 අයවැය ලේඛන 6<span class="en">The six budget documents</span></a>
   <a href="#total">🧾 මුළු ආයෝජනය<span class="en">Everything added up</span></a>
   <a href="#unitcost">🧮 බෝතලයක පිරිවැය<span class="en">Cost per bottle, all 5</span></a>
-  <a href="#materials">🏷️ අමුද්‍රව්‍ය + ලේබල්<span class="en">What to buy monthly</span></a>
+  <div class="nsec">පිටු 4 / The four pages</div>
+  <a href="index.html">📄 පිටු 4 — වෙන වෙනම<span class="en">Setup · production · stock · process</span></a>
   <div class="nsec">ක්‍රියාත්මක කිරීම / Execution</div>
   <a href="#checklist">✅ ලේඛන ලැයිස්තුව<span class="en">160-item checklist</span></a>
   <a href="#timeline">🗓️ කාලසටහන<span class="en">Timeline</span></a>
@@ -476,7 +476,7 @@ def build():
     s.append('<div class="card"><h3 style="margin-top:0">🏗️ මුල සිට කළ යුතු දේ / To be built from scratch</h3>'
              '<div class="tbl"><table><tr><th>කොටස</th><th class="num">පිරිවැය (Rs)</th></tr>')
     cats = {}
-    for name, qty, unit, rate, amt, cat, inkind, stg in M["capex"]:
+    for name, qty, unit, rate, amt, cat, inkind, stg, doc in M["capex"]:
         cats[cat] = cats.get(cat, 0) + amt
     for cat, label in [("building", "🏢 ගොඩනැඟිල්ල"), ("plant", "⚙️ යන්ත්‍රෝපකරණ + QC lab"),
                        ("utility", "⚡ Utilities"), ("env", "🌿 පරිසර + ආරක්ෂාව"),
@@ -579,73 +579,140 @@ def build():
              f'{M["sku19"]["variable_cost"]:.2f}) නමුත් ආරම්භක බෝතල් තොගයක් '
              'මිලදී ගත යුතුය.</div>')
     s.append('</section>')
-    # ============ 5 + 6. STAGE 1 and STAGE 2 BUDGETS ============
-    CAT_LBL = {"land": "🏞️ ඉඩම / Land",
-               "building": "🏢 ගොඩනැඟිලි / Building & civil",
-               "plant": "⚙️ යන්ත්‍රෝපකරණ / Plant & machinery",
-               "utility": "⚡ උපයෝගිතා / Utilities",
-               "env": "🌿 පරිසර + ආරක්ෂාව / Environment & safety",
-               "logistics": "🚚 ප්‍රවාහන / Logistics",
-               "pre": "📄 ලියාපදිංචි + උපදේශන / Registration & consultancy"}
-    CAT_ORDER = ["land", "building", "plant", "utility", "env", "logistics", "pre"]
+    # ======== 5. THE SIX BUDGET DOCUMENTS ========
+    s.append('<section id="budgets"><h2><span class="n">5</span>💰 අයවැය ලේඛන 6ක් — '
+             'වෙන වෙනම</h2>'
+             '<p class="lead">ඔබේ ලේඛන 6ට අනුව වෙන් කර ඇත · '
+             '<b>Split into the six budget documents, each one separate</b></p>')
 
-    def stage_block(num, stage, anchor, rows, stage_total, extra_note):
-        si, en = M["stage_titles"][stage]
-        out = [f'<section id="{anchor}"><h2><span class="n">{num}</span>'
-               f'💰 {si}</h2><p class="lead">{en}</p>']
-        out.append('<div class="tbl scroll"><table><thead><tr>'
-                   '<th style="width:34px">#</th><th>අයිතමය / Item</th>'
-                   '<th class="num">Qty</th><th>ඒකකය / Unit</th>'
-                   '<th class="num">ඒකක මිල / Rate (Rs)</th>'
-                   '<th class="num">මුදල / Amount (Rs)</th></tr></thead><tbody>')
-        n = 0
-        for ckey in CAT_ORDER:
-            sel = [r for r in rows if r[5] == ckey]
-            if not sel:
-                continue
-            out.append(f'<tr class="grp"><td colspan="6">{CAT_LBL[ckey]}</td></tr>')
-            for name, qty, unit, rate, amt, cat, inkind, stg in sel:
+    # quick index of the six
+    s.append('<div class="tbl"><table><thead><tr><th>අයවැය ලේඛනය / Budget document</th>'
+             '<th class="num">අයිතම්</th><th class="num">එක වර (CAPEX)</th>'
+             '<th class="num">මාසික (OPEX)</th></tr></thead><tbody>')
+    for key, si, en in M["budget_docs"]:
+        rows = [r for r in M["capex"] if r[8] == key]
+        capex = sum(r[4] for r in rows)
+        opex = ""
+        if key == "raw_material":
+            opex = f'Rs {M["rawmat_month"]:,.0f}'
+            capex = 0
+        elif key == "hr":
+            opex = f'Rs {M["hr_month_total"]:,.0f}'
+        s.append(f'<tr><td><b>{si}</b> <span style="color:var(--muted);font-size:11.5px">'
+                 f'{en}</span></td><td class="num">{len(rows) if rows else "—"}</td>'
+                 f'<td class="num">{("Rs "+format(capex,",")) if capex else "—"}</td>'
+                 f'<td class="num">{opex or "—"}</td></tr>')
+    s.append('</tbody></table></div>')
+
+    def doc_table(num, key, emoji_si, en, rows, note):
+        out = [f'<h3>{emoji_si} {en} <span class="en">{en.split(" / ")[-1]}</span></h3>']
+        if rows:
+            out.append('<div class="tbl scroll"><table><thead><tr>'
+                       '<th style="width:30px">#</th><th>අයිතමය / Item</th>'
+                       '<th class="num">Qty</th><th>ඒකකය</th>'
+                       '<th class="num">ඒකක මිල (Rs)</th><th class="num">මුදල (Rs)</th>'
+                       '<th>අදියර</th></tr></thead><tbody>')
+            n = 0
+            for name, qty, unit, rate, amt, cat, inkind, stg, doc in rows:
                 n += 1
                 cls = ' class="land"' if inkind else ''
-                tag = ' <span class="pill p-high">ආයෝජකයාගේ / in-kind</span>' if inkind else ''
+                tag = ' <span class="pill p-high">in-kind</span>' if inkind else ''
                 out.append(f'<tr{cls}><td class="num">{n}</td><td>{name}{tag}</td>'
                            f'<td class="num">{qty:,}</td><td>{unit}</td>'
                            f'<td class="num">{rate:,.0f}</td>'
-                           f'<td class="num"><b>{amt:,}</b></td></tr>')
-            out.append(f'<tr class="sub"><td></td><td>උප මුළු / Subtotal</td>'
+                           f'<td class="num"><b>{amt:,}</b></td>'
+                           f'<td><span class="pill {"p-high" if stg==1 else "p-med"}">'
+                           f'අදියර {stg}</span></td></tr>')
+            out.append(f'<tr class="grand"><td></td><td>මුළු / TOTAL</td>'
                        f'<td class="num"></td><td></td><td class="num"></td>'
-                       f'<td class="num">{sum(r[4] for r in sel):,}</td></tr>')
-        out.append(f'<tr class="grand"><td></td><td>🔵 අදියර {stage} මුළු පිරිවැය / '
-                   f'STAGE {stage} TOTAL ({n} අයිතම්)</td><td class="num"></td><td></td>'
-                   f'<td class="num"></td><td class="num">{stage_total:,}</td></tr>')
-        cash = sum(r[4] for r in rows if not r[6])
-        out.append(f'<tr class="grand cash"><td></td><td>💵 මුදලින් ගෙවිය යුතු / '
-                   f'CASH OUT (ඉඩම හැර / excl. land)</td><td class="num"></td><td></td>'
-                   f'<td class="num"></td><td class="num">{cash:,}</td></tr>')
-        out.append('</tbody></table></div>')
-        out.append(extra_note)
-        out.append('</section>')
+                       f'<td class="num">{sum(r[4] for r in rows):,}</td>'
+                       f'<td></td></tr></tbody></table></div>')
+        out.append(note)
         return out
 
-    s += stage_block(
-        5, 1, "stage1", M["stage1_rows"], M["stage1_total"],
-        '<div class="note ol"><b>🏁 අදියර 1 අවසන් වන්නේ:</b> ගොඩනැඟිල්ල සම්පූර්ණයි, '
-        'විදුලිය සම්බන්ධයි, ළිඳ කැණී ජල පරීක්ෂණ සමත් වී ඇත, ETP සහ ගිනි ආරක්ෂාව '
-        'සූදානම්, CEA EPL ලැබී ඇත. <b>නමුත් තවම නිෂ්පාදනය කළ නොහැක</b> — '
-        'යන්ත්‍ර නැත.<br><b>Stage 1 ends when</b> the building is complete, power is on, '
-        'the well is drilled and has passed SLS 614, and the ETP and fire systems are in. '
-        'You still cannot manufacture — there is no machinery yet.</div>')
+    # ---- 1. Registration ----
+    s += doc_table(1, "registration", "📄", "ලියාපදිංචි අයවැය / Registration Budget",
+                   [r for r in M["capex"] if r[8] == "registration"],
+                   '<div class="note ol">සමාගම් ලියාපදිංචියේ සිට FCAU + SLSI + CEA '
+                   'අනුමැතිය දක්වා සියලු නීතිමය සහ ලියාපදිංචි වියදම්. '
+                   '<b>Company incorporation through to FCAU, SLSI and CEA approval.</b></div>')
 
-    s += stage_block(
-        6, 2, "stage2", M["stage2_rows"], M["stage2_total"],
-        '<div class="note"><b>🏭 අදියර 2 අවසන් වන්නේ:</b> සම්පූර්ණ පිරිපහදු දාමය සවි කර '
-        'ඇත, filling monoblock සහ 19L රේඛාව ක්‍රියාත්මකයි, QC lab සූදානම්, '
-        'FCAU + SLSI ලියාපදිංචිය ලැබී ඇත → <b>නිෂ්පාදනය ආරම්භ කළ හැක.</b> '
-        '<b>මෙතනින් ඔබ්බට මෙම dashboard එක යන්නේ නැත.</b>'
-        '<br><b>Stage 2 ends when</b> the treatment train and filling lines run, the QC lab '
-        'is equipped and FCAU + SLSI registration is granted — manufacturing can start. '
-        'This dashboard stops here.</div>')
+    # ---- 2. Equipment ----
+    s += doc_table(2, "equipment", "⚙️", "උපකරණ + ඉදිකිරීම් අයවැය / Equipment Budget",
+                   [r for r in M["capex"] if r[8] == "equipment"],
+                   '<div class="note">ගොඩනැඟිල්ල, cleanroom, සම්පූර්ණ ජල පිරිපහදු දාමය, '
+                   'filling line, 19L රේඛාව, QC lab සහ utilities. '
+                   '<b>Building, cleanroom, the full treatment train, filling lines, '
+                   'the 19 L line, QC lab and utilities.</b></div>')
 
+    # ---- 3. Raw material (monthly OPEX) ----
+    s.append('<h3>🧴 අමුද්‍රව්‍ය අයවැය / Raw Material Budget '
+             '<span class="en">monthly, at 100% capacity</span></h3>')
+    s.append('<div class="tbl scroll"><table><thead><tr>'
+             '<th>අමුද්‍රව්‍යය / Material</th><th class="num">මාසික Qty</th>'
+             '<th>ඒකකය</th><th class="num">ඒකක මිල (Rs)</th>'
+             '<th class="num">මාසික මුදල (Rs)</th></tr></thead><tbody>')
+    for nm, qty, unit, rate, amt in M["rawmat_rows"]:
+        s.append(f'<tr><td>{nm}</td><td class="num">{qty:,}</td><td>{unit}</td>'
+                 f'<td class="num">{rate:,.2f}</td><td class="num"><b>{amt:,.0f}</b></td></tr>')
+    s.append(f'<tr class="grand"><td>මාසික මුළු / MONTHLY TOTAL</td><td class="num"></td>'
+             f'<td></td><td class="num"></td><td class="num">{M["rawmat_month"]:,.0f}</td></tr>')
+    s.append(f'<tr class="sub"><td>වාර්ෂික / Annual (× 12)</td><td class="num"></td>'
+             f'<td></td><td class="num"></td><td class="num">{M["rawmat_month"]*12:,.0f}</td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<div class="note ol"><b>📌 Wastage ඇතුළත්:</b> බෝතල් × 1.03 · මූඩි × 1.03 · '
+             'ලේබල් × 1.04 · shrink film × 1.05. '
+             '100% ධාරිතාවේදී (බෝතල් '
+             f'{M["nameplate_month"]:,}/මාස) ගණනය කර ඇත.</div>')
+
+    # ---- 4. Transportation ----
+    s += doc_table(4, "transport", "🚚", "ප්‍රවාහන අයවැය / Transportation Budget",
+                   [r for r in M["capex"] if r[8] == "transport"],
+                   '<div class="note">බෙදාහැරීමේ වාහන සහ ගබඩා උපකරණ. '
+                   'Option A (Lean Start) තෝරාගතහොත් මෙය <b>3PL බෙදාහැරීමකින් '
+                   'ප්‍රතිස්ථාපනය කර Rs 20.5M ඉතිරි කරගත හැක.</b></div>')
+
+    # ---- 5. HR ----
+    s.append('<h3>👷 මානව සම්පත් අයවැය / HR Budget '
+             '<span class="en">monthly payroll</span></h3>')
+    s.append('<div class="tbl scroll"><table><thead><tr>'
+             '<th>තනතුර / Role</th><th class="num">සේවකයන්</th>'
+             '<th class="num">එකෙකුගේ වැටුප (Rs)</th>'
+             '<th class="num">මාසික මුළු (Rs)</th></tr></thead><tbody>')
+    for role, n, sal in M["hr_plan"]:
+        s.append(f'<tr><td>{role}</td><td class="num">{n}</td>'
+                 f'<td class="num">{sal:,}</td><td class="num"><b>{n*sal:,}</b></td></tr>')
+    s.append(f'<tr class="sub"><td>දළ වැටුප් / Gross salaries</td>'
+             f'<td class="num">{M["hr_headcount"]}</td><td class="num"></td>'
+             f'<td class="num">{M["hr_gross"]:,.0f}</td></tr>')
+    s.append(f'<tr><td>EPF (සේවාදායක 12%) + ETF (3%)</td><td class="num"></td>'
+             f'<td class="num"></td><td class="num">{M["hr_employer"]:,.0f}</td></tr>')
+    s.append(f'<tr class="grand"><td>මාසික මුළු / MONTHLY TOTAL</td>'
+             f'<td class="num">{M["hr_headcount"]}</td><td class="num"></td>'
+             f'<td class="num">{M["hr_month_total"]:,.0f}</td></tr>')
+    s.append(f'<tr class="sub"><td>වාර්ෂික / Annual (× 12)</td><td class="num"></td>'
+             f'<td class="num"></td><td class="num">{M["hr_year_total"]:,.0f}</td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<h3 style="font-size:13.5px">එක වර වියදම් / One-off HR costs</h3>')
+    s.append('<div class="tbl"><table><tbody>')
+    for nm, q, r in M["hr_one_off"]:
+        s.append(f'<tr><td>{nm}</td><td class="num">{q}</td>'
+                 f'<td class="num">{r:,}</td><td class="num"><b>{q*r:,}</b></td></tr>')
+    s.append(f'<tr class="tot"><td>මුළු / Total</td><td class="num"></td>'
+             f'<td class="num"></td><td class="num">{M["hr_one_off_total"]:,}</td></tr>')
+    s.append('</tbody></table></div>')
+    s.append('<div class="note rd"><b>⚠️ EPF/ETF:</b> පළමු සේවකයා බඳවා ගත් '
+             'දින <b>14ක් ඇතුළත</b> EPF Form D ඉදිරිපත් කළ යුතුය. '
+             'සේවාදායක 12% + ETF 3% = <b>15%</b> අමතර බර. '
+             'වැටුප් නියම කිරීමේදී මෙය අමතක නොකරන්න.</div>')
+
+    # ---- 6. Miscellaneous ----
+    s += doc_table(6, "misc", "📦", "විවිධ අයවැය / Miscellaneous Budget",
+                   [r for r in M["capex"] if r[8] == "misc"],
+                   '<div class="note">පරිසර පද්ධති (ETP), ගිනි ආරක්ෂාව සහ '
+                   'කීට පාලනය. Contingency සහ working capital පහත '
+                   '"මුළු ආයෝජනය" කොටසේ දක්වා ඇත.</div>')
+    s.append('</section>')
     # ---- the combined roll-up ----
     s.append('<section id="total"><h2><span class="n">7</span>🧾 මුළු ආයෝජනය — එක තැනක</h2>'
              '<p class="lead">අදියර 1 + අදියර 2 + contingency + working capital · '
@@ -722,42 +789,6 @@ def build():
              'Rs 42.00 ක් වුවද, ලීටරයකට පිරිවැය ඉතා අඩුය '
              f'(Rs {76.80/5:,.2f}/L, 500 ml හි Rs {26.70/0.5:,.2f}/L ට සාපේක්ෂව). '
              'එබැවින් 5 L <b>පවුල් සහ කාර්යාල වෙළඳපොළට</b> ඉතා ලාභදායීයි.</div>')
-    s.append('</section>')
-    # ============ 9. MATERIALS AND LABELS ============
-    s.append('<section id="materials"><h2><span class="n">9</span>🏷️ අමුද්‍රව්‍ය සහ ලේබල් Qty</h2>'
-             '<p class="lead">නිෂ්පාදන 5ම — මිලදී ගත යුතු ප්‍රමාණය wastage සහිතව · '
-             '<b>What to buy each month for all five products, wastage included</b></p>')
-    s.append('<div class="tbl scroll"><table><thead><tr>'
-             '<th>නිෂ්පාදනය / Product</th><th class="num">බෝතල්/මාස</th>'
-             '<th class="num">× 1.03</th><th class="num">මූඩි / Caps</th>'
-             '<th class="num">ලේබල් / Labels × 1.04</th>'
-             '<th class="num">Shrink film × 1.05</th></tr></thead><tbody>')
-    t = [0, 0, 0, 0, 0]
-    for sk in M["skus"]:
-        base = round(M["nameplate_month"] * sk["share"])
-        b = round(base * sk["bottle_qty_factor"])
-        cp = round(base * sk["cap_qty_factor"])
-        lb = round(base * sk["label_qty_factor"])
-        fm = round(base * sk["film_qty_factor"])
-        for i, v in enumerate((base, b, cp, lb, fm)):
-            t[i] += v
-        s.append(f'<tr><td><b>💧 {sk["sku"]}</b></td><td class="num">{base:,}</td>'
-                 f'<td class="num">{b:,}</td><td class="num">{cp:,}</td>'
-                 f'<td class="num">{lb:,}</td><td class="num">{fm:,}</td></tr>')
-    s.append(f'<tr class="land"><td><b>🫙 19 L (returnable)</b></td>'
-             f'<td class="num">80,000</td><td class="num">—</td>'
-             f'<td class="num">82,400</td><td class="num">83,200</td>'
-             f'<td class="num">—</td></tr>')
-    s.append(f'<tr class="grand"><td>මුළු / TOTAL (100% ධාරිතාව)</td>'
-             f'<td class="num">{t[0]:,}</td><td class="num">{t[1]:,}</td>'
-             f'<td class="num">{t[2]:,}</td><td class="num">{t[3]:,}</td>'
-             f'<td class="num">{t[4]:,}</td></tr>')
-    s.append('</tbody></table></div>')
-    s.append('<div class="note ol"><b>📌 Wastage නීති:</b> බෝතල් <b>× 1.03</b> (3%) · '
-             'මූඩි <b>× 1.03</b> (3%) · ලේබල් <b>× 1.04</b> (4% — මුද්‍රණ වැරදි, '
-             'යන්ත්‍ර waste, changeovers) · shrink film <b>× 1.05</b> (5%). '
-             '<br><b>🎨 ලේබල් නිර්මාණ 5ක් අවශ්‍යයි</b> — එක් නිෂ්පාදනයකට එක බැගින්. '
-             'සෑම ලේබලයක්ම <b>FCAU අනුමත</b> විය යුතුය.</div>')
     s.append('</section>')
     # ================= CHECKLIST =================
     s.append('<section id="checklist"><h2><span class="n">10</span>✅ ලේඛන සහ අවශ්‍යතා ලැයිස්තුව <span class="en" style="font-size:13px;font-weight:600;color:var(--muted)">Documents &amp; requirements</span></h2>'
