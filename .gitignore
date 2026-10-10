@@ -1,0 +1,16 @@
+# generated documentation site - but the dashboard IS the deliverable, so it ships
+site/*
+!site/dashboard.html
+!site/index.html
+!site/docs.html
+!site/1-setup-budget.html
+!site/2-first-production.html
+!site/3-first-stock-cost.html
+!site/4-process-documents.html
+!site/5-organisation-chart.html
+!site/6-sales-marketing.html
+!site/7-final-summary.html
+
+__pycache__/
+*.pyc
+.DS_Store

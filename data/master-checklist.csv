@@ -1,0 +1,161 @@
+id,phase,category,item_en,item_si,authority_or_source,when,cost_lkr,validity,priority,notes
+D-001,0 - Investor,Legal,NDA (Non-Disclosure Agreement),රහස්‍යතා ගිවිසුම,Notary / Lawyer,Before sharing business plan,15000-40000,3-5 years,High,Sign before any data sharing
+D-002,0 - Investor,Legal,Investor NIC / Passport copy,ආයෝජක හැඳුනුම්පත් / විදේශ ගමන් බලපත්‍ර පිටපත,Investor,Before MOU,0,Permanent,Mandatory,Needed for eROC Form 18
+D-003,0 - Investor,Legal,Investor proof of funds / bank reference,මූල්‍ය හැකියාවේ සාක්ෂි / බැංකු නිර්දේශ ලිපිය,Bank,Before MOU,0,3-6 months,High,3-6 month statements
+D-004,0 - Investor,Legal,MOU / Term Sheet,අන්‍යෝන්‍ය අවබෝධතා පත්‍රය,Lawyer,Before incorporation,40000-150000,Project,Mandatory,Non-binding; sets Conditions Precedent
+D-005,0 - Investor,Legal,Shareholders Agreement (SHA),කොටස්හිමි ගිවිසුම,Lawyer,At incorporation,75000-300000,Permanent,Mandatory,Binding; governs control and exit
+D-006,0 - Investor,Technical,Hydrogeological / geophysical survey report,භූ විද්‍යාත්මක ජල සමීක්ෂණ වාර්තාව,Hydrogeologist / WRB-registered consultant,Before buying land,150000-600000,Permanent,Critical,Do NOT commit money before this
+D-007,0 - Investor,Technical,Land title report (root of title 30+ yrs),ඉඩම් හිමිකම් වාර්තාව,Lawyer,Before buying land,25000-75000,Permanent,Critical,
+D-008,0 - Investor,Business,Feasibility study / Business plan,සාධ්‍යතා අධ්‍යයනය / ව්‍යාපාර සැලැස්ම,Consultant,Before MOU,75000-400000,2-3 years,High,Needed for bank loan / BOI
+D-009,0 - Investor,Business,Market research report,වෙළඳපොළ පර්යේෂණ වාර්තාව,Consultant,Before MOU,50000-200000,2 years,Medium,
+D-010,0 - Investor,Legal,Encumbrance certificate (land),ඉඩම් උකස් සහතිකය,Divisional Registrar Badulla,Before buying land,500-2000,Recent copy,Mandatory,
+D-011,1 - Company,Legal,Company name reservation approval,සමාගම් නම රක්ෂිත කිරීම,DRC / eROC,First step,1000+VAT,3 months,Mandatory,eroc.gov.lk
+D-012,1 - Company,Legal,Form 1 - Application for Incorporation,පෝරම 1 - සමාගම් ලියාපදිංචි අයදුම්පත,DRC / eROC (system-generated),First step,4000+VAT,Permanent,Mandatory,PDF only; system-generated form only
+D-013,1 - Company,Legal,Form 18 - Consent of Director,පෝරම 18 - අධ්‍යක්ෂ එකඟතාව,DRC / eROC (system-generated),First step,2000+VAT each director,Permanent,Mandatory,One per director
+D-014,1 - Company,Legal,Form 19 - Consent of Secretary,පෝරම 19 - ලේකම් එකඟතාව,DRC / eROC (system-generated),First step,2000+VAT,Permanent,Mandatory,Licensed company secretary
+D-015,1 - Company,Legal,Articles of Association,සමාගම් ප්‍රඥප්තිය,Company Secretary / Lawyer,First step,2000+VAT,Permanent,Mandatory,Objects MUST include bottled drinking water manufacture
+D-016,1 - Company,Legal,NIC / certified passport copies (all stakeholders),හැඳුනුම්පත් / සහතික කළ විදේශ ගමන් බලපත්‍ර,Directors / shareholders / secretary,First step,0,Permanent,Mandatory,
+D-017,1 - Company,Legal,Registered office proof (deed/lease + utility bill),ලියාපදිංචි කාර්යාලයේ සාක්ෂිය,Land owner,First step,0,Per lease,Mandatory,Physical SL address; no PO Box
+D-018,1 - Company,Legal,Beneficial ownership disclosure,ප්‍රයෝජන හිමිකාරීත්ව හෙළිකිරීම,eROC,First step,0,Update on change,Mandatory,
+D-019,1 - Company,Legal,Certificate of Incorporation,ලියාපදිංචි සහතිකය,DRC,After approval,0,Permanent,Mandatory,THIS IS THE 1ST REGISTRATION DOCUMENT
+D-020,1 - Company,Legal,Certified copy of Form 1,සහතික කළ Form 1 පිටපත,DRC,After incorporation,1000+VAT,Permanent,Mandatory,Required by bank
+D-021,1 - Company,Legal,Certified copy of Articles of Association,සහතික කළ ප්‍රඥප්ති පිටපත,DRC,After incorporation,1000+VAT,Permanent,Mandatory,Required by bank / FCAU / BOI
+D-022,1 - Company,Tax,TIN certificate,බදු ගෙවන්නාගේ හඳුනාගැනීමේ අංකය,IRD (RAMIS / ird.gov.lk),Within 30 days,0,Permanent,Mandatory,Free
+D-023,1 - Company,Banking,Company bank account,සමාගම් බැංකු ගිණුම,Commercial bank,Immediately,0,Ongoing,Mandatory,BRC + Form 1 + AoA + TIN + board resolution
+D-024,1 - Company,Admin,Company seal + letterhead,සමාගම් මුද්‍රාව + නිල ලිපි ශීර්ෂය,Printer,Immediately,3000-8000,Ongoing,Low,
+D-025,1 - Company,Labour,EPF registration - Form D,EPF ලියාපදිංචිය - පෝරම D,Labour Dept / CBSL,Within 14 days of first hire,0,Ongoing,Mandatory,Employer 12% + employee 8%
+D-026,1 - Company,Labour,ETF registration,ETF ලියාපදිංචිය,CBSL ETF Board,With first contribution,0,Ongoing,Mandatory,Automatic with EPF number; employer 3%
+D-027,1 - Company,Tax,VAT registration,VAT ලියාපදිංචිය,IRD,When turnover exceeds threshold,0,Ongoing,High,Threshold LKR 60M/yr or 15M/qtr; verify current
+D-028,1 - Company,Legal,Annual Return (Form 15),වාර්ෂික ආපසු හැරවුම් පෝරමය,DRC / eROC,After AGM (first within 18 months),Fee,Ongoing,Mandatory,
+D-029,2 - Land,Land,Deed of ownership,ඉඩම් ඔප්පුව,Notary + Divisional Registrar,On purchase,Stamp 1-3% + legal,Permanent,Mandatory,
+D-030,2 - Land,Land,Approved survey plan (min 160 perches),අනුමත සමීක්ෂණ සැලැස්ම (අවම පර්චස් 160),Licensed Land Surveyor,On purchase,30000-90000,Permanent,Mandatory,FCAU minimum land requirement
+D-031,2 - Land,Land,Registered lease agreement (5+ years),ලියාපදිංචි බදු ගිවිසුම (වසර 5+),Notary + Land Registry,If leased,Stamp + registration,Per term,Mandatory,FCAU requires 5+ yrs if not owned
+D-032,2 - Land,Land,Owner consent letter,හිමිකරුගේ අවසර ලිපිය,Land owner,If leased,0,Per term,High,
+D-033,2 - Land,Land,Street line certificate,රේඛා සහතිකය,UDA / Pradeshiya Sabha,Before building,1000-5000,3-6 months,Medium,
+D-034,2 - Land,Land,Zoning confirmation (industrial use allowed),කලාප තහවුරු කිරීම (කර්මාන්ත භාවිතය),UDA Badulla / Pradeshiya Sabha,Before buying land,0,Permanent,Critical,
+D-035,2 - Land,Land,Rates payment receipt,බදු ගෙවීම් රිසිට්පත,Pradeshiya Sabha / Urban Council,Annually,Fee,1 year,Mandatory,Required for UDA + Trade Licence
+D-036,2 - Land,Technical,Soil test report,පස් පරීක්ෂණ වාර්තාව,Geotechnical engineer,Before design,60000-150000,Permanent,High,
+D-037,2 - Land,Technical,Flood / drainage assessment,ගංවතුර / ජල බැස්ම තක්සේරුව,Engineer,Before design,25000-75000,Permanent,Medium,
+D-038,2 - Land,Approval,Preliminary Planning Clearance (PPC),පූර්ව සැලසුම් අනුමැතිය,UDA (applications.uda.lk),Before building permit,Fee,Project,High,
+D-039,2 - Land,Approval,Development Permit + Approved Building Plan (Form B),සංවර්ධන බලපත්‍රය + අනුමත ගොඩනැඟිලි සැලැස්ම,UDA / Pradeshiya Sabha,Before construction,Fee,Project,Mandatory,FCAU requires the approved building plan
+D-040,2 - Land,Approval,Structural engineer certificate,ව්‍යුහ ඉංජිනේරු සහතිකය,Chartered Structural Engineer,With building plan,100000-350000,Project,Mandatory,
+D-041,2 - Land,Approval,Certificate of Conformity (CoC - Form D),අනුකූලතා සහතිකය,UDA / Pradeshiya Sabha,After construction before occupation,Fee,Ongoing,Mandatory,Required for EPL + FCAU
+D-042,2 - Land,Approval,Fire Department clearance / certificate,ගිනි අනතුරු දෙපාර්තමේන්තු අනුමැතිය,Fire Service Dept Badulla,Before operation,15000-60000,1-3 years,Mandatory,
+D-043,2 - Land,Utility,CEB 3-phase electricity connection,විදුලිබල මණ්ඩල 3-කලාප සම්බන්ධතාව,CEB,Before operation,100000-1000000+,Ongoing,Mandatory,Deposits scale with load
+D-044,2 - Land,Utility,NWS&DB water connection,ජල සම්බන්ධතාව,NWS&DB,Before operation,25000-150000,Ongoing,Medium,Backup supply
+D-045,2 - Land,Licence,Trade Licence (Annual Licence),වාර්ෂික ව්‍යාපාර බලපත්‍රය,Bandarawela Pradeshiya Sabha / Urban Council,After CoC,Gazette fee,1 year,Mandatory,MANDATORY for FCAU application (R6)
+D-046,2 - Land,Labour,Factory registration - Factories Ordinance No 45 of 1942,කර්මාන්ත ශාලා ලියාපදිංචිය,Dept of Labour - District Factory Inspecting Engineer,Before occupying factory,Fee,Ongoing,High,Verify requirement with Labour Dept
+D-047,3 - Water,WRB,Hydrogeological survey report,භූ විද්‍යාත්මක ජල සමීක්ෂණ වාර්තාව,Hydrogeologist,Before drilling,150000-600000,Permanent,Critical,
+D-048,3 - Water,WRB,WRB registration - industrial groundwater user,WRB ලියාපදිංචිය - වාණිජ භූගත ජල පරිශීලක,Water Resources Board Rajagiriya,Before drilling,Fee,Ongoing,Mandatory,Bottled water is a listed industry
+D-049,3 - Water,WRB,WRB written permission to drill the well,ළිඳ කැණීමට WRB ලිඛිත අනුමැතිය,WRB (Act 29/1964; Gazette 2010/23),Before drilling,0,Project,Mandatory,
+D-050,3 - Water,WRB,Registered drilling contractor certificate,ලියාපදිංචි කැණීම් කොන්ත්‍රාත්තරු සහතිකය,WRB-registered contractor,Before drilling,0,Ongoing,Mandatory,Illegal drilling is an offence
+D-051,3 - Water,WRB,Borewell completion certificate,නළ ළිඳ සම්පූර්ණ කිරීමේ සහතිකය,Contractor + WRB,After drilling,0,Permanent,Mandatory,
+D-052,3 - Water,Technical,Pumping / yield test report,පොම්ප කිරීමේ / ඵලදායිතා පරීක්ෂණ වාර්තාව,Hydrogeologist,After drilling,40000-120000,Permanent,Mandatory,
+D-053,3 - Water,Lab,Source water test report - SLS 614:2013 (before treatment),මූලාශ්‍ර ජල පරීක්ෂණ වාර්තාව - SLS 614:2013,SLSI / ISO 17025 lab,Before building the factory,25000-90000,Per test,Critical,FCAU will NOT register if this fails
+D-054,3 - Water,Lab,Heavy metals + pesticide + fluoride/arsenic panel,බැර ලෝහ + කීටනාශක පරීක්ෂණ,Accredited lab,Before building the factory,40000-150000,Per test,Critical,
+D-149,3 - Water,Lab,Bromide (Br-) test of source water,මූලාශ්‍ර ජලයේ බ්‍රෝමයිඩ් පරීක්ෂණය,Accredited lab,Before ozone system design,25000-80000,Per test,Critical,Ozone + bromide = BROMATE (carcinogen). Controls ozone dose
+D-150,3 - Water,Lab,SDI + LSI + full cation/anion profile + silica/barium,RO සැලසුම සඳහා SDI LSI සහ සම්පූර්ණ අයන පැතිකඩ,Accredited lab / RO supplier,Before RO plant order,40000-120000,Per test,Critical,RO supplier needs this to size membranes and antiscalant
+D-151,3 - Water,Lab,Dry-season + wet-season source samples,වියළි සහ වැසි කාල දෙකෙහිම නියැදි,Accredited lab,Across the year,50000-180000,Per test,High,Groundwater quality varies seasonally
+D-055,3 - Water,Technical,Sanitary / pollution source survey,සනීපාරක්ෂක / දූෂණ මූලාශ්‍ර සමීක්ෂණය,Hydrogeologist / PHI,With source test,25000-75000,Permanent,High,
+D-056,3 - Water,Equipment,Flow meter + daily abstraction log,ජල මාපකය + දෛනික වාර්තා පොත,Supplier,After drilling,30000-150000,Ongoing,Mandatory,Required above 30000 L/month
+D-057,3 - Water,Construction,Well head protection structure,ළිඳ මුඛ ආරක්ෂණ ව්‍යුහය,Contractor,During construction,100000-400000,Permanent,Mandatory,
+D-058,3 - Water,WRB,6-monthly water quality reports to WRB,මාස 6කට වරක් ජල තත්ත්ව වාර්තා,Accredited lab -> WRB,Every 6 months,25000-90000,Per test,Mandatory,
+D-059,4 - Factory,Technical,Architectural drawings (approved),ගෘහ නිර්මාණ ශිල්ප සැලසුම්,Chartered Architect,Design phase,200000-800000,Project,Mandatory,
+D-060,4 - Factory,Technical,Structural drawings + calculation report,ව්‍යුහ සැලසුම් + ගණනය වාර්තාව,Chartered Structural Engineer,Design phase,150000-500000,Project,Mandatory,
+D-061,4 - Factory,Technical,M&E drawings (electrical/plumbing/drainage),යාන්ත්‍රික හා විදුලි සැලසුම්,Chartered Engineer,Design phase,100000-400000,Project,High,
+D-062,4 - Factory,Technical,Process flow diagram + P&ID,ක්‍රියාවලි ප්‍රවාහ සටහන,Process engineer / plant supplier,Design phase,50000-200000,Project,Mandatory,Needed for FCAU (R5)
+D-063,4 - Factory,Technical,Cleanroom specification and layout,පිරිසිදු කාමර පිරිවිතර හා සැලැස්ම,Cleanroom contractor,Design phase,100000-500000,Project,Mandatory,Filling room ISO 8 / Class 100000
+D-064,4 - Factory,Technical,Bill of Quantities (BOQ),ප්‍රමාණ පත්‍රය,Quantity Surveyor,Design phase,75000-250000,Project,High,
+D-065,4 - Factory,Legal,Contractor agreement + insurance,කොන්ත්‍රාත්තරු ගිවිසුම + රක්ෂණය,Lawyer,Before construction,25000-100000,Project,Mandatory,
+D-066,4 - Factory,Technical,Material test certificates (tiles/epoxy/SS grade),ද්‍රව්‍ය පරීක්ෂණ සහතික,Suppliers,During construction,0,Permanent,High,
+D-067,4 - Factory,Technical,Commissioning report,ක්‍රියාරම්භක වාර්තාව,Plant supplier,At handover,0,Permanent,Mandatory,SLSI audit evidence
+D-068,4 - Factory,Technical,As-built drawings,සැබෑ ඉදිකිරීම් සැලසුම්,Architect,At handover,75000-250000,Permanent,Mandatory,FCAU submission
+D-069,4 - Factory,FCAU,Location Map (Google map),පිහිටුම් සිතියම (ගූගල්),You,FCAU application,0,Ongoing,Mandatory,FCAU required doc R1
+D-070,4 - Factory,FCAU,Site plan on survey plan (source + factory marked),සමීක්ෂණ සැලැස්ම මත ස්ථාන සැලැස්ම,Surveyor,FCAU application,25000-75000,Ongoing,Mandatory,FCAU required doc R2
+D-071,4 - Factory,FCAU,Factory layout (approved building plan),කර්මාන්ත ශාලා සැලැස්ම,Local authority,FCAU application,Fee,Ongoing,Mandatory,FCAU required doc R3
+D-072,4 - Factory,FCAU,Sketch map of source water and processing facility,ජල මූලාශ්‍ර හා සැකසුම් පහසුකම් සිතියම,Process engineer,FCAU application,25000-100000,Ongoing,Mandatory,FCAU required doc R4
+D-073,4 - Factory,FCAU,Process flow chart,ක්‍රියාවලි ප්‍රවාහ ප්‍රස්තාරය,Process engineer,FCAU application,15000-50000,Ongoing,Mandatory,FCAU required doc R5
+D-074,5 - Machinery,Procurement,3 competing quotations per major machine,ප්‍රධාන යන්ත්‍ර සඳහා තරඟකාරී quotation 3ක්,Suppliers,Before PO,0,Ongoing,Mandatory,Investor governance requirement
+D-075,5 - Machinery,Procurement,Landed cost calculation (customs/PAL/VAT/CESS/shipping),සම්පූර්ණ ආනයන පිරිවැය ගණනය,Clearing agent,Before PO,0,Ongoing,High,For imported machines
+D-076,5 - Machinery,Customs,Customs registration (importer),රේගු ලියාපදිංචිය (ආනයනකරු),Sri Lanka Customs,Before importing,Fee,Ongoing,Mandatory,
+D-077,5 - Machinery,Equipment,Water treatment plant (RO + filters + ozone + UV),ජල පිරිපහදු පද්ධතිය,Plant supplier,Construction phase,4000000-25000000,10+ years,Critical,Core asset
+D-078,5 - Machinery,Equipment,PET stretch blow moulding machine,PET බෝතල් නිෂ්පාදන යන්ත්‍රය,Machine supplier,Construction phase,3000000-25000000,10+ years,High,Or buy bottles externally
+D-079,5 - Machinery,Equipment,Rinsing-filling-capping monoblock,පිරවීම-මුද්‍රා තැබීමේ යන්ත්‍රය,Machine supplier,Construction phase,4000000-40000000,10+ years,Critical,Core asset
+D-080,5 - Machinery,Equipment,Labelling + shrink wrap + palletizing,ලේබල් + ඇසුරුම් යන්ත්‍ර,Machine supplier,Construction phase,2000000-12000000,10+ years,High,
+D-081,5 - Machinery,Equipment,Date/batch coder (inkjet or laser),දින/කාණ්ඩ මුද්‍රණ යන්ත්‍රය,Supplier,Construction phase,350000-2000000,8 years,Mandatory,Label law requirement
+D-082,5 - Machinery,Equipment,Oil-free food-grade air compressor,ආහාර ශ්‍රේණියේ වායු සම්පීඩකය,Supplier,Construction phase,600000-3500000,10 years,Mandatory,Ordinary compressed air not acceptable
+D-083,5 - Machinery,Equipment,Standby generator,විකල්ප ජනක යන්ත්‍රය,Supplier,Construction phase,3000000-15000000,10 years,High,
+D-084,5 - Machinery,Equipment,Quality control laboratory equipment,තත්ත්ව පාලන පරීක්ෂණාගාර උපකරණ,Lab supplier,Construction phase,2000000-6000000,8 years,Mandatory,SLSI requires in-house QC
+D-085,5 - Machinery,Equipment,CIP (Clean-in-Place) system,CIP පිරිසිදු කිරීමේ පද්ධතිය,Plant supplier,Construction phase,400000-1800000,10 years,Mandatory,
+D-152,5 - Machinery,Equipment,Re-mineralisation dosing system (Ca/Mg/bicarbonate),ඛනිජ යළි එකතු කිරීමේ පද්ධතිය,Plant supplier,Construction phase,200000-700000,10 years,High,RO water tastes flat; must stay within SLS 894 limits
+D-153,5 - Machinery,Equipment,0.2 micron sterile filter before filler,පිරවීමට පෙර 0.2 මයික්‍රෝන් වන්ධ්‍යා පෙරහන,Plant supplier,Construction phase,150000-600000,10 years,Mandatory,Final microbial barrier - CCP 6
+D-154,5 - Machinery,Equipment,UV sterilizer with validated dose and intensity sensor,සත්‍යාපිත මාත්‍රාවක් සහිත UV විෂබීජහරණ යන්ත්‍රය,Plant supplier,Construction phase,150000-700000,10 years,Mandatory,Dose >= 40 mJ/cm2 - CCP 4; lamp change yearly
+D-155,5 - Machinery,Equipment,RO reject water recovery / reuse system,RO අප ජල නැවත භාවිත පද්ධතිය,Contractor,Construction phase,500000-2500000,10 years,High,RO rejects 25-50% of feed; CEA discharge limits apply
+D-086,5 - Machinery,Equipment,Spare parts initial stock,ආරම්භක අමතර කොටස් තොගය,Suppliers,At commissioning,500000-3000000,Ongoing,High,
+D-087,5 - Machinery,Service,Preventive maintenance contracts,වැළැක්වීමේ නඩත්තු ගිවිසුම්,Plant suppliers,At commissioning,Annual fee,1 year,Mandatory,
+D-088,5 - Machinery,Service,Calibration services (pH/balance/thermometer/flow),මාපාංකන සේවා,Accredited calibration lab,Annually,50000-250000,6-12 months,Mandatory,SLSI audit evidence
+D-089,5 - Machinery,Service,Pest control contract,කීට පාලන ගිවිසුම,Licensed pest control,Monthly,120000-480000,1 year,Mandatory,FCAU/SLSI requirement
+D-090,5 - Machinery,Service,Staff training (food handling / GMP / machines),සේවක පුහුණුව,SLSI / ITI / supplier,Annually,100000-500000,1 year,Mandatory,FCAU required doc R10
+D-156,5 - Machinery,Service,Filter media replacement schedule and log,පෙරහන් මාධ්‍ය මාරු කිරීමේ කාලසටහන සහ වාර්තාව,QA Manager,Ongoing,500000-2000000,Ongoing,Mandatory,Carbon 1-2 yrs; cartridges 1-3 months; membranes 2-5 yrs
+D-091,6 - MoH FCAU,Registration,FCAU bottled water registration application,FCAU බෝතල් ජල ලියාපදිංචි අයදුම්පත,Food Control Administration Unit,After plant is ready,Fee,Ongoing,Mandatory,Food Act 26/1980 + Regs 2011
+D-092,6 - MoH FCAU,Registration,Two specimen labels,ලේබල් නියැදි දෙකක්,Printer,FCAU application,10000-50000,Per design,Mandatory,Food (Labelling) Regs 2005
+D-093,6 - MoH FCAU,Registration,Organization chart,සංවිධාන ප්‍රස්තාරය,HR,FCAU application,0,Ongoing,Mandatory,FCAU required doc R8
+D-094,6 - MoH FCAU,Registration,Supervision schedules,අධීක්ෂණ කාලසටහන්,QA Manager,FCAU application,0,Ongoing,Mandatory,FCAU required doc R9
+D-095,6 - MoH FCAU,Registration,Training documents (food handling / hygiene),පුහුණු ලේඛන,HR / trainer,FCAU application,0,Ongoing,Mandatory,FCAU required doc R10
+D-096,6 - MoH FCAU,Registration,Job descriptions for all staff,සියලු සේවක රාජකාරි විස්තර,HR,FCAU application,0,Ongoing,Mandatory,FCAU required doc R11
+D-097,6 - MoH FCAU,Quality,HACCP plan and food safety management system,HACCP සැලැස්ම සහ ආහාර සුරක්ෂිතතා පද්ධතිය,Food safety consultant,Before SLSI audit,250000-900000,Ongoing,Mandatory,
+D-098,6 - MoH FCAU,Quality,GMP manual + SOPs,GMP අත්පොත + සම්මත ක්‍රියාපටිපාටි,QA Manager,Before SLSI audit,150000-500000,Ongoing,Mandatory,
+D-099,6 - MoH FCAU,Quality,Food handler medical certificates,ආහාර හසුරුවන්නන්ගේ වෛද්‍ය සහතික,Hospital / PHI,Annually,5000-15000 per person,1 year,Mandatory,
+D-100,6 - MoH FCAU,Registration,SLSI recommendation letter (valid 1 year),SLSI නිර්දේශ ලිපිය (වසර 1),SLSI,After audit 1,0,1 year,Mandatory,
+D-101,6 - MoH FCAU,Registration,PHI / MOH / FDI inspection recommendations,PHI / MOH / FDI පරීක්ෂණ නිර්දේශ,Local health authorities,After SLSI audit,0,Project,Mandatory,
+D-102,6 - MoH FCAU,Registration,Conditional temporary registration (1 year),කොන්දේසි සහිත තාවකාලික ලියාපදිංචිය,Chief Food Authority,After all recommendations,0,1 year,Mandatory,
+D-103,6 - MoH FCAU,Registration,Full registration after SLSI audit 2 (2 more years),SLSI දෙවන විගණනයෙන් පසු සම්පූර්ණ ලියාපදිංචිය,Chief Food Authority,Within year 1,0,2 years,Mandatory,Total validity 3 years
+D-104,6 - MoH FCAU,Quality,Finished product test reports - SLS 894 (Bottled Drinking Water),අවසාන නිෂ්පාදන පරීක්ෂණ වාර්තා - SLS 894,SLSI / accredited lab,Monthly + per audit,25000-90000,Per test,Mandatory,SLS 1038 not applicable - product decision 2026-10-10
+D-157,6 - MoH FCAU,Quality,Ozone residual monitoring records (CCP 5) - 0.2-0.4 ppm,ඕසෝන් අවශේෂ අධීක්ෂණ වාර්තා - 0.2-0.4 ppm,QA lab,Every batch,0,2 years retention,Critical,Determines shelf life; below 0.15 ppm = microbial growth
+D-158,6 - MoH FCAU,Quality,Bromate testing of finished product,අවසාන නිෂ්පාදනයේ බ්‍රෝමේට් පරීක්ෂණය,SLSI / accredited lab,Monthly + per audit,25000-90000,Per test,Critical,Ozonation by-product; carcinogenic if bromide present in source
+D-159,6 - MoH FCAU,Quality,Shelf life validation study (6 / 12 months at 30C and 40C),ගබඩා කාල වලංගු අධ්‍යයනය,Accredited lab,Before launch,100000-400000,Per product,Mandatory,Sets the Best Before date on the label
+D-105,7 - SLSI,Certification,SLSI application form + fee,SLSI අයදුම්පත + ගාස්තුව,SLSI,After MoH process starts,Fee,Project,Mandatory,
+D-106,7 - SLSI,Certification,Quality manual + documented QMS,තත්ත්ව අත්පොත + ලේඛනගත QMS,QA Manager,Before SLSI audit,150000-600000,Ongoing,Mandatory,
+D-107,7 - SLSI,Certification,Internal audit + management review records,අභ්‍යන්තර විගණන + කළමනාකරණ සමාලෝචන වාර්තා,QA,Before SLSI audit,0,Ongoing,Mandatory,
+D-108,7 - SLSI,Certification,Raw material specs + supplier CoAs,අමුද්‍රව්‍ය පිරිවිතර + සැපයුම්කරු සහතික,Suppliers,Ongoing,0,Ongoing,Mandatory,
+D-109,7 - SLSI,Certification,Batch production records + traceability,කාණ්ඩ නිෂ්පාදන වාර්තා + සොයාගැනීමේ හැකියාව,Production,Ongoing,0,2 years,Mandatory,
+D-110,7 - SLSI,Certification,Complaint handling + product recall procedure,පැමිණිලි කළමනාකරණය + නිෂ්පාදන ආපසු කැඳවීම,QA Manager,Before SLSI audit,0,Ongoing,Mandatory,
+D-111,7 - SLSI,Certification,SLS 1336:2008 certification for PET bottles,PET බෝතල් සඳහා SLS 1336:2008 සහතිකය,SLSI (own) or bottle supplier,Ongoing,Fee,3 years,Mandatory,CAA enforced since 01.09.2016 (Gazette 1918/18)
+D-112,7 - SLSI,Certification,SLS Product Certification Mark permit (SLS 894 - Bottled Drinking Water),SLS නිෂ්පාදන සහතික ලකුණ - SLS 894,SLSI,After 2 conforming samples,Annual fee on turnover,3 years,High,Voluntary but commercially essential; SLS 1038 not applicable
+D-113,7 - SLSI,Certification,Agreement with SLSI (permit conditions),SLSI සමඟ ගිවිසුම,SLSI,With permit,0,3 years,Mandatory,Indemnity / misuse / cancellation clauses
+D-114,8 - Environment,Licence,EPL category determination (A/B/C/D),EPL ප්‍රවර්ග තීරණය,CEA Badulla District Office,Early in project,0,Ongoing,Mandatory,Gazette 2264/18 (27.01.2022)
+D-115,8 - Environment,Licence,EIA / IEE screening determination,EIA / IEE තීරණය,CEA,Early in project,0,Ongoing,High,Only if prescribed project / sensitive area
+D-116,8 - Environment,Licence,Effluent treatment plant (ETP) + discharge permit,අප ජල පිරිපහදු පද්ධතිය,Contractor + CEA,Before operation,1000000-5000000,Ongoing,Mandatory,Gazette 2264/17 discharge standards
+D-117,8 - Environment,Licence,Effluent characteristics lab report,අප ජල රසායනික වාර්තාව,Accredited lab,Before EPL,30000-100000,Per test,Mandatory,
+D-118,8 - Environment,Licence,Pollutant abatement proposal,දූෂක අවම කිරීමේ යෝජනාව,Environmental consultant,Before EPL,75000-300000,Ongoing,Mandatory,
+D-119,8 - Environment,Licence,Environmental Protection Licence (EPL),පරිසර ආරක්ෂණ බලපත්‍රය,CEA / Local Authority (cat D),Before commercial operation,4000-15000 + VAT,1-3 years,Mandatory,National Environment Act s.23A
+D-120,8 - Environment,Licence,Scheduled Waste Management Licence (generator),අනතුරුදායක අපද්‍රව්‍ය බලපත්‍රය,CEA,If hazardous waste,4000-15000 + VAT,1-3 years,High,Gazette 1534/18; RO membranes waste oil etc
+D-121,8 - Environment,Service,Licensed scheduled waste collector / transporter agreement,බලපත්‍රලාභී අපද්‍රව්‍ය එකතුකරු ගිවිසුම,CEA-licensed collector,Ongoing,Fee,1 year,Mandatory,Declaration form per consignment
+D-122,8 - Environment,Technical,Noise assessment (blow moulding / generator),ශබ්ද තක්සේරුව,Acoustic consultant,Before operation,50000-150000,Ongoing,Medium,
+D-123,8 - Environment,Technical,Air emission source list + stack test (boiler/generator),වායු විමෝචන වාර්තාව,Accredited lab,Before operation,50000-200000,Ongoing,Medium,Gazette 2126/36
+D-124,9 - Tax/Statutory,Tax,VAT returns,VAT ආපසු ඉල්ලීම්,IRD,Monthly,0,Ongoing,Mandatory,Due end of following month
+D-125,9 - Tax/Statutory,Tax,APIT / PAYE withholding returns,APIT වාර්තා,IRD,Monthly,0,Ongoing,Mandatory,Due 15th of following month
+D-126,9 - Tax/Statutory,Tax,Corporate income tax return,ආයතනික ආදායම් බදු ආපසු ඉල්ලීම,IRD,Annually,0,Ongoing,Mandatory,
+D-127,9 - Tax/Statutory,Labour,EPF monthly contributions (Form C),EPF මාසික දායකත්ව,CBSL,Monthly,0,Ongoing,Mandatory,Last working day of following month
+D-128,9 - Tax/Statutory,Labour,ETF monthly contributions,ETF මාසික දායකත්ව,CBSL,Monthly,0,Ongoing,Mandatory,Last working day of following month
+D-129,9 - Tax/Statutory,Labour,Written employment contracts,ලිඛිත සේවා ගිවිසුම්,HR,On hiring,0,Ongoing,Mandatory,
+D-130,9 - Tax/Statutory,Labour,Gratuity provision (Act 12 of 1983),වැටහීමේ දීමනා ප්‍රතිපාදන,Accounts,Annually,0,Ongoing,Mandatory,
+D-131,9 - Tax/Statutory,Audit,Statutory audit + financial statements,විගණිත මූල්‍ය ප්‍රකාශන,Chartered Accountant,Annually,300000-1200000,Ongoing,Mandatory,
+D-132,9 - Tax/Statutory,Audit,AGM minutes + board resolutions,වාර්ෂික මහා සභා විනාඩි සටහන්,Company Secretary,Annually,Secretarial fee,Ongoing,Mandatory,
+D-133,9 - Tax/Statutory,Insurance,Fire and perils insurance,ගිනි රක්ෂණය,Insurance company,Before operation,Annual premium,1 year,Mandatory,
+D-134,9 - Tax/Statutory,Insurance,Product liability insurance,නිෂ්පාදන වගකීම් රක්ෂණය,Insurance company,Before launch,Annual premium,1 year,Critical,Highest risk exposure
+D-135,9 - Tax/Statutory,Insurance,Public liability insurance,මහජන වගකීම් රක්ෂණය,Insurance company,Before operation,Annual premium,1 year,Mandatory,
+D-136,9 - Tax/Statutory,Insurance,Workmen's compensation / group personal accident,සේවක වන්දි රක්ෂණය,Insurance company,On hiring,Annual premium,1 year,Mandatory,
+D-137,9 - Tax/Statutory,Insurance,Machinery breakdown + goods in transit,යන්ත්‍ර බිඳවැටීම් + ප්‍රවාහන රක්ෂණය,Insurance company,Before operation,Annual premium,1 year,High,
+D-138,10 - Launch,IP,Trademark search + registration,වෙළඳ ලකුණ සෙවීම + ලියාපදිංචිය,NIPO (nipo.gov.lk),Before branding,5000-15000 + agent,10 years,Critical,Do before moulds and labels are made
+D-139,10 - Launch,IP,Logo and packaging copyright,ලෝගෝ සහ ඇසුරුම් ප්‍රකාශන හිමිකම,NIPO,With branding,75000-400000,Life of author,High,
+D-140,10 - Launch,Product,GS1 Sri Lanka barcode membership,GS1 ශ්‍රී ලංකා barcode සාමාජිකත්වය,GS1 Sri Lanka,Before retail,Annual fee,1 year,Mandatory,One GTIN per SKU
+D-141,10 - Launch,Product,Label compliance check (Food Labelling Regs 2005),ලේබල් අනුකූලතා පරීක්ෂාව,QA / FCAU,Before printing,0,Per design,Mandatory,
+D-160,10 - Launch,Product,Label wording locked to Bottled Drinking Water only,ලේබල් නාමය බෝතල් කළ පානීය ජලය ලෙස සීමා කිරීම,QA / legal,Before label print,0,Ongoing,Critical,No spring means Natural Mineral Water and Spring Water are illegal claims
+D-142,10 - Launch,Quality,Shelf life validation study,ගබඩා කාල වලංගු අධ්‍යයනය,Accredited lab,Before launch,100000-400000,Per product,Mandatory,
+D-143,10 - Launch,Operations,Distributor / dealer agreements,බෙදාහරින්නන්ගේ ගිවිසුම්,Lawyer,Before launch,25000-100000 each,1-3 years,High,
+D-144,10 - Launch,Operations,Vehicle revenue licences + permits,වාහන බලපත්‍ර,DMT / Pradeshiya Sabha,Annually,Fee,1 year,Mandatory,
+D-145,10 - Launch,Export,Exporter registration (Customs + Dept of Commerce),අපනයනකරු ලියාපදිංචිය,Sri Lanka Customs / DoC,Before export,Fee,Ongoing,High,Export phase only
+D-146,10 - Launch,Export,Certificate of Free Sale / Health Certificate,නිදහස් විකුණුම් සහතිකය,MoH / EDB,Per shipment,Fee,Per shipment,High,Export phase only
+D-147,10 - Launch,Export,Certificate of Origin,මූලාරම්භ සහතිකය,Ceylon Chamber / National Chamber,Per shipment,Fee,Per shipment,High,Export phase only
+D-148,10 - Launch,Investment,BOI registration (if foreign investment or export focus),BOI ලියාපදිංචිය,Board of Investment,Early if applicable,0,Project term,Medium,investsrilanka.com
