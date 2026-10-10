@@ -10,6 +10,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dashboard_model import build_model, load_checklist  # noqa: E402
+from nav_common import DASHBOARD_FILE, nav_links         # noqa: E402
 from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
                               fill_empty_table_cells, highlight_prompts,
                               mark_bilingual_pairs)  # noqa: E402
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   updateProgress();
   const ids=document.querySelectorAll('select option[data-ph]');
   // nav scroll-spy
-  const links=[...document.querySelectorAll('#nav a[href^="#"]')];
+  const links=[...document.querySelectorAll('.section-jump a[href^="#"]')];
   const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
   const spy=()=>{
     let cur=secs[0];
@@ -126,23 +127,7 @@ __LANG_BOOTSTRAP__
     <p>__LOCATION__<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: __INVESTOR__</b></p>
     __LANGUAGE_SWITCH__
   </div>
-  <div class="nav-links">
-  <div class="nsec"><span class="si">දළ විශ්ලේෂණය</span><span class="en">Overview</span></div>
-  <a href="#dash"><span class="si">📊 සාරාංශය</span><span class="en">Summary &amp; the 5 products</span></a>
-  <a href="#project"><span class="si">🏭 ව්‍යාපෘතිය</span><span class="en">What exists today</span></a>
-  <a href="#process"><span class="si">💧 පිරිපහදු ක්‍රියාවලිය</span><span class="en">Treatment train</span></a>
-  <a href="#production"><span class="si">📦 නිෂ්පාදන 5</span><span class="en">Bottle quantities</span></a>
-  <div class="nsec"><span class="si">පිරිවැය</span><span class="en">The cost</span></div>
-  <a href="#budgets"><span class="si">💰 අයවැය ලේඛන 6</span><span class="en">The six budget documents</span></a>
-  <a href="#total"><span class="si">🧾 මුළු ආයෝජනය</span><span class="en">Everything added up</span></a>
-  <a href="#unitcost"><span class="si">🧮 බෝතලයක පිරිවැය</span><span class="en">Cost per bottle, all 5</span></a>
-  <div class="nsec"><span class="si">ව්‍යාපෘති කොටස්</span><span class="en">Project sections</span></div>
-  <a href="index.html"><span class="si">📄 ව්‍යාපෘති කොටස් — වෙන වෙනම</span><span class="en">Budget · Process · Management · Sales · Summary</span></a>
-  <div class="nsec"><span class="si">ක්‍රියාත්මක කිරීම</span><span class="en">Execution</span></div>
-  <a href="#checklist"><span class="si">✅ ලේඛන ලැයිස්තුව</span><span class="en">160-item checklist</span></a>
-  <a href="#timeline"><span class="si">🗓️ කාලසටහන</span><span class="en">Timeline</span></a>
-  <a href="#risks"><span class="si">⚠️ අවදානම්</span><span class="en">Top risks</span></a>
-  </div>
+  __NAV_ROW__
 </nav>
 <main id="main">
 __HERO__
@@ -163,6 +148,30 @@ __BODY__
 </div>
 <script>__JS__</script>
 </body></html>"""
+
+# In-page jump strip for the long dashboard. Separate from the shared nav row
+# (nav_common) so the header stays one row of pages.
+SECTION_JUMP = [
+    ("dash", "සාරාංශය", "Summary"),
+    ("project", "ව්‍යාපෘතිය", "Project"),
+    ("process", "ක්‍රියාවලිය", "Process"),
+    ("production", "නිෂ්පාදනය", "Production"),
+    ("budgets", "අයවැය ලේඛන", "Budget documents"),
+    ("total", "මුළු ආයෝජනය", "Total investment"),
+    ("unitcost", "බෝතලයක පිරිවැය", "Cost per bottle"),
+    ("checklist", "ලේඛන ලැයිස්තුව", "Checklist"),
+    ("timeline", "කාලසටහන", "Timeline"),
+    ("risks", "අවදානම්", "Risks"),
+]
+
+
+def section_jump():
+    links = "".join(
+        f'<a href="#{anchor}"><span class="si">{si}</span><span class="en">{en}</span></a>'
+        for anchor, si, en in SECTION_JUMP)
+    return ('<nav class="section-jump" aria-label="ඉක්මන් යාම / Jump to section">'
+            '<span class="sj-label"><span class="si">ඉක්මනින් යන්න</span>'
+            '<span class="en">Jump to</span></span>' + links + '</nav>')
 
 
 def bilingual_label(label):
@@ -223,9 +232,9 @@ def hero(M, n_items, rec):
     <h1><span class="si">කඳුකර නියම ජලයෙන් බෝතල් කරන ලද පානීය ජලය</span>
       <span class="en">Bottled Drinking Water from the Uva Highlands</span></h1>
     <p class="hsub">
-      <span class="si">Mr. {M["investor"]} ආයෝජනය කරන, {M["location"]} හි පිහිටි,
+      <span class="si">{M["investor"]} ආයෝජනය කරන, {M["location"]} හි පිහිටි,
       {M["capacity_bph"]:,} BPH ධාරිතාවේ සම්පූර්ණ RO + UV + Ozone පිරිපහදු කර්මාන්ත ශාලාවක්.</span>
-      <span class="en">A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by Mr. {M["investor"]}.
+      <span class="en">A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by {M["investor"]}.
       Currently only the land exists — building, plant and every approval start from scratch.</span>
     </p>
     <div class="hero-actions">
@@ -751,8 +760,9 @@ def build():
              'නොඑසේ නම් කර්මාන්ත ශාලාවක් තිබී ලියාපදිංචියක් නොලැබේ.</div>')
     s.append('</section>')
 
-    body = "\n".join(s)
+    body = section_jump() + "\n" + "\n".join(s)
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS)
+            .replace("__NAV_ROW__", nav_links(DASHBOARD_FILE))
             .replace("__LANG_BOOTSTRAP__", LANGUAGE_BOOTSTRAP)
             .replace("__LANGUAGE_SWITCH__", LANGUAGE_SWITCH)
             .replace("__BODY__", body)

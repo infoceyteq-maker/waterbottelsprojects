@@ -19,6 +19,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_dashboard import plain as de_emoji  # noqa: E402
+from nav_common import ROW_HREFS, DASHBOARD_FILE, LANDING_FILE  # noqa: E402
+from nav_common import PAGES as INVESTOR_PAGES  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "build"))
@@ -211,6 +213,25 @@ def check_site(item_count):
     else:
         ok(f"Sinhala/English selector and saved preference present on all {len(html_files)} generated pages")
 
+    # Every generated page head loads Inter + Noto Sans Sinhala (LANGUAGE_BOOTSTRAP)
+    no_fonts, glyph = [], []
+    for name in html_files:
+        with open(os.path.join(site, name), encoding="utf-8") as fh:
+            page = fh.read()
+        if "fonts.googleapis.com/css2?family=Inter" not in page or \
+           "Noto+Sans+Sinhala" not in page:
+            no_fonts.append(name)
+        if "⌄" in page:
+            glyph.append(name)
+    if no_fonts:
+        fail(f"Google Fonts (Inter + Noto Sans Sinhala) missing from: {no_fonts}")
+    else:
+        ok(f"Inter + Noto Sans Sinhala loaded in all {len(html_files)} generated pages")
+    if glyph:
+        fail(f"literal ⌄ glyph still rendered in: {glyph}")
+    else:
+        ok("no literal ⌄ glyph anywhere in the site")
+
     # Non-template output must not leave cells blank; templates retain highlighted
     # blank input/signature fields by design.
     blank_pages = []
@@ -240,6 +261,59 @@ def check_csv_in_sync(item_count):
              f"- re-run: python3 build/build_checklist.py")
     else:
         ok(f"generated checklist in sync ({rows} rows)")
+
+
+SHARED_ROW_LABELS = ("Budget", "ක්‍රියාවලිය", "Dashboard", "කළමනාකරණය සහ මූල්‍ය",
+                     "අලෙවිය සහ අලෙවිකරණය", "අවසන් සාරාංශය", "ලේඛන පැකේජය")
+
+
+def check_shared_nav(fname, page, label=None):
+    """The one shared button row: same buttons, same order, current page on.
+
+    Verifies the row built by build/nav_common.py is present, exposes the
+    expected hrefs in order (Budget dropdown children included), marks exactly
+    the current page as ``on``, draws the Budget caret in CSS (no ``⌄`` glyph),
+    and carries the Sinhala label for the Budget button.
+    """
+    label = label or fname
+    row = re.search(r'<div class="nav-links">(.*?)</nav>', page, re.S)
+    if not row:
+        fail(f"{label}: shared nav row missing")
+        return
+    row_html = row.group(1)
+    hrefs = re.findall(r'<a href="([^"]+)"', row_html)
+    if hrefs != list(ROW_HREFS):
+        fail(f"{label}: shared nav hrefs {hrefs} != expected {list(ROW_HREFS)}")
+        return
+    active = re.findall(r'<a href="([^"]+)" class="on">', row_html)
+    expected_active = [fname] if fname in ROW_HREFS else []
+    if active != expected_active:
+        fail(f"{label}: active nav button {active}, expected {expected_active}")
+        return
+    if '<span class="dropdown-caret" aria-hidden="true"></span>' not in row_html:
+        fail(f"{label}: Budget caret is not the CSS-drawn element")
+        return
+    if "⌄" in row_html:
+        fail(f"{label}: literal ⌄ glyph in the nav")
+        return
+    if "අයවැය" not in row_html:
+        fail(f"{label}: Budget button label missing")
+        return
+    ok(f"{label}: shared nav row (7 buttons, Budget dropdown), current page highlighted")
+
+
+def check_shared_nav_all_pages():
+    print("\n[7b] Shared nav row on every investor page")
+    site = os.path.join(ROOT, "site")
+    # the dashboard is checked inside check_dashboard(), so it is not repeated here
+    names = [LANDING_FILE] + [p[0] for p in INVESTOR_PAGES]
+    for name in names:
+        fp = os.path.join(site, name)
+        if not os.path.exists(fp):
+            fail(f"{name} not built")
+            continue
+        with open(fp, encoding="utf-8") as fh:
+            check_shared_nav(name, fh.read())
 
 
 def check_dashboard(item_count):
@@ -361,13 +435,17 @@ def check_dashboard(item_count):
             fail(f"removed section/label still present: {gone}")
     ok("no yearly profit / payback / break-even sections (as requested)")
 
-    # --- nav order must match the rendered section order ---
+    # --- in-page section strip must match the rendered section order ---
     dom = re.findall(r'<section id="([a-z0-9]+)"', html_src)
-    nav = re.findall(r'<a href="#([a-z0-9]+)"', html_src)  # ignore page links
+    strip = re.search(r'<nav class="section-jump".*?</nav>', html_src, re.S)
+    nav = re.findall(r'<a href="#([a-z0-9]+)"', strip.group(0)) if strip else []
     if dom != nav:
-        fail(f"nav order {nav} does not match DOM order {dom}")
+        fail(f"section strip {nav} does not match DOM order {dom}")
     else:
-        ok(f"nav matches section order ({len(dom)} sections)")
+        ok(f"section strip matches section order ({len(dom)} sections)")
+
+    # --- dashboard-nav: the shared button row, identical to every other page ---
+    check_shared_nav(DASHBOARD_FILE, html_src, label="dashboard")
 
     # the model numbers must be present and non-trivial
     for token, label in [("Mr. Thilakarathna", "investor name"),
@@ -507,6 +585,7 @@ def main():
     check_csv_in_sync(item_count)
     check_site(item_count)
     check_dashboard(item_count)
+    check_shared_nav_all_pages()
     check_css_variables()
 
     print("\n" + "=" * 68)
