@@ -15,6 +15,19 @@ The caret on the Budget button is drawn in CSS (.dropdown-caret), never a
 text glyph.
 """
 import html
+import re
+
+_NAV_BLOCK = re.compile(r"<nav\b.*?</nav>", re.S)
+_BETWEEN_TAGS = re.compile(r">\s+<")
+
+
+def compact_nav(document):
+    """Remove formatting whitespace between tags inside every <nav> block.
+
+    Navs must contain only their buttons: no stray whitespace text nodes and
+    no pictographs. Applied by every page builder after rendering.
+    """
+    return _NAV_BLOCK.sub(lambda m: _BETWEEN_TAGS.sub("><", m.group(0)), document)
 
 # (file, page number, Sinhala label, English label) - seven investor pages.
 PAGES = [
@@ -68,7 +81,8 @@ def nav_links(active=""):
            f'<details class="nav-dropdown budget-dropdown"{budget_open}>',
            f'<summary class="budget-trigger{budget_on}">'
            f'<span class="si">{BUDGET_SI}</span><span class="en">{BUDGET_EN}</span>'
-           '<span class="dropdown-caret" aria-hidden="true"></span></summary>',
+           '<span class="dropdown-caret" aria-hidden="true"></span>'
+           f'<span class="budget-count" aria-label="{len(PAGES[:3])} pages">{len(PAGES[:3])}</span></summary>',
            '<div class="dropdown-menu">']
     for fname, _num, si, en in PAGES[:3]:
         out.append(_link(fname, si, en, active))

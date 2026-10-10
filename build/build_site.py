@@ -12,6 +12,7 @@ import markdown
 
 from build_dashboard import plain  # noqa: E402
 from dashboard_model import INVESTOR, LOCATION  # noqa: E402
+from nav_common import compact_nav  # noqa: E402
 from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
                               fill_empty_table_cells, highlight_prompts,
                               highlight_table_priorities,
@@ -79,7 +80,7 @@ __LANG_BOOTSTRAP__
   </div>
   <div class="sub"><span class="en">Bottled Drinking Water Plant · Bandarawela, Badulla</span><br>
   <span class="si">සම්පූර්ණ ලේඛන පැකේජය</span> · v1.2 · SLS 894 · 2026-10-10</div>
-  <input type="text" id="q" placeholder="🔍 පිටු සොයන්න / Filter pages…" oninput="flt()">
+  <input type="text" id="q" placeholder="පිටු සොයන්න / Filter pages…" oninput="flt()">
   <ol id="nl">{nav}</ol>
 </nav>
 <main id="main">{body}</main>
@@ -129,6 +130,7 @@ def main():
 
     nav_html = []
     for src, out, title in NAV:
+        title = " ".join(plain(title).split())  # nav labels carry no pictographs
         if " / " in title:
             title_si, title_en = title.split(" / ", 1)
             label = (f'<span class="si">{html.escape(title_si)}</span>'
@@ -136,7 +138,7 @@ def main():
         else:
             label = html.escape(title)  # source has one language; retain it as fallback
         nav_html.append(f'<li><a href="{out}" id="n-{out}">{label}</a></li>')
-    nav_html = "\n".join(nav_html)
+    nav_html = "".join(nav_html)
 
     written = 0
     for src, out, title in NAV:
@@ -164,7 +166,7 @@ def main():
         rendered = plain(page)
         if not is_template:
             rendered = fill_empty_table_cells(rendered)
-        rendered = highlight_prompts(rendered)
+        rendered = compact_nav(highlight_prompts(rendered))
         rendered = highlight_table_priorities(rendered)
         with open(os.path.join(OUT, out), "w", encoding="utf-8") as fh:
             fh.write(rendered)
