@@ -27,19 +27,11 @@ from dashboard_model import build_model         # noqa: E402
 from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
                               fill_empty_table_cells, highlight_prompts,
                               mark_bilingual_pairs)  # noqa: E402
+from nav_common import PAGES, LANDING_FILE, nav_links  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "site")
 
-PAGES = [
-    ("1-setup-budget.html", "1", "ආරම්භක අයවැය", "Setup Budget"),
-    ("2-first-production.html", "2", "පළමු නිෂ්පාදන අයවැය", "First Production Budget"),
-    ("3-first-stock-cost.html", "3", "පළමු stock එකේ පිරිවැය", "First Stock Cost"),
-    ("4-process-documents.html", "4", "ක්‍රියාවලිය", "Process"),
-    ("5-organisation-chart.html", "5", "කළමනාකරණය සහ මූල්‍ය", "Management & Finance"),
-    ("6-sales-marketing.html", "6", "අලෙවිය සහ අලෙවිකරණය", "Sales & Marketing"),
-    ("7-final-summary.html", "7", "අවසන් සාරාංශය", "Final Summary"),
-]
 
 PAGE_CATEGORY = {
     "0": ("බණ්ඩාරවෙල · ඌව කඳුකරය", "Bandarawela · Uva Highlands"),
@@ -78,32 +70,12 @@ def cover_bg():
 
 def shell(M, num, title_si, title_en, subtitle, body):
     """One column: a slim top bar, a masthead, then every block stacked."""
-    budget_open = " open" if num in {"1", "2", "3"} else ""
-    budget_active = " on" if budget_open else ""
-    nav = ['<div class="brand"><div class="logo">W</div><h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span>'
-           '<span class="en">Bottled Drinking Water Plant</span></h1>'
-           f'<p>{M["location"]}<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: '
-           f'{M["investor"]}</b></p>{LANGUAGE_SWITCH}</div>',
-           '<div class="nav-links">',
-           f'<details class="nav-dropdown budget-dropdown"{budget_open}>',
-           f'<summary class="budget-trigger{budget_active}"><span class="si">අයවැය</span>'
-           '<span class="en">Budget</span><span class="dropdown-caret" aria-hidden="true">⌄</span></summary>',
-           '<div class="dropdown-menu">']
-    for fname, pn, si, en in PAGES[:3]:
-        on = ' class="on"' if pn == num else ""
-        nav.append(f'<a href="{fname}"{on}><span class="si">{esc(si)}</span><span class="en">{esc(en)}</span></a>')
-    nav.append('</div></details>')
-    fname, pn, si, en = PAGES[3]
-    on = ' class="on"' if pn == num else ""
-    nav.append(f'<a href="{fname}"{on}><span class="si">{esc(si)}</span><span class="en">{esc(en)}</span></a>')
-    nav.append('<a href="dashboard.html"><span class="si">Dashboard</span>'
-               '<span class="en">Dashboard</span></a>')
-    for fname, pn, si, en in PAGES[4:]:
-        on = ' class="on"' if pn == num else ""
-        nav.append(f'<a href="{fname}"{on}><span class="si">{esc(si)}</span><span class="en">{esc(en)}</span></a>')
-    nav.append('<a href="docs.html"><span class="si">ලේඛන පැකේජය</span>'
-               '<span class="en">Document Pack</span></a>')
-    nav.append('</div>')
+    active = LANDING_FILE if num == "0" else PAGES[int(num) - 1][0]
+    brand = ('<div class="brand"><div class="logo">W</div><h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span>'
+             '<span class="en">Bottled Drinking Water Plant</span></h1>'
+             f'<p>{M["location"]}<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: '
+             f'{M["investor"]}</b></p>{LANGUAGE_SWITCH}</div>')
+    nav = [brand, nav_links(active)]
 
     category_si, category_en = PAGE_CATEGORY.get(num, PAGE_CATEGORY["0"])
     hero_actions = ""
@@ -126,6 +98,11 @@ def shell(M, num, title_si, title_en, subtitle, body):
     <div class="kicker"><span class="si">{category_si}</span><span class="en">{category_en}</span></div>
     <h1><span class="si">{title_si}</span><span class="en">{esc(title_en)}</span></h1>
     <p class="hsub">{subtitle}</p>{hero_actions}
+    <div class="chips">
+      <span class="chip"><span class="si">ස්ථානය</span><span class="en">Location</span> <b>{esc(M["location"])}</b></span>
+      <span class="chip"><span class="si">ධාරිතාව</span><span class="en">Capacity</span> <b>{M["capacity_bph"]:,} BPH</b></span>
+      <span class="chip"><span class="si">ප්‍රමිතිය</span><span class="en">Standard</span> <b>SLS 894</b></span>
+    </div>
   </div>
 </div>
 <div class="inner">

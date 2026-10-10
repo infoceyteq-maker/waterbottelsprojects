@@ -81,7 +81,15 @@ LANGUAGE_SWITCH = '''<label class="language-switch">
   </select>
 </label>'''
 
-LANGUAGE_BOOTSTRAP = r'''<script>
+# Google Fonts for every generated page: Inter for Latin text and Noto Sans
+# Sinhala for the Sinhala script. Loaded here because LANGUAGE_BOOTSTRAP is
+# injected into the <head> of every page the build writes.
+FONT_LINKS = '''<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;500;600;700;800&display=swap">'''
+
+LANGUAGE_BOOTSTRAP = FONT_LINKS + r'''
+<script>
 (function(){
   var lang='si';
   try { var saved=localStorage.getItem('wb-project-language');
