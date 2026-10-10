@@ -9,6 +9,7 @@ site/*
 !site/4-process-documents.html
 !site/5-organisation-chart.html
 !site/6-sales-marketing.html
+!site/7-final-summary.html
 
 __pycache__/
 *.pyc

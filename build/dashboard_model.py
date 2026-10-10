@@ -124,8 +124,8 @@ SKU_19L = {
 
 # Fixed monthly operating costs, Year 1 (LKR)
 FIXED_Y1 = {
-    "Salaries (35 staff incl. sales team)": 2200000,
-    "EPF 12% + ETF 3%": 330000,
+    "Gross salaries (all staff)": 0,        # set from HR_PLAN below
+    "EPF 12% + ETF 3% (employer)": 0,       # set from HR_PLAN below
     "Sales commission": 400000,
     "Marketing & trade promotion": 1500000,
     "Distribution (fuel, drivers, vehicle running)": 1800000,
@@ -664,6 +664,97 @@ TREATMENT_STEPS = [
 ]
 
 
+def final_summary(M):
+    """Final numbers for the investor.
+
+    Reconciles the two budgets the pages deliver, takes the earnings rate
+    straight off the FIRST STOCK, and answers:
+      * how much do I put in?
+      * how much must I sell per day just to break even?
+      * how long until the whole investment comes back?
+      * what do I have to make and sell per day to get it back in ONE year?
+    """
+    dt = M["doc_totals"]
+
+    # ---- 1. the full investment, rebuilt from the delivered pages ----
+    setup_sub = (dt["registration"] + dt["equipment"] + M["office_total"]
+                 + dt["transport"] + dt["misc"] + M["hr_one_off_total"])
+    setup_cont = round(setup_sub * CONTINGENCY_PCT)
+    setup_total = setup_sub + setup_cont                 # == page 1
+    first_prod = round(M["fp_total"])                    # == page 2
+    investment = setup_total + first_prod
+    land = M["land_value"]
+    cash = investment - land                             # land is in-kind
+    buffer = WORKING_CAPITAL
+
+    # ---- 2. earnings rate, taken off the FIRST STOCK ----
+    fs_bottles = M["fs_bottles"]
+    fs_margin = M["fs_margin"]
+    fs_cost = M["fs_full_cost"]
+    fs_revenue = M["fs_retail_value"]
+    per_bottle = fs_margin / fs_bottles                  # Rs profit / bottle
+    rev_bottle = fs_revenue / fs_bottles                 # Rs factory price / bottle
+    cost_bottle = fs_cost / fs_bottles
+
+    fixed = M["fixed_total_y1"]
+    nameplate = M["nameplate_month"]
+    days = M["work_days"]
+    tax = M["tax_rate"]
+
+    # ---- 3. break-even: what must sell every day ----
+    be_bottles_m = fixed / per_bottle
+    be_day = be_bottles_m / days
+    be_pct = be_bottles_m / nameplate
+    be_revenue_day = be_day * rev_bottle
+
+    # ---- 4. payback at each utilisation level ----
+    rows = []
+    for u in (0.25, 0.40, 0.50, 0.65, 0.75, 0.85, 1.00):
+        bm = round(nameplate * u)
+        contrib = bm * per_bottle
+        profit = contrib - fixed
+        pat = profit * (1 - tax)
+        rows.append({
+            "util": u, "bottles_m": bm, "bottles_day": round(bm / days),
+            "revenue_m": bm * rev_bottle, "contrib_m": contrib,
+            "profit_m": profit, "pat_m": pat,
+            "months": investment / profit if profit > 0 else None,
+            "months_tax": investment / pat if pat > 0 else None,
+        })
+
+    # ---- 5. the one-year target ----
+    req_profit = investment / 12
+    req_bottles_m = (req_profit + fixed) / per_bottle
+    req_bottles_m_tax = (req_profit / (1 - tax) + fixed) / per_bottle
+
+    return {
+        "setup_sub": setup_sub, "setup_cont": setup_cont,
+        "setup_total": setup_total, "first_prod": first_prod,
+        "investment": investment, "land": land, "cash": cash, "buffer": buffer,
+        "cash_with_buffer": cash + buffer,
+        "fs_bottles": fs_bottles, "fs_cost": fs_cost, "fs_revenue": fs_revenue,
+        "fs_margin": fs_margin,
+        "per_bottle": per_bottle, "rev_bottle": rev_bottle,
+        "cost_bottle": cost_bottle,
+        "fixed": fixed, "fixed_day": fixed / days,
+        "be_bottles_m": be_bottles_m, "be_day": be_day, "be_pct": be_pct,
+        "be_revenue_day": be_revenue_day,
+        "payback_rows": rows,
+        "one_year": {
+            "profit_m": req_profit, "profit_y": investment,
+            "bottles_m": req_bottles_m, "bottles_day": req_bottles_m / days,
+            "util": req_bottles_m / nameplate,
+            "bottles_m_tax": req_bottles_m_tax,
+            "bottles_day_tax": req_bottles_m_tax / days,
+            "util_tax": req_bottles_m_tax / nameplate,
+            "feasible": req_bottles_m <= nameplate,
+            "feasible_tax": req_bottles_m_tax <= nameplate,
+        },
+        "nameplate": nameplate, "nameplate_day": nameplate / days,
+        "days": days, "tax": tax,
+    }
+
+
 def build_model():
     for s in SKUS:
         s["variable_cost"] = round(sum(s["costs"].values()), 2)
@@ -693,6 +784,9 @@ def build_model():
     dep_month = round(total_capex / 10 / 12)
     # keep depreciation in the fixed-cost block consistent with the actual CAPEX
     FIXED_Y1["Depreciation (CAPEX / 10 years)"] = dep_month
+    _hr_hc, _hr_gross, _hr_er, _hr_total = hr_monthly()
+    FIXED_Y1["Gross salaries (all staff)"] = _hr_gross
+    FIXED_Y1["EPF 12% + ETF 3% (employer)"] = _hr_er
 
     # ---- budget scenarios ----
     scenarios = []
@@ -789,7 +883,7 @@ def build_model():
             payback_year = i
             payback_months = round((target - prev) / p["pat_y"] * 12, 1) if p["pat_y"] > 0 else 0
 
-    return {
+    model = {
         "investor": INVESTOR,
         "location": LOCATION,
         "capacity_bph": CAPACITY_BPH,
@@ -875,6 +969,8 @@ def build_model():
         "payback_months": payback_months,
         "tax_rate": TAX_RATE,
     }
+    model["final"] = final_summary(model)
+    return model
 
 
 def load_checklist():

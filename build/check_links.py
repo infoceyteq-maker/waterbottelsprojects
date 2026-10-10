@@ -331,18 +331,20 @@ def check_dashboard(item_count):
         missing = [f for f in ("1-setup-budget.html", "2-first-production.html",
                                "3-first-stock-cost.html", "4-process-documents.html",
                                "5-organisation-chart.html",
-                               "6-sales-marketing.html")
+                               "6-sales-marketing.html",
+                               "7-final-summary.html")
                    if f'href="{f}"' not in landing]
         if missing:
             fail(f"landing page does not link: {missing}")
         else:
-            ok("landing page links all six pages")
+            ok("landing page links all seven pages")
 
-    # each of the six pages must exist and be well formed
+    # each of the seven pages must exist and be well formed
     four = ["1-setup-budget.html", "2-first-production.html",
             "3-first-stock-cost.html", "4-process-documents.html",
             "5-organisation-chart.html",
-            "6-sales-marketing.html"]
+            "6-sales-marketing.html",
+            "7-final-summary.html"]
     from html.parser import HTMLParser
 
     class Bal(HTMLParser):
@@ -390,7 +392,7 @@ def check_dashboard(item_count):
         if b.st or b.e:
             fail(f"{f} unbalanced HTML: {b.st[:3]} {b.e[:3]}")
     if not any(f"site/{f} missing" in str(x) for x in []):
-        ok("all six pages built and well formed")
+        ok("all seven pages built and well formed")
 
 
 def load_csv_rows():

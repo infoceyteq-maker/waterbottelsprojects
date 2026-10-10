@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the four separate pages the investor asked for.
+"""Build the seven separate pages the investor asked for.
 
   1-setup-budget.html          start -> factory registered, built, machines in,
                                up to the day work begins.  FULL budget, office
@@ -11,9 +11,9 @@
   4-process-documents.html     the process step by step, which document each
                                step needs, and how long each step takes.
 
-Plus a landing page (index.html) that links all four.
+Plus a landing page (index.html) that links all of them.
 
-Everything is derived from build/dashboard_model.py, so the five pages and the
+Everything is derived from build/dashboard_model.py, so the seven pages and the
 main dashboard can never disagree.
 """
 import os
@@ -33,6 +33,7 @@ PAGES = [
     ("4-process-documents.html", "4", "ක්‍රියාවලිය + ලේඛන", "Process & documents"),
     ("5-organisation-chart.html", "5", "කර්මාන්ඩල සටහන", "Organisation chart"),
     ("6-sales-marketing.html", "6", "අලෙවි සහ නාමකරණ", "Sales & marketing"),
+    ("7-final-summary.html", "7", "අවසන් සාරාංශය", "Final summary"),
 ]
 
 
@@ -60,7 +61,7 @@ def shell(M, num, title_si, title_en, subtitle, body):
            '<span style="display:block;font-size:11.5px;font-weight:500;'
            'color:var(--muted);margin-top:3px">Bottled Drinking Water Plant</span></h1>'
            f'<p>{M["location"]}<br><b>ආයෝජක / Investor:<br>{M["investor"]}</b></p></div>',
-           '<div class="nsec">පිටු 4 / The five pages</div>']
+           f'<div class="nsec">පිටු {len(PAGES)} / The {len(PAGES)} pages</div>']
     for fname, n, si, en in PAGES:
         on = ' class="on"' if n == num else ""
         nav.append(f'<a href="{fname}"{on}>📄 පිටුව {n} — {si}'

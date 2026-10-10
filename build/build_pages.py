@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the six pages + the landing page. Run: python3 build/build_pages.py"""
+"""Emit the seven pages + the landing page. Run: python3 build/build_pages.py"""
 import html
 import os
 import sys
@@ -456,8 +456,179 @@ def page6(M):
     s.append('<div class="note ol"><b>📌 මතක තබාගන්න:</b> මෙම ලාභය '
              '<b>variable cost පමණක්</b> අඩු කිරීමෙන් පසු ලැබෙන්නයි. '
              'සේවක පඩි, විදුලිය සහ ස්ථාවර වියදම් ආවරණය කිරීමට '
-             f'මාසිකව බෝතල් <b>~{M["breakeven_pet"]:,}</b>ක් '
-             f'(ධාරිතාවෙන් {M["breakeven_pct"]*100:.0f}%) අවශ්‍යයි.</div>')
+             f'මාසිකව බෝතල් <b>~{M["final"]["be_bottles_m"]:,.0f}</b>ක් — '
+             f'දවසට <b>{M["final"]["be_day"]:,.0f}</b>ක් (ධාරිතාවෙන් '
+             f'{M["final"]["be_pct"]*100:.0f}%) අවශ්‍යයි. '
+             'සම්පූර්ණ ගණනය <a href="7-final-summary.html">අවසන් '
+             'සාරාංශය</a> පිටුවේ.</div>')
+    return "".join(s)
+
+
+
+# =====================================================================
+# PAGE 7 - FINAL SUMMARY  (whole budget, break-even per day, payback)
+# =====================================================================
+def page7(M):
+    F = M["final"]
+    oy = F["one_year"]
+    dt = M["doc_totals"]
+    s = []
+    s.append('<h2 style="font-size:21px;margin:0 0 6px">🎯 අවසන් සාරාංශය '
+             '— ආයෝජනය, ලාභය, ආපසු ලැබෙන කාලය</h2>'
+             '<p class="lead">මුළු අයවැය එක තැනක · දවසට විකුණිය යුතු '
+             'ප්‍රමාණය · ආයෝජනය ආපසු ලැබෙන මාස · <b>the whole budget in '
+             'one place, what must sell each day, and when the money comes '
+             'back</b></p>')
+
+    pb100 = F["payback_rows"][-1]
+    s.append('<div class="grid g4">')
+    s.append(kpi("💼 මුළු ආයෝජනය / Total investment", m(F["investment"]),
+                 f'Rs {F["investment"]:,.0f}', "am"))
+    s.append(kpi("💵 මුදලින් අවශ්‍ය / Cash to raise", m(F["cash"]),
+                 "ඉඩම් Rs 12M in-kind දායකත්වයක්", "bl"))
+    s.append(kpi("🔴 දවසට විකුණිය යුතු අවම", f'{F["be_day"]:,.0f}<em> බෝතල්</em>',
+                 f'ධාරිතාවෙන් {F["be_pct"]*100:.0f}% · ලාභය Rs 0 වන තැන', "rd"))
+    s.append(kpi("⏳ ආයෝජනය ආපසු / Payback", f'{pb100["months"]:.1f}<em> මාස</em>',
+                 "100% ධාරිතාවේදී (බදු පෙර)", "ol"))
+    s.append('</div>')
+
+    # ---------- 1. the whole budget ----------
+    s.append('<h3>🧾 සම්පූර්ණ අයවැජ සාරාංශය '
+             '<span class="en">the whole budget, one table</span></h3>')
+    s.append(table(["කොටස / Component", "පිටුව", "මුදල (Rs)"], [
+        ["A. ලියාපදිංචි / Registration", "1", f'{dt["registration"]:,}'],
+        ["B. උපකරණ + ඉදිකිරීම් / Equipment & construction", "1",
+         f'{dt["equipment"]:,}'],
+        ["C. කාර්යාල උපකරණ / Office equipment", "1",
+         f'{M["office_total"]:,}'],
+        ["D. ප්‍රවාහන / Transportation", "1", f'{dt["transport"]:,}'],
+        ["E. විවිධ / Miscellaneous", "1", f'{dt["misc"]:,}'],
+        ["F. බඳවා ගැනීම + පුහුණුව / Recruitment & training", "1",
+         f'{M["hr_one_off_total"]:,}'],
+    ], [f'{F["setup_sub"]:,}'], "උප මුළු / SUBTOTAL (පිටුව 1)"))
+    s.append(table(["", "මුදල (Rs)"], [
+        ["උප මුළු (A–F)", f'{F["setup_sub"]:,}'],
+        ["G. Contingency @ 15% — මිල ඉහළ යාමට ආරක්ෂාව",
+         f'{F["setup_cont"]:,}'],
+        ["<b>ආරම්භක CAPEX / Total setup</b> (පිටුව 1)",
+         f'<b>{F["setup_total"]:,}</b>'],
+        ["H. පළමු නිෂ්පාදන අයවැය / First production run (පිටුව 2)",
+         f'{F["first_prod"]:,}'],
+    ], [f'{F["investment"]:,}'], "💼 මුළු ආයෝජනය / TOTAL INVESTMENT"))
+    s.append(table(["", "මුදල (Rs)"], [
+        ["💼 මුළු ආයෝජනය", f'{F["investment"]:,}'],
+        ["🏞️ අඩු කරන්න: ඉඩම — Mr. Thilakarathna ගේ "
+         "<b>in-kind</b> දායකත්වය", f'({F["land"]:,})'],
+    ], [f'{F["cash"]:,}'], "💵 මුදලින් අවශ්‍ය / CASH REQUIRED"))
+    s.append(f'<div class="note ol"><b>🏦 බැංකුවේ තිබිය යුතු මුදල:</b> '
+             f'Rs {F["cash"]:,.0f} + නිර්දේශිත working capital buffer '
+             f'Rs {F["buffer"]:,.0f} = <b>Rs {F["cash_with_buffer"]:,.0f}</b>. '
+             'Buffer එක නිෂ්පාදනය ආරම්භ වන තෙක් දෛනික වියදම් ගෙවීමටයි.</div>')
+
+    # ---------- 2. the earnings rate, off the first stock ----------
+    s.append('<h3>📦 පළමු stock එකේ ලාභය '
+             '<span class="en">the earnings rate</span></h3>')
+    s.append(table(["", "ප්‍රමාණය / මුදල"], [
+        ["පළමු stock එකේ බෝතල්", f'{F["fs_bottles"]:,}'],
+        ["නිෂ්පාදන පිරිවැය / Production cost (පිටුව 3)",
+         f'Rs {F["fs_cost"]:,.0f}'],
+        ["Factory ආදායම / Revenue (පිටුව 6)", f'Rs {F["fs_revenue"]:,.0f}'],
+        ["<b>💰 අපේ ලාභය / Our margin</b>", f'<b>Rs {F["fs_margin"]:,.0f}</b>'],
+        ["ලාභ ප්‍රතිශතය / Margin %",
+         f'{M["sales_totals"][6]:.1f}%'],
+    ], [f'Rs {F["per_bottle"]:.2f}'], "🔑 එක් බෝතලයක ලාභය / PROFIT PER BOTTLE"))
+
+    # ---------- 3. break-even per day (marked) ----------
+    s.append('<h3>🔴 දවසට විකුණිය යුතු ප්‍රමාණය '
+             '<span class="en">what MUST sell every day</span></h3>')
+    s.append(table(["", "අගය"], [
+        ["මාසික ස්ථාවර වියදම් / Monthly fixed cost "
+         "(පඩි + EPF + විදුලිය + නඩත්තුව + ප්‍රවාහන + අලෙවි)",
+         f'Rs {F["fixed"]:,.0f}'],
+        ["එක් බෝතලයක ලාභය / Profit per bottle", f'Rs {F["per_bottle"]:.2f}'],
+        ["= මාසිකව අවශ්‍ය බෝතල් / Bottles per month",
+         f'<b>{F["be_bottles_m"]:,.0f}</b>'],
+        ["= දවසකට (වැඩ කරන දින 25) / Per working day",
+         f'<b>{F["be_day"]:,.0f} බෝතල්</b>'],
+        ["ධාරිතාවෙන් ප්‍රතිශතය / % of capacity",
+         f'{F["be_pct"]*100:.0f}% (ධාරිතාව '
+         f'{F["nameplate_day"]:,.0f} බෝතල්/දවස)'],
+        ["දවසට අවශ්‍ය ආදායම / Revenue needed per day",
+         f'Rs {F["be_revenue_day"]:,.0f}'],
+    ]))
+    s.append(f'<div class="note rd"><b>🔴 මතක තබාගන්න:</b> දවසට බෝතල් '
+             f'<b>{F["be_day"]:,.0f}</b>ක් විකුණා නොමැති නම් ඒ දවසේ '
+             '<b>පාඩු</b>යි. එය ධාරිතාවෙන් <b>'
+             f'{F["be_pct"]*100:.0f}%</b>ක් පමණි — එනම් කර්මාන්ත ශාලාවේ '
+             '71%ක් හිස්ව තිබුණත් පාඩු නැත. ඉතිරි 71% තුළ ලාභය '
+             'උපයනු ලැබේ.</div>')
+
+    # ---------- 4. payback at each utilisation ----------
+    s.append('<h3>⏳ ආයෝජනය ආපසු ලැබෙන කාලය '
+             '<span class="en">how long until the investment comes back</span>'
+             '</h3>')
+    rows = []
+    for r in F["payback_rows"]:
+        mo = f'<b>{r["months"]:.1f} මාස</b>' if r["months"] else \
+             '<span class="bad">❌ කිසිවිටෙකත් නැත</span>'
+        mt = f'{r["months_tax"]:.1f} මාස' if r["months_tax"] else "—"
+        rows.append([f'{r["util"]*100:.0f}%', f'{r["bottles_m"]:,}',
+                     f'{r["bottles_day"]:,}', f'Rs {r["profit_m"]:,.0f}',
+                     mo, mt])
+    s.append(table(["ධාරිතාව", "බෝතල් / මාස", "බෝතල් / දවස",
+                    "මාසික ලාභය", "ආයෝජනය ආපසු<br>(බදු පෙර)",
+                    "ආයෝජනය ආපසු<br>(බදු 30% පසු)"], rows))
+    s.append(f'<div class="note"><b>📌 කියවන ආකාරය:</b> ධාරිතාවෙන් 50%කින් '
+             f'(දවසට බෝතල් 24,000) ක්‍රියාත්මක වුවහොත් මුළු ආයෝජනය '
+             f'<b>මාස 29.7කින්</b> ආපසු ලැබේ. 100%කින් '
+             f'<b>මාස {pb100["months"]:.1f}කින්</b>. 25%කින් '
+             '<b>පාඩු</b>යි — ආයෝජනය කිසිවිටෙකත් ආපසු නොලැබේ.</div>')
+
+    # ---------- 5. the one-year target (marked) ----------
+    s.append('<h3>🎯 අවුරුද්දක් තුළ මුළු ආයෝජනයම ආපසු ලබා ගැනීමට '
+             '<span class="en">to get it all back in ONE year</span></h3>')
+    s.append(table(["", "අගය"], [
+        ["මුළු ආයෝජනය / Investment to recover", f'Rs {oy["profit_y"]:,.0f}'],
+        ["= අවශ්‍ය මාසික ලාභය / Required profit per month",
+         f'Rs {oy["profit_m"]:,.0f}'],
+        ["🏭 <b>දවසට නිෂ්පාදනය කළ යුතු / MAKE per day</b>",
+         f'<b>{oy["bottles_day"]:,.0f} බෝතල්</b>'],
+        ["🛒 <b>දවසට විකුණිය යුතු / SELL per day</b>",
+         f'<b>{oy["bottles_day"]:,.0f} බෝතල්</b>'],
+        ["= මාසිකව / per month", f'{oy["bottles_m"]:,.0f} බෝතල්'],
+        ["ධාරිතාවෙන් / % of capacity", f'<b>{oy["util"]*100:.0f}%</b>'],
+    ]))
+    s.append(f'<div class="note ol"><b>✅ හැකියි.</b> දවසට බෝතල් '
+             f'<b>{oy["bottles_day"]:,.0f}</b>ක් යනු ධාරිතාවෙන් '
+             f'{oy["util"]*100:.0f}%කි — එක shift එකක ධාරිතාව බෝතල් '
+             f'{F["nameplate_day"]:,.0f}/දවස බැවින් <b>අමතර යන්ත්‍රෝපකරණ '
+             'අවශ්‍ය නැත</b>.</div>')
+    s.append(f'<div class="note rd"><b>⚠️ බදු 30% සලකා බැලූ විට:</b> '
+             f'අවශ්‍ය වන්නේ දවසට බෝතල් <b>{oy["bottles_day_tax"]:,.0f}</b>ක් '
+             f'= ධාරිතාවෙන් <b>{oy["util_tax"]*100:.0f}%</b>. එය එක '
+             'shift එකකින් <b>නොහැක</b>. විසඳුම: <b>shift 2ක්</b>, නැතහොත් '
+             f'බදු පසු ආයෝජනය ආපසු ලැබෙන්නේ <b>මාස 15.8කින්</b>.</div>')
+
+    # ---------- 6. notes ----------
+    s.append('<h3>📝 උපකල්පන <span class="en">assumptions</span></h3>')
+    s.append('<ul class="bullets">'
+             f'<li>ධාරිතාව: {M["capacity_bph"]:,} බෝතල්/පැය × '
+             f'{M["shift_hours"]} පැය × {F["days"]} දින = '
+             f'<b>{F["nameplate"]:,} බෝතල්/මාස</b></li>'
+             '<li>ලාභ වේගය <b>පළමු stock එකේ මිශ්‍රණය</b> මත පදනම් වේ '
+             '(500 ml 5,000 · 1 L 3,000 · 1.5 L 3,000 · 5 L 1,000 · '
+             '19 L 150). මිශ්‍රණය වෙනස් වුවහොත් බෝතලයක ලාභය වෙනස් වේ.</li>'
+             '<li>ලාභය <b>Factory මිල</b> මත පමණි (පිටුව 6 බලන්න).</li>'
+             f'<li>ස්ථාවර වියදම් Rs {F["fixed"]:,.0f}/මාස — 43 දෙනාගේ '
+             'පඩි + EPF/ETF + විදුලිය + නඩත්තුව + ප්‍රවාහන + අලෙවි + '
+             'අපහරණය.</li>'
+             '<li>බදු පෙර අගයන් ඉහළ වගුවේ ද, බදු 30% පසු අගයන් අවසන් '
+             'තීරුවේ ද දක්වා ඇත.</li>'
+             '<li>ඉඩම මුදලින් ගෙවීමක් නොවේ — in-kind දායකත්වයකි.</li>'
+             '<li>මෙය එක් කර්මාන්ත ශාලාවක් / shift එකක් සඳහායි. වසර '
+             'කිහිපයක P&amp;L අනාවැකි ඉල්ලීමක් නොමැති බැවින් '
+             'ඇතුළත් කර නැත.</li>'
+             '</ul>')
     return "".join(s)
 
 
@@ -465,7 +636,8 @@ def main():
     M = build_model()
     os.makedirs(OUT, exist_ok=True)
 
-    builders = {"1": page1, "2": page2, "3": page3, "4": page4, "5": page5, "6": page6}
+    builders = {"1": page1, "2": page2, "3": page3, "4": page4, "5": page5, "6": page6,
+            "7": page7}
     subs = {
         "1": "ෆැක්ටරි එක ලියාපදිංචි කර, ගොඩනැඟිල්ල ඉදිකර, යන්ත්‍ර සවිකර, "
              "වැඩ පටන් ගන්න දවස වෙනකම් වන සම්පූර්ණ පිරිවැය — කාර්යාල උපකරණ ද ඇතුළුව.",
@@ -479,6 +651,8 @@ def main():
              "EPF 12% සහ ETF 3% සහිතව.",
         "6": "Factory → Distributor → Retail මිල පඩිපෙළ, නිෂ්පාදනය අනුව ලාභය, "
              "සහ පළමු stock එකේ ලාභ ප්‍රතිශතය.",
+        "7": "සම්පූර්ණ ආයෝජනය, දවසට විකුණිය යුතු අවම ප්‍රමාණය, ආයෝජනය "
+             "ආපසු ලැබෙන මාස, සහ අවුරුද්දක් තුළ ආපසු ලබා ගැනීමේ ඉලක්කය.",
     }
     written = []
     for fname, num, si, en in PAGES:
@@ -504,13 +678,17 @@ def main():
              "Sales & Marketing · Transportation. වැටුප් + EPF/ETF සහිතව.",
         "6": "Factory → Distributor → Retail මිල පඩිපෙළ · නිෂ්පාදනය අනුව ලාභය · "
              "පළමු stock එකේ ලාභය.",
+        "7": "මුළු අයවැය · දවසට විකුණිය යුතු ප්‍රමාණය · ආයෝජනය ආපසු "
+             "ලැබෙන කාලය · අවුරුද්දක ඉලක්කය.",
         }[num]
         head = {"1": f'Rs {m(M["doc_totals"]["registration"]+M["doc_totals"]["equipment"]+M["office_total"]+M["doc_totals"]["transport"]+M["doc_totals"]["misc"]+M["hr_one_off_total"])}',
                 "2": f'Rs {m(M["fp_total"])}',
                 "3": f'Rs {M["fs_full_cost"]:,.0f}',
                 "4": f'{len(M["process_steps"])} පියවර',
                 "5": f'{M["hr_headcount"]} දෙනා · Rs {m(M["hr_month_total"])}/මාස',
-                "6": f'ලාභය Rs {M["sales_totals"][3]:,.0f} ({M["sales_totals"][6]:.1f}%)'}[num]
+                "6": f'ලාභය Rs {M["sales_totals"][3]:,.0f} ({M["sales_totals"][6]:.1f}%)',
+                "7": f'ආයෝජනය {m(M["final"]["investment"])} · දවසට '
+                     f'{M["final"]["be_day"]:,.0f} බෝතල්'}[num]
         cards.append(
             f'<a class="card" href="{fname}" style="text-decoration:none;color:inherit;'
             f'display:block;transition:box-shadow .15s" '
@@ -524,8 +702,8 @@ def main():
             f'<div style="margin-top:12px;font-size:20px;font-weight:750;'
             f'color:var(--olive-d)">{head}</div></a>')
 
-    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 6ක් — වෙන වෙනම</h2>'
-            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The six pages, in the order '
+    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 7ක් — වෙන වෙනම</h2>'
+            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The seven pages, in the order '
             'you asked for</b></p>'
             '<div class="grid g2">' + "".join(cards) + '</div>'
             '<div class="note ol"><b>📊 සම්පූර්ණ Dashboard එක:</b> සියල්ල එක පිටුවක '
@@ -542,7 +720,7 @@ def main():
         fh.write(html)
     print(f"[ok] index.html (landing)          "
           f"{os.path.getsize(os.path.join(OUT,'index.html'))/1024:,.0f} KB")
-    print("\n[ok] 6 pages + landing written into site/")
+    print("\n[ok] 7 pages + landing written into site/")
 
 
 if __name__ == "__main__":
