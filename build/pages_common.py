@@ -27,7 +27,8 @@ from dashboard_model import build_model         # noqa: E402
 from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
                               fill_empty_table_cells, highlight_prompts,
                               mark_bilingual_pairs)  # noqa: E402
-from nav_common import PAGES, LANDING_FILE, nav_links  # noqa: E402
+from nav_common import PAGES, LANDING_FILE, nav_links, compact_nav  # noqa: E402
+from hero_common import hero_actions as hero_actions_row  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "site")
@@ -78,9 +79,7 @@ def shell(M, num, title_si, title_en, subtitle, body):
     nav = [brand, nav_links(active)]
 
     category_si, category_en = PAGE_CATEGORY.get(num, PAGE_CATEGORY["0"])
-    hero_actions = ""
-    if num == "0":
-        hero_actions = """\n    <div class=\"hero-actions\">\n      <a class=\"btn btn-primary\" href=\"#project-sections\"><span class=\"si\">ව්‍යාපෘති සාරාංශය</span><span class=\"en\">Project overview</span><b class=\"btn-arrow\" aria-hidden=\"true\">→</b></a>\n      <a class=\"btn btn-secondary\" href=\"dashboard.html\"><span class=\"si\">සම්පූර්ණ Dashboard</span><span class=\"en\">Open full dashboard</span></a>\n    </div>"""
+    hero_actions = hero_actions_row(active)
 
     doc = f"""<!doctype html>
 <html lang="si"><head>
@@ -121,7 +120,7 @@ def shell(M, num, title_si, title_en, subtitle, body):
 <script>{LANGUAGE_JS}</script>
 </body></html>"""
     rendered = mark_bilingual_pairs(plain(doc))
-    return highlight_prompts(fill_empty_table_cells(rendered))
+    return compact_nav(highlight_prompts(fill_empty_table_cells(rendered)))
 
 
 _HTML_TAGS = re.compile(r"<[^>]+>")

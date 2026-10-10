@@ -10,7 +10,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dashboard_model import build_model, load_checklist  # noqa: E402
-from nav_common import DASHBOARD_FILE, nav_links         # noqa: E402
+from nav_common import DASHBOARD_FILE, nav_links, compact_nav  # noqa: E402
+from hero_common import hero_actions                    # noqa: E402
 from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
                               fill_empty_table_cells, highlight_prompts,
                               mark_bilingual_pairs)  # noqa: E402
@@ -119,16 +120,7 @@ __LANG_BOOTSTRAP__
 <style>__CSS__</style>
 </head><body class="dashboard-page">
 <div id="wrap">
-<nav id="nav">
-  <div class="brand">
-    <div class="logo">💧</div>
-    <h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span>
-      <span class="en">Bottled Drinking Water Plant</span></h1>
-    <p>__LOCATION__<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: __INVESTOR__</b></p>
-    __LANGUAGE_SWITCH__
-  </div>
-  __NAV_ROW__
-</nav>
+<nav id="nav"><div class="brand"><div class="logo">W</div><h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span><span class="en">Bottled Drinking Water Plant</span></h1><p>__LOCATION__<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: __INVESTOR__</b></p>__LANGUAGE_SWITCH__</div>__NAV_ROW__</nav>
 <main id="main">
 __HERO__
 <div class="inner">
@@ -237,10 +229,7 @@ def hero(M, n_items, rec):
       <span class="en">A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by {M["investor"]}.
       Currently only the land exists — building, plant and every approval start from scratch.</span>
     </p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#dash"><span class="si">ව්‍යාපෘති සාරාංශය බලන්න</span><span class="en">View project summary</span><b class="btn-arrow" aria-hidden="true">→</b></a>
-      <a class="btn btn-secondary" href="index.html"><span class="si">කොටස් 7 වෙත යන්න</span><span class="en">Explore the seven sections</span></a>
-    </div>
+    {hero_actions(DASHBOARD_FILE)}
     <div class="chips">
       <span class="chip">🏞️ <span class="si">ඉඩම ඇත</span><span class="en"><b>Land owned</b></span></span>
       <span class="chip">🏗️ <span class="si">ගොඩනැඟිල්ල + යන්ත්‍ර = මුල සිට</span><span class="en"><b>From scratch</b></span></span>
@@ -773,7 +762,7 @@ def build():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as fh:
         rendered = mark_bilingual_pairs(plain(html))
-        rendered = highlight_prompts(fill_empty_table_cells(rendered))
+        rendered = compact_nav(highlight_prompts(fill_empty_table_cells(rendered)))
         fh.write(rendered)
 
     print(f"[ok] wrote {OUT} ({os.path.getsize(OUT)/1024:,.0f} KB)")

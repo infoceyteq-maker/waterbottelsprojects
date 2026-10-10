@@ -21,7 +21,7 @@
 
    Canvas    cool off-white with white, lightly bordered content cards
    Type      system sans stack with large editorial headings
-   Accent    violet / indigo for actions, selected states and data highlights
+   Accent    deep tea-green for structure and sunrise-gold for the main actions
    Layout    responsive grids, spacious hero, tidy sticky section navigation
    Motion    subtle card lift and focus states; reduced-motion is respected
 
@@ -72,9 +72,9 @@
   --olive-d:#8a6417;       /* alias — landing cards (now gold) */
 
   /* info blue — secondary, used sparingly */
-  --blue:#1e3a8a;
-  --blue-2:#2563eb;
-  --blue-soft:#eff4ff;
+  --blue:#1f5c44;
+  --blue-2:#3f8a64;
+  --blue-soft:#eef7f2;
 
   /* red — losses & warnings ONLY */
   --red:#dc2626;
@@ -104,8 +104,8 @@ body{
   background-color:var(--canvas);
   background-image:
     radial-gradient(900px 520px at 8% -6%,rgba(16,185,129,.17),transparent 62%),
-    radial-gradient(860px 560px at 96% 4%,rgba(37,99,235,.22),transparent 60%),
-    radial-gradient(1100px 700px at 50% 42%,rgba(30,58,138,.20),transparent 70%),
+    radial-gradient(860px 560px at 96% 4%,rgba(47,125,91,.22),transparent 60%),
+    radial-gradient(1100px 700px at 50% 42%,rgba(31,92,68,.20),transparent 70%),
     radial-gradient(720px 480px at 50% 110%,rgba(16,185,129,.11),transparent 66%),
     linear-gradient(180deg,var(--canvas-3) 0%,var(--canvas) 40%,var(--canvas-2) 100%);
   background-attachment:fixed;
@@ -196,7 +196,7 @@ a:hover{text-decoration:underline}
 .hero::before{
   content:"";position:absolute;inset:0;
   background:radial-gradient(640px 320px at 88% 8%,rgba(16,185,129,.30),transparent 70%),
-             radial-gradient(520px 300px at 6% 100%,rgba(37,99,235,.22),transparent 70%);
+             radial-gradient(520px 300px at 6% 100%,rgba(47,125,91,.22),transparent 70%);
 }
 .hero::after{
   content:"";position:absolute;inset:0;
@@ -409,7 +409,7 @@ tr.done td:nth-child(3){text-decoration:line-through}
 .org{display:block;margin:16px 0}
 .org-box{border-radius:var(--radius);padding:14px 18px;max-width:640px;margin:0 auto}
 .org-board{
-  background:linear-gradient(135deg,#13254d 0%,#0b1834 100%);color:#fff;
+  background:linear-gradient(135deg,#1b3b30 0%,#0f2a22 100%);color:#fff;
   border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-emboss);
 }
 .org-board .t{font-size:14px;font-weight:700;display:block}
@@ -527,7 +527,7 @@ footer b{color:var(--ink-2)}
 
 /* =====================================================================
    RapidDev-inspired visual refresh
-   Bright editorial canvas, charcoal type, violet actions and generous space.
+   Bright editorial canvas, charcoal type, tea-green accents, gold actions and generous space.
    Content and project calculations remain unchanged.
    ===================================================================== */
 :root{
@@ -551,20 +551,20 @@ footer b{color:var(--ink-2)}
   --line:#e7e8ed;
   --line-2:#d9dae1;
   --border2:#d9dae1;
-  --emerald:#6658e8;
-  --emerald-2:#8a7cff;
-  --emerald-d:#5144cb;
-  --emerald-soft:#f1efff;
-  --emerald-line:#d9d4ff;
+  --emerald:#2f7d5b;
+  --emerald-2:#5fae86;
+  --emerald-d:#1f5c44;
+  --emerald-soft:#eef7f2;
+  --emerald-line:#bfe0cd;
   --gold:#f0aa45;
   --gold-d:#a96a12;
   --gold-soft:#fff6e8;
   --gold-line:#f4dcad;
   --gold-grad:linear-gradient(135deg,#fff0c9 0%,#f5c66b 52%,#e69b34 100%);
   --olive-d:#a96a12;
-  --blue:#353e95;
-  --blue-2:#4f61da;
-  --blue-soft:#eef2ff;
+  --blue:#1f5c44;
+  --blue-2:#3f8a64;
+  --blue-soft:#eef7f2;
   --red:#d94c5b;
   --red-d:#b83a49;
   --red-soft:#fff0f1;
@@ -572,7 +572,7 @@ footer b{color:var(--ink-2)}
   --radius-sm:14px;
   --shadow:0 8px 24px -14px rgba(22,24,38,.12);
   --shadow-emboss:0 12px 34px -22px rgba(24,25,40,.16),0 1px 3px rgba(24,25,40,.035);
-  --shadow-lift:0 20px 44px -24px rgba(55,48,125,.23),0 4px 12px rgba(24,25,40,.06);
+  --shadow-lift:0 20px 44px -24px rgba(31,92,68,.23),0 4px 12px rgba(24,25,40,.06);
 }
 
 html,body{background:var(--canvas)}
@@ -605,8 +605,8 @@ a:hover{color:var(--emerald);text-decoration:none}
 }
 #nav .brand .logo{
   display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;
-  background:linear-gradient(140deg,#776bff,#5548db);border:1px solid rgba(83,70,211,.12);
-  border-radius:13px;box-shadow:0 8px 20px -10px rgba(86,72,220,.65);
+  background:linear-gradient(140deg,#f6bb54,#d9a03c);border:1px solid rgba(154,113,34,.12);
+  border-radius:13px;box-shadow:0 8px 20px -10px rgba(232,154,47,.65);
   color:#fff;font-size:0;
 }
 #nav .brand .logo::before{content:"W";font-size:17px;font-weight:800;letter-spacing:-.06em}
@@ -636,16 +636,26 @@ a:hover{color:var(--emerald);text-decoration:none}
 #nav .nav-dropdown{position:relative;flex:0 0 auto;margin:0;padding:0}
 #nav .budget-trigger{
   position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
-  min-height:36px;margin:0;padding:7px 28px 7px 11px;border:1px solid transparent;border-radius:12px;
-  background:transparent;color:var(--ink-2);font-size:13px;font-weight:680;line-height:1.4;text-align:left;cursor:pointer;
-  list-style:none;transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+  min-height:38px;margin:4px 6px 0 0;padding:7px 30px 7px 12px;border:1px solid #e3be62;border-radius:12px;
+  background:linear-gradient(135deg,#fff6d8 0%,#fbe3a4 55%,#f6cf72 100%);
+  color:#5b3b06;font-size:13px;font-weight:720;line-height:1.4;text-align:left;cursor:pointer;
+  list-style:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px -10px rgba(154,103,20,.7);
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease;
 }
 #nav .budget-trigger::-webkit-details-marker{display:none}
 #nav .budget-trigger:hover,#nav .nav-dropdown[open] .budget-trigger{
-  background:#f4f3ff;border-color:#eceaff;color:var(--emerald-d);
+  background:linear-gradient(135deg,#ffeebd 0%,#f8d27c 55%,#f0bb55 100%);border-color:#d9a03c;color:#432a03;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 8px 18px -10px rgba(154,103,20,.85);transform:translateY(-1px);
 }
-#nav .budget-trigger.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);font-weight:700}
-#nav .budget-trigger .en{display:block;color:#525967;font-size:11px;font-weight:600;letter-spacing:0;line-height:1.3}
+#nav .budget-trigger.on{box-shadow:inset 0 0 0 1px #d9a03c,0 8px 18px -10px rgba(154,103,20,.85);font-weight:800}
+#nav .budget-trigger .en{display:block;color:#7a5410;font-size:11px;font-weight:650;letter-spacing:0;line-height:1.3}
+/* small "3" count badge on the Budget button (number of budget pages) */
+#nav .budget-count{
+  position:absolute;top:-7px;right:-7px;z-index:2;display:grid;place-items:center;
+  min-width:20px;height:20px;padding:0 6px;border:2px solid #fff;border-radius:999px;
+  background:linear-gradient(135deg,#7a4f0c,#4a2e05);color:#fff;
+  font-size:11px;font-weight:800;line-height:1;box-shadow:0 4px 10px -4px rgba(74,46,5,.8);
+}
 /* CSS-drawn chevron (no text glyph): a rotated square with two visible borders */
 #nav .dropdown-caret{
   position:absolute;right:13px;top:calc(50% - 4px);width:7px;height:7px;
@@ -663,7 +673,7 @@ a:hover{color:var(--emerald);text-decoration:none}
   line-height:1.4;white-space:normal;
 }
 #nav .nav-links .dropdown-menu a .en{display:block;color:#525967;font-size:11px;font-weight:550;letter-spacing:0;line-height:1.4}
-#nav .nav-links .dropdown-menu a:hover{background:#f7f6ff;border-color:#eeecff;color:var(--emerald-d);transform:none}
+#nav .nav-links .dropdown-menu a:hover{background:#f1f8f4;border-color:#dcefe5;color:var(--emerald-d);transform:none}
 #nav .nav-links .dropdown-menu a.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);box-shadow:none}
 #nav .nsec{display:none!important}
 #nav .nav-links a{
@@ -673,9 +683,9 @@ a:hover{color:var(--emerald);text-decoration:none}
   transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease;
 }
 #nav .nav-links a .en{display:block;color:#525967;font-size:11px;font-weight:550;letter-spacing:0;text-transform:none;line-height:1.3}
-#nav .nav-links a.on .en{color:#6257bd}
+#nav .nav-links a.on .en{color:#1f5c44}
 #nav .nav-links a b{min-width:0;margin:0;padding:0;background:none;color:inherit;font-size:10px}
-#nav .nav-links a:hover{background:#f4f3ff;color:var(--emerald-d);border-color:#eceaff;transform:translateY(-1px)}
+#nav .nav-links a:hover{background:#eef7f2;color:var(--emerald-d);border-color:#dcefe5;transform:translateY(-1px)}
 #nav .nav-links a.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);box-shadow:none;font-weight:700}
 #nav .nav-links a[href="dashboard.html"],#nav .nav-links a[href="docs.html"]{
   margin-left:4px;padding:8px 14px;background:var(--ink);border-color:var(--ink);color:#fff;font-weight:650;
@@ -688,7 +698,7 @@ a:hover{color:var(--emerald);text-decoration:none}
 #nav .nav-links a[href="dashboard.html"].on,#nav .nav-links a[href="docs.html"].on{
   background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);font-weight:700;
 }
-#nav .nav-links a[href="dashboard.html"].on .en,#nav .nav-links a[href="docs.html"].on .en{color:#6257bd}
+#nav .nav-links a[href="dashboard.html"].on .en,#nav .nav-links a[href="docs.html"].on .en{color:#1f5c44}
 
 /* ── Cinematic upcountry hero ─ the Uva Highlands photograph, full-bleed ──
    The Bandarawela tea-country cover fills the whole hero; deep green-ink
@@ -700,8 +710,9 @@ a:hover{color:var(--emerald);text-decoration:none}
 }
 .hero::before{
   content:"";position:absolute;inset:0;z-index:0;
-  background:radial-gradient(1000px 520px at 8% 0%,rgba(16,185,129,.30),transparent 64%),
-             radial-gradient(820px 480px at 96% 100%,rgba(102,88,232,.22),transparent 70%),
+  background:radial-gradient(1000px 520px at 8% 0%,rgba(31,92,68,.55),transparent 64%),
+             radial-gradient(760px 460px at 100% 108%,rgba(246,187,84,.30),transparent 68%),
+             radial-gradient(640px 360px at 0% 110%,rgba(232,154,47,.16),transparent 70%),
              linear-gradient(97deg,rgba(5,17,13,.94) 0%,rgba(5,19,15,.82) 34%,rgba(6,22,17,.52) 62%,rgba(6,22,17,.20) 100%);
 }
 .hero::after{
@@ -820,13 +831,13 @@ table{font-size:14px}
 th,td{padding:11px 14px;border-bottom:1px solid #efeff2}
 th{background:#f7f7fa;border-bottom-color:var(--line);color:#3f4550;font-size:11px;letter-spacing:.06em}
 tbody tr:nth-child(even){background:#fbfbfd}
-tbody tr:hover{background:#f5f3ff}
+tbody tr:hover{background:#f1f8f4}
 tr.tot td{background:#f5f5f9;border-top:1px solid #dfe0e8}
 tr.grand td{background:var(--emerald-soft);color:var(--emerald-d);border-top:1px solid var(--emerald-line)}
-tr.grand.cash td{background:linear-gradient(110deg,#f1efff,#e5e1ff);color:#4135aa;border-top:1px solid #ccc5ff}
+tr.grand.cash td{background:linear-gradient(110deg,#eef7f2,#e2f1e8);color:#1f5c44;border-top:1px solid #bfe0cd}
 
 .note{border:1px solid var(--line);border-left:3px solid #8f91a0;border-radius:12px;box-shadow:none;background:#fff;color:var(--ink-2);font-size:14.5px}
-.note.ol{background:#f4f2ff;border-color:#dedaff;border-left-color:var(--emerald)}
+.note.ol{background:#eef7f2;border-color:#bfe0cd;border-left-color:var(--emerald)}
 .note.am{background:#fff7e9;border-color:#f4dfb7;border-left-color:var(--gold)}
 .note.rd{background:#fff1f2;border-color:#f3c8ce;border-left-color:var(--red)}
 .badge.ol{background:var(--emerald);color:#fff}
@@ -834,13 +845,13 @@ tr.grand.cash td{background:linear-gradient(110deg,#f1efff,#e5e1ff);color:#4135a
 .pill.p-ok{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d)}
 .p-mand{background:#333541}
 .flow .st{border-radius:13px;box-shadow:none}
-.flow .st.key{background:#f3f1ff;border-top-color:var(--emerald)}
+.flow .st.key{background:#eef7f2;border-top-color:var(--emerald)}
 .flow .st.star{background:#fff7e8;border-top-color:var(--gold)}
 .flow .ar{color:var(--emerald)}
 .bar{background:#eeedf3;box-shadow:none}
-.bar>i,.bar.ol>i{background:linear-gradient(90deg,#9388ff,#5e51dc)}
+.bar>i,.bar.ol>i{background:linear-gradient(90deg,#5fae86,#2f7d5b)}
 .bar.am>i{background:linear-gradient(90deg,#f8cd79,#e59b35)}
-.org-board{background:linear-gradient(135deg,#5c50db,#7770ee);border:0;box-shadow:var(--shadow)}
+.org-board{background:linear-gradient(135deg,#2f5d49,#3f7d5f);border:0;box-shadow:var(--shadow)}
 .org-mgr{border-left-color:var(--emerald);box-shadow:var(--shadow)}
 .org-dept{box-shadow:var(--shadow)}
 .org-dept .hd{border-top-color:var(--emerald);background:#f8f8fb}
@@ -848,9 +859,9 @@ tr.grand.cash td{background:linear-gradient(110deg,#f1efff,#e5e1ff);color:#4135a
 .org-role .rn .lv.l2{background:var(--emerald);color:#fff}
 .controls{padding:10px 0}
 input[type=search],select{border-radius:999px;border-color:var(--line-2);box-shadow:none}
-input[type=search]:focus,select:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(102,88,232,.15)}
+input[type=search]:focus,select:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(47,125,91,.15)}
 a.pcard{position:relative;min-height:255px;padding:23px 24px;overflow:hidden;text-decoration:none}
-a.pcard::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--emerald),#9a8cff)}
+a.pcard::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--emerald),#5fae86)}
 a.pcard:hover{text-decoration:none}
 .pc-kicker{color:var(--emerald-d);font-size:11px;letter-spacing:.1em}
 h3.pc-title{font-size:19px;line-height:1.35;letter-spacing:-.025em}
@@ -861,7 +872,7 @@ h3.pc-title{font-size:19px;line-height:1.35;letter-spacing:-.025em}
 footer{margin-top:38px;padding:23px 0 0;border-top:1px solid var(--line);color:#4f5662;font-size:12.5px}
 footer b{color:var(--ink-2)}
 
-:focus-visible{outline:3px solid rgba(102,88,232,.34);outline-offset:3px}
+:focus-visible{outline:3px solid rgba(47,125,91,.34);outline-offset:3px}
 @media (max-width:1040px){
   .inner{max-width:960px;padding-right:22px;padding-left:22px}
   .hero .hc{padding-right:24px;padding-left:24px}
@@ -876,7 +887,25 @@ footer b{color:var(--ink-2)}
   #nav{padding-right:16px;padding-left:16px}
   #nav .brand{min-height:60px}
   #nav .brand p{display:none}
-  #nav .nav-links{margin:0 -2px;padding-bottom:8px}
+  /* Phones: the shared nav row is ONE horizontally swipeable line.
+     - no wrapping, scrollbar hidden, a soft fade on the right edge
+     - the Document Pack button is moved to the front (order:-1) so it shows
+       first; DOM order (and check_links) is unchanged
+     - the Budget menu drops below the whole nav bar (positioned against #nav,
+       not the scroller, so it is never clipped by the swipe area) */
+  #nav .nav-links{
+    flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:none;
+    margin:0 -16px;padding:10px 46px 10px 16px;scroll-padding-left:16px;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 46px),transparent);
+            mask-image:linear-gradient(90deg,#000 calc(100% - 46px),transparent);
+  }
+  #nav .nav-links:has(.nav-dropdown[open]){-webkit-mask-image:none;mask-image:none}
+  #nav .nav-links::-webkit-scrollbar{display:none;width:0;height:0}
+  #nav .nav-links>*{flex:0 0 auto;scroll-snap-align:start}
+  #nav .nav-dropdown{position:static}
+  #nav .dropdown-menu{position:absolute;top:100%;left:16px;right:16px;min-width:0;max-height:70vh;overflow-y:auto}
+  #nav .nav-links a[href="docs.html"]{order:-1;margin-left:0;margin-right:6px}
   .hero{min-height:0;display:block;background-position:72% 38%}
   .hero::before{background:linear-gradient(180deg,rgba(5,17,13,.9) 0%,rgba(5,17,13,.68) 55%,rgba(6,22,17,.45) 100%)}
   .hero::after{height:90px;background:linear-gradient(0deg,var(--canvas) 4%,rgba(246,247,250,0) 100%)}
@@ -935,7 +964,7 @@ footer b{color:var(--ink-2)}
   min-width:76px;margin:0;padding:5px 24px 5px 9px;border:1px solid var(--line-2);
   border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-size:12px;
 }
-.language-switch .language-select:focus{outline:2px solid rgba(102,88,232,.25);outline-offset:1px}
+.language-switch .language-select:focus{outline:2px solid rgba(47,125,91,.25);outline-offset:1px}
 #nav .brand .language-switch{margin-left:8px}
 #nav .nav-links a .en{white-space:normal}
 .btn .si,.btn .en{display:inline}
@@ -1003,7 +1032,7 @@ body.template-page #main td:empty{
    only a short fade at the bottom blends the hero into the light page body. */
 .hero.hero--upcountry::before{
   background:radial-gradient(900px 480px at 10% 0%,rgba(16,185,129,.30),transparent 64%),
-             radial-gradient(760px 460px at 96% 100%,rgba(102,88,232,.20),transparent 70%),
+             radial-gradient(760px 460px at 96% 100%,rgba(47,125,91,.20),transparent 70%),
              linear-gradient(100deg,rgba(4,18,14,.95) 0%,rgba(5,24,18,.86) 36%,rgba(6,28,21,.58) 66%,rgba(6,28,21,.30) 100%);
 }
 .hero.hero--upcountry::after{
@@ -1014,7 +1043,7 @@ body.template-page #main td:empty{
 .executive-overview{
   position:relative;overflow:hidden;margin:4px 0 28px;padding:27px 28px 25px;
   border:1px solid #d9e6e2;border-radius:22px;
-  background:linear-gradient(125deg,#f1fbf6 0%,#ffffff 47%,#f4f3ff 100%);
+  background:linear-gradient(125deg,#f1fbf6 0%,#ffffff 47%,#eef7f2 100%);
   box-shadow:var(--shadow-emboss);
 }
 .executive-overview::after{
@@ -1285,51 +1314,7 @@ html[data-language="en"] #nav ol#nl a .en{display:inline!important}
 @media print{#nav .language-switch{display:none!important}}
 </style></head>
 <body><div id="wrap">
-<nav id="nav">
-  <div class="brand doc-brand">
-    <div class="logo">W</div>
-    <h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span><span class="en">Bottled Drinking Water Plant</span></h1>
-    <p>Bandarawela, Badulla District, Uva Province<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: Mr. Thilakarathna</b></p>
-    <label class="language-switch">
-  <span class="language-switch-label"><span class="si">භාෂාව</span><span class="en">Language</span></span>
-  <select class="language-select" aria-label="Select language">
-    <option value="si">සිංහල</option>
-    <option value="en">English</option>
-  </select>
-</label>
-  </div>
-  <div class="sub"><span class="en">Bottled Drinking Water Plant · Bandarawela, Badulla</span><br>
-  <span class="si">සම්පූර්ණ ලේඛන පැකේජය</span> · v1.2 · SLS 894 · 2026-10-10</div>
-  <input type="text" id="q" placeholder=" පිටු සොයන්න / Filter pages…" oninput="flt()">
-  <ol id="nl"><li><a href="docs.html" id="n-docs.html" class="on"><span class="si"> ලේඛන මුල් පිටුව</span><span class="en">Docs Home</span></a></li>
-<li><a href="dashboard.html" id="n-dashboard.html">  ව්‍යාපෘති DASHBOARD (මුදල් + Qty)</a></li>
-<li><a href="p01.html" id="n-p01.html"><span class="si">ආයෝජක එකඟතා</span><span class="en">Investor &amp; MOU</span></a></li>
-<li><a href="p02.html" id="n-p02.html"><span class="si">සමාගම් ලියාපදිංචිය</span><span class="en">Company (1st Reg.)</span></a></li>
-<li><a href="p03.html" id="n-p03.html"><span class="si">ඉඩම සහ ගොඩනැඟිල්ල</span><span class="en">Land</span></a></li>
-<li><a href="p04.html" id="n-p04.html"><span class="si">ජල මූලාශ්‍රය</span><span class="en">Water Source (WRB)</span></a></li>
-<li><a href="p05.html" id="n-p05.html"><span class="si">කර්මාන්ත ශාලාව</span><span class="en">Factory</span></a></li>
-<li><a href="p06.html" id="n-p06.html"><span class="si">යන්ත්‍රෝපකරණ</span><span class="en">Machinery</span></a></li>
-<li><a href="p07.html" id="n-p07.html"><span class="si"> FCAU ලියාපදිංචිය</span><span class="en">MoH Registration</span></a></li>
-<li><a href="p08.html" id="n-p08.html"><span class="si">SLSI සහතික</span><span class="en">SLSI Certification</span></a></li>
-<li><a href="p09.html" id="n-p09.html"><span class="si">පරිසර</span><span class="en">Environment (CEA)</span></a></li>
-<li><a href="p10.html" id="n-p10.html"><span class="si">බදු සහ ශ්‍රම</span><span class="en">Tax &amp; Labour</span></a></li>
-<li><a href="p11.html" id="n-p11.html"><span class="si">වෙළඳපොළ</span><span class="en">Launch &amp; Market</span></a></li>
-<li><a href="p12.html" id="n-p12.html"> MASTER CHECKLIST</a></li>
-<li><a href="p13.html" id="n-p13.html"><span class="si">අයවැය</span><span class="en">Budget</span></a></li>
-<li><a href="p14.html" id="n-p14.html"><span class="si">කාලසටහන</span><span class="en">Timeline</span></a></li>
-<li><a href="p15.html" id="n-p15.html">Due Diligence</a></li>
-<li><a href="p16.html" id="n-p16.html"><span class="si">අවදානම්</span><span class="en">Risk Register</span></a></li>
-<li><a href="p17.html" id="n-p17.html"><span class="si">ආයතන</span><span class="en">Agency Directory</span></a></li>
-<li><a href="p18.html" id="n-p18.html"><span class="si">නැවුම් කිරීම්</span><span class="en">Renewals</span></a></li>
-<li><a href="p19.html" id="n-p19.html"><span class="si">ලේබල්</span><span class="en">Labels</span></a></li>
-<li><a href="p20.html" id="n-p20.html"><span class="si"> පිරිපහදුව</span><span class="en">Water Treatment Train</span></a></li>
-<li><a href="p21.html" id="n-p21.html"><span class="si"> තීරණ</span><span class="en">Decisions &amp; Assumptions</span></a></li>
-<li><a href="t01.html" id="n-t01.html"><span class="si"> MOU</span><span class="en">Term Sheet</span></a></li>
-<li><a href="t02.html" id="n-t02.html"> Shareholders Agreement</a></li>
-<li><a href="t03.html" id="n-t03.html"> Board Resolution</a></li>
-<li><a href="t04.html" id="n-t04.html"> ජල පරීක්ෂණ ලිපිය</a></li>
-<li><a href="t05.html" id="n-t05.html"> FCAU ආවරණ ලිපිය</a></li></ol>
-</nav>
+<nav id="nav"><div class="brand doc-brand"><div class="logo">W</div><h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span><span class="en">Bottled Drinking Water Plant</span></h1><p>Bandarawela, Badulla District, Uva Province<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: Mr. Thilakarathna</b></p><label class="language-switch"><span class="language-switch-label"><span class="si">භාෂාව</span><span class="en">Language</span></span><select class="language-select" aria-label="Select language"><option value="si">සිංහල</option><option value="en">English</option></select></label></div><div class="sub"><span class="en">Bottled Drinking Water Plant · Bandarawela, Badulla</span><br><span class="si">සම්පූර්ණ ලේඛන පැකේජය</span> · v1.2 · SLS 894 · 2026-10-10</div><input type="text" id="q" placeholder="පිටු සොයන්න / Filter pages…" oninput="flt()"><ol id="nl"><li><a href="docs.html" id="n-docs.html" class="on"><span class="si">ලේඛන මුල් පිටුව</span><span class="en">Docs Home</span></a></li><li><a href="dashboard.html" id="n-dashboard.html">ව්‍යාපෘති DASHBOARD (මුදල් + Qty)</a></li><li><a href="p01.html" id="n-p01.html"><span class="si">ආයෝජක එකඟතා</span><span class="en">Investor &amp; MOU</span></a></li><li><a href="p02.html" id="n-p02.html"><span class="si">සමාගම් ලියාපදිංචිය</span><span class="en">Company (1st Reg.)</span></a></li><li><a href="p03.html" id="n-p03.html"><span class="si">ඉඩම සහ ගොඩනැඟිල්ල</span><span class="en">Land</span></a></li><li><a href="p04.html" id="n-p04.html"><span class="si">ජල මූලාශ්‍රය</span><span class="en">Water Source (WRB)</span></a></li><li><a href="p05.html" id="n-p05.html"><span class="si">කර්මාන්ත ශාලාව</span><span class="en">Factory</span></a></li><li><a href="p06.html" id="n-p06.html"><span class="si">යන්ත්‍රෝපකරණ</span><span class="en">Machinery</span></a></li><li><a href="p07.html" id="n-p07.html"><span class="si">FCAU ලියාපදිංචිය</span><span class="en">MoH Registration</span></a></li><li><a href="p08.html" id="n-p08.html"><span class="si">SLSI සහතික</span><span class="en">SLSI Certification</span></a></li><li><a href="p09.html" id="n-p09.html"><span class="si">පරිසර</span><span class="en">Environment (CEA)</span></a></li><li><a href="p10.html" id="n-p10.html"><span class="si">බදු සහ ශ්‍රම</span><span class="en">Tax &amp; Labour</span></a></li><li><a href="p11.html" id="n-p11.html"><span class="si">වෙළඳපොළ</span><span class="en">Launch &amp; Market</span></a></li><li><a href="p12.html" id="n-p12.html">MASTER CHECKLIST</a></li><li><a href="p13.html" id="n-p13.html"><span class="si">අයවැය</span><span class="en">Budget</span></a></li><li><a href="p14.html" id="n-p14.html"><span class="si">කාලසටහන</span><span class="en">Timeline</span></a></li><li><a href="p15.html" id="n-p15.html">Due Diligence</a></li><li><a href="p16.html" id="n-p16.html"><span class="si">අවදානම්</span><span class="en">Risk Register</span></a></li><li><a href="p17.html" id="n-p17.html"><span class="si">ආයතන</span><span class="en">Agency Directory</span></a></li><li><a href="p18.html" id="n-p18.html"><span class="si">නැවුම් කිරීම්</span><span class="en">Renewals</span></a></li><li><a href="p19.html" id="n-p19.html"><span class="si">ලේබල්</span><span class="en">Labels</span></a></li><li><a href="p20.html" id="n-p20.html"><span class="si">පිරිපහදුව</span><span class="en">Water Treatment Train</span></a></li><li><a href="p21.html" id="n-p21.html"><span class="si">තීරණ</span><span class="en">Decisions &amp; Assumptions</span></a></li><li><a href="t01.html" id="n-t01.html"><span class="si">MOU</span><span class="en">Term Sheet</span></a></li><li><a href="t02.html" id="n-t02.html">Shareholders Agreement</a></li><li><a href="t03.html" id="n-t03.html">Board Resolution</a></li><li><a href="t04.html" id="n-t04.html">ජල පරීක්ෂණ ලිපිය</a></li><li><a href="t05.html" id="n-t05.html">FCAU ආවරණ ලිපිය</a></li></ol></nav>
 <main id="main"><h1> බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාව — සම්පූර්ණ ව්‍යාපෘති ලේඛන පැකේජය</h1>
 <h1>Bottled Drinking Water Manufacturing Plant — Complete Project Documentation Pack</h1>
 <blockquote>

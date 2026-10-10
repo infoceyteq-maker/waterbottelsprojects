@@ -21,6 +21,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_dashboard import plain as de_emoji  # noqa: E402
 from nav_common import ROW_HREFS, DASHBOARD_FILE, LANDING_FILE  # noqa: E402
 from nav_common import PAGES as INVESTOR_PAGES  # noqa: E402
+from nav_common import nav_links  # noqa: E402
+from hero_common import CTA_BY_PAGE, hero_actions  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "build"))
@@ -299,7 +301,14 @@ def check_shared_nav(fname, page, label=None):
     if "අයවැය" not in row_html:
         fail(f"{label}: Budget button label missing")
         return
-    ok(f"{label}: shared nav row (7 buttons, Budget dropdown), current page highlighted")
+    if '<span class="budget-count"' not in row_html or '>3</span>' not in row_html:
+        fail(f"{label}: Budget dropdown is missing its '3' badge")
+        return
+    # the page must carry exactly the markup build/nav_common.py produces
+    if nav_links(fname) not in page:
+        fail(f"{label}: nav row differs from build/nav_common.py output (stray markup or whitespace)")
+        return
+    ok(f"{label}: shared nav row (7 buttons, Budget dropdown + 3 badge), exact shared markup, current page highlighted")
 
 
 def check_shared_nav_all_pages():
@@ -314,6 +323,77 @@ def check_shared_nav_all_pages():
             continue
         with open(fp, encoding="utf-8") as fh:
             check_shared_nav(name, fh.read())
+
+
+def check_hero_ctas():
+    print("\n[7c] Main call-to-action on the landing page, dashboard and all 7 pages")
+    site = os.path.join(ROOT, "site")
+    for fname, (ph, _psi, _pen, sh, _ssi, _sen) in CTA_BY_PAGE.items():
+        fp = os.path.join(site, fname)
+        if not os.path.exists(fp):
+            fail(f"{fname} not built")
+            continue
+        with open(fp, encoding="utf-8") as fh:
+            page = fh.read()
+        if hero_actions(fname) not in page:
+            fail(f"{fname}: hero CTA row missing or not the build/hero_common.py output")
+            continue
+        hrefs = re.findall(r'<a class="btn btn-(?:primary|secondary)" href="([^"]+)"', page)
+        if hrefs != [ph, sh]:
+            fail(f"{fname}: CTA hrefs {hrefs} != expected {[ph, sh]}")
+            continue
+        ok(f"{fname}: primary -> {ph}, secondary -> {sh}")
+
+
+def check_nav_markup():
+    print("\n[7d] Navs are clean on every page: no pictographs, no stray whitespace")
+    site = os.path.join(ROOT, "site")
+    bad = []
+    for name in sorted(os.listdir(site)):
+        if not name.endswith(".html"):
+            continue
+        with open(os.path.join(site, name), encoding="utf-8") as fh:
+            page = fh.read()
+        for block in re.findall(r"<nav\b.*?</nav>", page, re.S):
+            if de_emoji(block) != block:
+                bad.append(f"{name}: pictograph in nav")
+            if re.search(r">\s+<", block):
+                bad.append(f"{name}: whitespace text between nav elements")
+    if bad:
+        for b in bad[:10]:
+            fail(b)
+    else:
+        ok("all navs contain buttons only (no pictographs, no stray whitespace)")
+
+
+def check_mobile_nav_css():
+    print("\n[7e] Mobile nav (<=760px): one swipeable line, Document Pack first, upcountry hero")
+    css_path = os.path.join(ROOT, "build", "style.css")
+    with open(css_path, encoding="utf-8") as fh:
+        css = fh.read()
+    needles = {
+        "swipeable single line (nowrap + horizontal scroll)":
+            "flex-wrap:nowrap;overflow-x:auto",
+        "hidden scrollbar": "scrollbar-width:none",
+        "right-edge fade": "linear-gradient(90deg,#000 calc(100% - 46px),transparent)",
+        "Document Pack ordered first on phones":
+            '#nav .nav-links a[href="docs.html"]{order:-1',
+        "gold Budget dropdown with badge": ".budget-count{",
+        "CSS-drawn caret": ".dropdown-caret{",
+    }
+    missing = [name for name, needle in needles.items() if needle not in css]
+    if missing:
+        fail(f"style.css lacks: {missing}")
+    else:
+        ok("mobile nav rules present (swipe line, hidden scrollbar, fade, docs first)")
+    start = css.index(".hero{\n  min-height:540px")
+    hero_css = css[start:css.index(".hero-actions{", start)]
+    if "102,88,232" in hero_css or "violet" in hero_css:
+        fail("hero overlay still contains violet/blue colour")
+    elif "246,187,84" not in hero_css:
+        fail("hero overlay lacks the sunrise-gold layer")
+    else:
+        ok("hero overlay: tea-green + sunrise-gold only (no violet/blue)")
 
 
 def check_dashboard(item_count):
@@ -586,6 +666,9 @@ def main():
     check_site(item_count)
     check_dashboard(item_count)
     check_shared_nav_all_pages()
+    check_hero_ctas()
+    check_nav_markup()
+    check_mobile_nav_css()
     check_css_variables()
 
     print("\n" + "=" * 68)
