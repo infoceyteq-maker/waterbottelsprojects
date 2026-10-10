@@ -229,7 +229,7 @@ def hero(M, n_items, rec):
       Currently only the land exists — building, plant and every approval start from scratch.</span>
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="#dash"><span class="si">ව්‍යාපෘති සාරාංශය බලන්න</span><span class="en">View project summary</span></a>
+      <a class="btn btn-primary" href="#dash"><span class="si">ව්‍යාපෘති සාරාංශය බලන්න</span><span class="en">View project summary</span><b class="btn-arrow" aria-hidden="true">→</b></a>
       <a class="btn btn-secondary" href="index.html"><span class="si">කොටස් 7 වෙත යන්න</span><span class="en">Explore the seven sections</span></a>
     </div>
     <div class="chips">

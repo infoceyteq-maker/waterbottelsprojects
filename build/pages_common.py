@@ -108,7 +108,7 @@ def shell(M, num, title_si, title_en, subtitle, body):
     category_si, category_en = PAGE_CATEGORY.get(num, PAGE_CATEGORY["0"])
     hero_actions = ""
     if num == "0":
-        hero_actions = """\n    <div class=\"hero-actions\">\n      <a class=\"btn btn-primary\" href=\"#project-sections\"><span class=\"si\">ව්‍යාපෘති සාරාංශය</span><span class=\"en\">Project overview</span></a>\n      <a class=\"btn btn-secondary\" href=\"dashboard.html\"><span class=\"si\">සම්පූර්ණ Dashboard</span><span class=\"en\">Open full dashboard</span></a>\n    </div>"""
+        hero_actions = """\n    <div class=\"hero-actions\">\n      <a class=\"btn btn-primary\" href=\"#project-sections\"><span class=\"si\">ව්‍යාපෘති සාරාංශය</span><span class=\"en\">Project overview</span><b class=\"btn-arrow\" aria-hidden=\"true\">→</b></a>\n      <a class=\"btn btn-secondary\" href=\"dashboard.html\"><span class=\"si\">සම්පූර්ණ Dashboard</span><span class=\"en\">Open full dashboard</span></a>\n    </div>"""
 
     doc = f"""<!doctype html>
 <html lang="si"><head>
