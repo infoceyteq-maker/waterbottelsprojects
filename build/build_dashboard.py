@@ -15,99 +15,132 @@ OUT = os.path.join(ROOT, "site", "dashboard.html")
 
 CSS = """
 :root{
-  --bg:#f2f4ef; --bg2:#e9ece4; --surface:#ffffff; --surface2:#fafbf7;
-  --border:#dde3d5; --border2:#c9d3ba;
-  --ink:#1b2420; --ink2:#3d4a42; --muted:#6b7a6e; --faint:#94a298;
-  --emerald:#10b981; --emerald-d:#047857; --emerald-l:#d1fae5;
-  --olive:#6b8e23; --olive-d:#4d6619; --olive-l:#eef3dd;
-  --amber:#b45309; --amber-l:#fef3c7;
-  --red:#b91c1c; --red-l:#fee2e2;
-  --blue:#1d4ed8; --blue-l:#dbeafe;
+  /* ── LIGHT ASH + WHITE (neutral, not green-tinted) ── */
+  --bg:#f4f4f5; --bg2:#ebebed; --bg3:#e4e4e7;
+  --surface:#ffffff; --surface2:#fafafa;
+  --border:#e4e4e7; --border2:#d4d4d8;
+  --ink:#18181b; --ink2:#3f3f46; --muted:#71717a; --faint:#a1a1aa;
+  /* ── accents: used sparingly, never as page fill ── */
+  --emerald:#059669; --emerald-d:#047857; --emerald-l:#ecfdf5;
+  --olive:#6b8e23;  --olive-d:#556b1c;  --olive-l:#f4f8ea;
+  --amber:#b45309; --amber-l:#fffbeb;
+  --red:#dc2626;   --red-l:#fef2f2;
+  --blue:#2563eb;  --blue-l:#eff6ff;
+  --sh:0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.03);
+  --sh2:0 4px 12px rgba(0,0,0,.06);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);
   font-family:"Noto Sans Sinhala","Nirmala UI","Iskoola Pota",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+  line-height:1.65;font-size:15.5px;-webkit-font-smoothing:antialiased}
 a{color:var(--emerald-d);text-decoration:none}
 a:hover{text-decoration:underline}
 
+/* ── bilingual label: Sinhala primary, English secondary ── */
+.bi{display:block}
+.bi .en{display:block;font-size:.78em;font-weight:500;color:var(--muted);letter-spacing:.01em;
+  margin-top:1px;line-height:1.4}
+
 #wrap{display:flex;min-height:100vh}
-#nav{width:266px;flex:0 0 266px;background:var(--surface);border-right:1px solid var(--border);
+#nav{width:270px;flex:0 0 270px;background:var(--surface);border-right:1px solid var(--border);
   position:sticky;top:0;height:100vh;overflow-y:auto;padding:22px 0}
-.brand{padding:0 20px 16px;border-bottom:1px solid var(--border);margin-bottom:12px}
-.brand .logo{width:38px;height:38px;border-radius:11px;
+.brand{padding:0 20px 16px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.brand .logo{width:40px;height:40px;border-radius:12px;
   background:linear-gradient(135deg,var(--emerald),var(--olive));
-  display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;margin-bottom:10px}
-.brand h1{font-size:15px;margin:0;line-height:1.35;color:var(--ink)}
-.brand p{margin:4px 0 0;font-size:11.5px;color:var(--muted);line-height:1.45}
-.nsec{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:var(--faint);
-  padding:14px 20px 5px;font-weight:700}
+  display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;margin-bottom:11px}
+.brand h1{font-size:14.5px;margin:0;line-height:1.4;color:var(--ink)}
+.brand p{margin:5px 0 0;font-size:11.5px;color:var(--muted);line-height:1.5}
+.nsec{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);
+  padding:16px 20px 6px;font-weight:700}
 #nav a{display:block;padding:7px 20px;font-size:13px;color:var(--ink2);border-left:3px solid transparent}
-#nav a:hover{background:var(--olive-l);text-decoration:none;color:var(--ink)}
+#nav a .en{display:block;font-size:10.5px;color:var(--faint);font-weight:500;margin-top:1px}
+#nav a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
 #nav a.on{background:var(--emerald-l);border-left-color:var(--emerald);color:var(--emerald-d);font-weight:600}
 
-#main{flex:1;min-width:0;padding:30px 38px 100px;max-width:1320px}
+#main{flex:1;min-width:0;padding:0 0 100px;max-width:1360px}
+.inner{padding:34px 40px 0}
+
+/* ── HERO / COVER ── */
+.hero{position:relative;border-radius:0 0 26px 26px;overflow:hidden;
+  background:var(--bg3);min-height:340px;display:flex;align-items:flex-end;
+  background-size:cover;background-position:center;margin-bottom:30px}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,14,12,.86) 0%,rgba(10,14,12,.45) 45%,rgba(10,14,12,.12) 100%)}
+.hero .hc{position:relative;z-index:2;padding:30px 40px 34px;width:100%;color:#fff}
+.hero .kicker{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;font-weight:700;
+  color:#a7f3d0;margin-bottom:10px}
+.hero h1{font-size:34px;line-height:1.22;margin:0 0 8px;font-weight:750;letter-spacing:-.6px;color:#fff}
+.hero .hsub{font-size:15px;color:#e7e9e6;margin:0 0 18px;max-width:760px;line-height:1.6}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px}
+.hero .chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(6px);padding:6px 13px;border-radius:99px;font-size:12.5px;font-weight:600;color:#fff}
+.hero .chip b{color:#6ee7b7}
+.hero .nofallback{position:absolute;inset:0;z-index:1;display:flex;align-items:center;
+  justify-content:center;font-size:64px;background:linear-gradient(135deg,#e7e9e6,#d8dbd4)}
+
 header.top{margin-bottom:26px}
 header.top h1{font-size:26px;margin:0 0 6px;letter-spacing:-.2px}
 header.top .sub{color:var(--muted);font-size:14px}
 .badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:600;
   background:var(--emerald-l);color:var(--emerald-d);border:1px solid #a7f3d0;margin:2px 4px 2px 0}
-.badge.ol{background:var(--olive-l);color:var(--olive-d);border-color:#d5e3b0}
+.badge.ol{background:var(--olive-l);color:var(--olive-d);border-color:#dde8c4}
 .badge.am{background:var(--amber-l);color:var(--amber);border-color:#fde68a}
 .badge.rd{background:var(--red-l);color:var(--red);border-color:#fecaca}
 
-section{margin-bottom:44px;scroll-margin-top:20px}
-section>h2{font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
-section>h2 .n{width:26px;height:26px;border-radius:8px;background:var(--olive);color:#fff;
-  font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 26px;font-weight:700}
-section>.lead{color:var(--muted);font-size:13.5px;margin:0 0 18px;padding-left:36px}
-h3{font-size:15.5px;margin:26px 0 10px;color:var(--olive-d)}
+section{margin-bottom:46px;scroll-margin-top:20px}
+section>h2{font-size:21px;margin:0 0 5px;display:flex;align-items:flex-start;gap:11px;letter-spacing:-.2px}
+section>h2 .n{width:27px;height:27px;border-radius:9px;background:var(--ink);color:#fff;
+  font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 27px;
+  font-weight:700;margin-top:2px}
+section>.lead{color:var(--muted);font-size:13.5px;margin:0 0 18px;padding-left:38px}
+h3{font-size:15.5px;margin:28px 0 11px;color:var(--ink)}
+h3 .en{font-weight:500;color:var(--muted);font-size:12.5px}
 
-.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;
-  box-shadow:0 1px 2px rgba(27,36,32,.04)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;
+  box-shadow:var(--sh)}
 .grid{display:grid;gap:14px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .g5{grid-template-columns:repeat(5,minmax(0,1fr))}
 
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;
-  position:relative;overflow:hidden}
-.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--emerald)}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;
+  position:relative;overflow:hidden;box-shadow:var(--sh)}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--emerald)}
 .kpi.ol::before{background:var(--olive)}
 .kpi.am::before{background:var(--amber)}
 .kpi.bl::before{background:var(--blue)}
-.kpi .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.kpi .v{font-size:23px;font-weight:700;margin:5px 0 2px;letter-spacing:-.5px;color:var(--ink)}
-.kpi .v.sm{font-size:18px}
-.kpi .h{font-size:11.5px;color:var(--faint)}
+.kpi .l{font-size:11px;color:var(--muted);letter-spacing:.3px;font-weight:600;line-height:1.4}
+.kpi .v{font-size:25px;font-weight:750;margin:7px 0 3px;letter-spacing:-.7px;color:var(--ink)}
+.kpi .v.sm{font-size:19px}
+.kpi .h{font-size:11.5px;color:var(--faint);line-height:1.45}
 .kpi .v em{font-style:normal;font-size:13px;font-weight:600;color:var(--muted)}
 
 table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
-.tbl{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.tbl{border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
 .scroll{overflow-x:auto}
-th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
-th{background:var(--olive-l);color:var(--olive-d);font-weight:700;font-size:11.5px;
-  text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface2);color:var(--muted);font-weight:700;font-size:11px;
+  text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;
+  border-bottom:1px solid var(--border2)}
 tbody tr:last-child td{border-bottom:none}
-tbody tr:nth-child(even){background:var(--surface2)}
-tbody tr:hover{background:var(--emerald-l)}
+tbody tr:hover{background:var(--surface2)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-tr.tot td{background:var(--olive-l)!important;font-weight:700;color:var(--olive-d);
-  border-top:2px solid var(--olive)}
+tr.tot td{background:var(--bg2)!important;font-weight:750;color:var(--ink);
+  border-top:2px solid var(--ink2)}
 tr.sub td{background:var(--surface2)!important;font-weight:700}
 tr.land td{background:var(--emerald-l)!important}
 
-.bar{height:9px;border-radius:5px;background:var(--bg2);overflow:hidden;min-width:60px}
-.bar>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--emerald),var(--olive))}
+.bar{height:8px;border-radius:4px;background:var(--bg3);overflow:hidden;min-width:60px}
+.bar>i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--emerald),var(--olive))}
 .bar.ol>i{background:var(--olive)}
 .bar.am>i{background:var(--amber)}
 
-.bar-chart{display:flex;flex-direction:column;gap:9px}
-.bc-row{display:grid;grid-template-columns:190px 1fr 110px;gap:12px;align-items:center;font-size:12.5px}
+.bar-chart{display:flex;flex-direction:column;gap:10px}
+.bc-row{display:grid;grid-template-columns:200px 1fr 115px;gap:12px;align-items:center;font-size:12.5px}
 .bc-row .lbl{color:var(--ink2)}
-.bc-row .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--olive-d)}
+.bc-row .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:650;color:var(--ink)}
 
 .pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap}
 .p-crit{background:var(--red-l);color:var(--red)}
@@ -116,34 +149,35 @@ tr.land td{background:var(--emerald-l)!important}
 .p-med{background:var(--blue-l);color:var(--blue)}
 .p-low{background:var(--bg2);color:var(--muted)}
 
-.note{border-left:4px solid var(--emerald);background:var(--emerald-l);padding:12px 16px;
-  border-radius:0 10px 10px 0;font-size:13.5px;margin:16px 0}
-.note.ol{border-color:var(--olive);background:var(--olive-l)}
-.note.am{border-color:var(--amber);background:var(--amber-l)}
-.note.rd{border-color:var(--red);background:var(--red-l)}
+.note{border-left:3px solid var(--emerald);background:var(--surface);border:1px solid var(--border);
+  border-left:3px solid var(--emerald);padding:13px 17px;
+  border-radius:0 12px 12px 0;font-size:13.5px;margin:16px 0;box-shadow:var(--sh)}
+.note.ol{border-left-color:var(--olive)}
+.note.am{border-left-color:var(--amber)}
+.note.rd{border-left-color:var(--red)}
 .note b{color:var(--ink)}
 
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-input[type=search],select{padding:8px 12px;border:1px solid var(--border2);border-radius:9px;
+input[type=search],select{padding:9px 13px;border:1px solid var(--border2);border-radius:10px;
   background:var(--surface);color:var(--ink);font-size:13px;font-family:inherit}
 input[type=search]{flex:1;min-width:200px}
 input[type=search]:focus,select:focus{outline:2px solid var(--emerald);outline-offset:-1px}
 .chk{width:17px;height:17px;accent-color:var(--emerald);cursor:pointer}
-.done td{opacity:.55}
+.done td{opacity:.5}
 .done td:nth-child(3){text-decoration:line-through}
 .hidden{display:none!important}
 
 .flow{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:14px 0}
-.flow .st{background:var(--surface);border:1.5px solid var(--border2);border-radius:10px;
-  padding:8px 12px;font-size:12px;font-weight:600;color:var(--ink2);text-align:center;min-width:96px}
+.flow .st{background:var(--surface);border:1px solid var(--border2);border-radius:11px;
+  padding:9px 13px;font-size:12px;font-weight:600;color:var(--ink2);text-align:center;min-width:96px}
 .flow .st.key{border-color:var(--emerald);background:var(--emerald-l);color:var(--emerald-d)}
 .flow .st.star{border-color:var(--olive);background:var(--olive);color:#fff}
 .flow .ar{color:var(--faint);font-weight:700}
 
 .tl{display:flex;flex-direction:column;gap:0;margin-top:14px}
-.tl-i{display:grid;grid-template-columns:74px 1fr;gap:16px;padding:11px 0;border-bottom:1px dashed var(--border)}
+.tl-i{display:grid;grid-template-columns:80px 1fr;gap:16px;padding:12px 0;border-bottom:1px dashed var(--border)}
 .tl-i:last-child{border-bottom:none}
-.tl-m{font-weight:700;color:var(--olive-d);font-size:13px;font-variant-numeric:tabular-nums}
+.tl-m{font-weight:700;color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums}
 .tl-c{font-size:13.5px}
 .tl-c b{color:var(--ink)}
 .tl-c .t{color:var(--muted);font-size:12.5px}
@@ -153,11 +187,13 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--border);
 
 @media(max-width:1080px){#wrap{flex-direction:column}#nav{width:100%;flex:none;height:auto;
   position:static;border-right:none;border-bottom:1px solid var(--border)}
-  #main{padding:22px 18px 70px}.g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .inner{padding:24px 20px 0}#main{padding-bottom:70px}
+  .g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero h1{font-size:26px}.hero .hc{padding:24px 20px 26px}}
 @media(max-width:620px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}
-  .bc-row{grid-template-columns:120px 1fr 84px}}
-@media print{#nav{display:none}#main{max-width:100%;padding:0}
-  body{background:#fff}.kpi,.card{box-shadow:none}}
+  .bc-row{grid-template-columns:120px 1fr 84px}.hero{min-height:290px}}
+@media print{#nav{display:none}#main{max-width:100%}
+  body{background:#fff}.kpi,.card,.tbl{box-shadow:none}.hero{display:none}}
 """
 
 JS = """
@@ -227,40 +263,48 @@ PAGE = """<!doctype html>
 <html lang="si"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>💧 බෝතල් ජල කර්මාන්ත ශාලාව — ව්‍යාපෘති Dashboard | Bandarawela</title>
+<title>💧 බෝතල් ජල කර්මාන්ත ශාලාව — ව්‍යාපෘති Dashboard | Bandarawela Bottled Water Plant</title>
 <style>__CSS__</style>
 </head><body>
 <div id="wrap">
 <nav id="nav">
   <div class="brand">
     <div class="logo">💧</div>
-    <h1>බෝතල් ජල කර්මාන්ත ශාලාව</h1>
-    <p>Bottled Drinking Water Plant<br>__LOCATION__<br><b>ආයෝජක: __INVESTOR__</b></p>
+    <h1>බෝතල් ජල කර්මාන්ත ශාලාව
+      <span style="display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:3px">Bottled Drinking Water Plant</span></h1>
+    <p>__LOCATION__<br><b>ආයෝජක / Investor:<br>__INVESTOR__</b></p>
   </div>
-  <div class="nsec">ප්‍රධාන / Overview</div>
-  <a href="#dash">📊 Dashboard</a>
-  <a href="#project">🏭 ව්‍යාපෘතිය</a>
-  <a href="#process">💧 පිරිපහදු ක්‍රියාවලිය</a>
+  <div class="nsec">දළ විශ්ලේෂණය / Overview</div>
+  <a href="#dash">📊 Dashboard<span class="en">At a glance</span></a>
+  <a href="#project">🏭 ව්‍යාපෘතිය<span class="en">What exists today</span></a>
+  <a href="#process">💧 පිරිපහදු ක්‍රියාවලිය<span class="en">Treatment train</span></a>
   <div class="nsec">මුදල් / Money</div>
-  <a href="#production">📦 නිෂ්පාදන පරිමාව</a>
-  <a href="#materials">🏷️ අමුද්‍රව්‍ය + ලේබල් Qty</a>
-  <a href="#budget">💰 සම්පූර්ණ අයවැය</a>
-  <a href="#unitcost">🧮 බෝතලයක පිරිවැය</a>
-  <a href="#profit">📈 ලාභය + Break-even</a>
-  <a href="#growth">🚀 වර්ධන සැලැස්ම</a>
+  <a href="#production">📦 නිෂ්පාදන පරිමාව<span class="en">Bottle quantities</span></a>
+  <a href="#materials">🏷️ අමුද්‍රව්‍ය + ලේබල්<span class="en">Material &amp; label qty</span></a>
+  <a href="#budget">💰 සම්පූර්ණ අයවැය<span class="en">Full budget</span></a>
+  <a href="#unitcost">🧮 බෝතලයක පිරිවැය<span class="en">Cost per bottle</span></a>
+  <a href="#profit">📈 ලාභය + Break-even<span class="en">Profit & break-even</span></a>
+  <a href="#growth">🚀 වර්ධන සැලැස්ම<span class="en">Expansion plan</span></a>
   <div class="nsec">ක්‍රියාත්මක කිරීම / Execution</div>
-  <a href="#checklist">✅ ලේඛන ලැයිස්තුව</a>
-  <a href="#timeline">🗓️ කාලසටහන</a>
-  <a href="#risks">⚠️ අවදානම්</a>
+  <a href="#checklist">✅ ලේඛන ලැයිස්තුව<span class="en">160-item checklist</span></a>
+  <a href="#timeline">🗓️ කාලසටහන<span class="en">Timeline</span></a>
+  <a href="#risks">⚠️ අවදානම්<span class="en">Top risks</span></a>
 </nav>
 <main id="main">
+__HERO__
+<div class="inner">
 __BODY__
 <footer>
-  💧 බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාව — __LOCATION__ · ආයෝජක: __INVESTOR__<br>
-  නිෂ්පාදනය: <b>Bottled Drinking Water (SLS 894)</b> · මූලාශ්‍රය: නළ ළිඳ · සම්පූර්ණ RO + UV + Ozone පිරිපහදුව<br>
-  සියලු මුදල් අගයන් <b>උපකල්පිත (indicative)</b> — quotation 3ක් ලබාගෙන තහවුරු කරගන්න.
-  සකස් කළ දිනය: 2026-10-10
+  💧 බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාව · Bottled Drinking Water Plant<br>
+  __LOCATION__ · ආයෝජක / Investor: <b>__INVESTOR__</b><br>
+  නිෂ්පාදනය / Product: <b>Bottled Drinking Water (SLS 894)</b> ·
+  මූලාශ්‍රය / Source: නළ ළිඳ / deep tube well ·
+  සම්පූර්ණ RO + UV + Ozone පිරිපහදුව / full RO + UV + ozone treatment<br>
+  සියලු මුදල් අගයන් <b>උපකල්පිත (indicative)</b> — quotation 3ක් ලබාගෙන තහවුරු කරගන්න.<br>
+  All monetary figures are indicative — confirm with three written quotations.<br>
+  සකස් කළ දිනය / Prepared: 2026-10-10
 </footer>
+</div>
 </main>
 </div>
 <script>__JS__</script>
@@ -290,6 +334,43 @@ def m(n):
     return f"{n/1_000_000:,.1f}M"
 
 
+ASSET = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                     "assets", "cover.jpg")
+
+
+def hero(M, n_items, rec):
+    """Full-width upcountry cover. Embeds assets/cover.jpg as base64 so the
+    dashboard stays a single self-contained file; degrades gracefully."""
+    style, art = "", '<div class="nofallback">💧🏔️</div>'
+    if os.path.exists(ASSET):
+        with open(ASSET, "rb") as fh:
+            import base64
+            b64 = base64.b64encode(fh.read()).decode("ascii")
+        style = f'background-image:url("data:image/jpeg;base64,{b64}")'
+    return f"""<div class="hero" style="{style}">
+  {art}
+  <div class="hc">
+    <div class="kicker">බණ්ඩාරවෙල · ඌව කඳුකරය &nbsp;·&nbsp; Bandarawela, Uva Highlands</div>
+    <h1>කඳුකර නියම ජලයෙන් බෝතල් කරන ලද පානීය ජලය<br>
+      <span style="font-size:19px;font-weight:600;color:#cbd5ce">
+      Bottled Drinking Water from the Uva Highlands</span></h1>
+    <p class="hsub">
+      Mr. {M["investor"]} ආයෝජනය කරන, {M["location"]} හි පිහිටි,
+      {M["capacity_bph"]:,} BPH ධාරිතාවේ සම්පූර්ණ RO + UV + Ozone පිරිපහදු කර්මාන්ත ශාලාවක්.<br>
+      A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by Mr. {M["investor"]}.
+      Currently only the land exists — building, plant and every approval start from scratch.
+    </p>
+    <div class="chips">
+      <span class="chip">🏞️ ඉඩම ඇත / <b>Land owned</b></span>
+      <span class="chip">🏗️ ගොඩනැඟිල්ල + යන්ත්‍ර = මුල සිට / <b>From scratch</b></span>
+      <span class="chip">💰 ආයෝජනය / <b>Rs {rec["total_investment"]/1e6:,.1f}M</b></span>
+      <span class="chip">🧾 බෝතලයක ලාභය / <b>Rs {M["blend_contribution"]:.2f}</b></span>
+      <span class="chip">📄 ලේඛන / <b>{n_items} items</b></span>
+    </div>
+  </div>
+</div>"""
+
+
 def build():
     M = build_model()
     CL = load_checklist()
@@ -315,18 +396,10 @@ def build():
 
     # ================= DASHBOARD =================
     s = []
-    s.append('<header class="top"><h1>💧 බෝතල් ජල කර්මාන්ත ශාලාව — ව්‍යාපෘති Dashboard</h1>')
-    s.append(f'<div class="sub">{M["location"]} · ආයෝජක: <b>{M["investor"]}</b> · '
-             f'නිෂ්පාදනය: <b>Bottled Drinking Water (SLS 894)</b></div>')
-    s.append('<div style="margin-top:10px">'
-             '<span class="badge">🏞️ ඉඩම ඇත — Mr. Thilakarathna</span>'
-             '<span class="badge ol">🏗️ ගොඩනැඟිල්ල + යන්ත්‍ර = මුල සිට</span>'
-             '<span class="badge am">🔬 සම්පූර්ණ RO filtration</span>'
-             '<span class="badge">📄 ලේඛන අයිතම ' + str(len(CL)) + '</span>'
-             '</div></header>')
+    # (hero cover replaces the old text header)
 
     s.append('<section id="dash"><h2><span class="n">1</span>📊 Dashboard — එක බැල්මකින්</h2>'
-             '<p class="lead">සම්පූර්ණ ව්‍යාපෘතියේ ප්‍රධාන සංඛ්‍යා</p>')
+             '<p class="lead">සම්පූර්ණ ව්‍යාපෘතියේ ප්‍රධාන සංඛ්‍යා · <b>The whole project at a glance</b></p>')
     s.append('<div class="grid g4">')
     s.append(kpi("ධාරිතාව / Capacity", f'{M["capacity_bph"]:,} <em>BPH</em>',
                  f'{M["shift_hours"]}h × {M["work_days"]}d = {M["nameplate_month"]:,} බෝතල්/මාස (100%)'))
@@ -364,7 +437,7 @@ def build():
 
     # ================= PROJECT =================
     s.append('<section id="project"><h2><span class="n">2</span>🏭 ව්‍යාපෘතිය — දැන් තිබෙන්නේ මොනවාද?</h2>'
-             '<p class="lead">Starting point vs. what must be built</p>')
+             '<p class="lead">දැනට ඇති දේ සහ මුල සිට ගොඩනැගිය යුතු දේ · <b>What exists today vs. what must be built from scratch</b></p>')
     s.append('<div class="grid g2">')
     s.append('<div class="card"><h3 style="margin-top:0">✅ දැනට තිබෙන දේ / What exists today</h3>'
              '<div class="tbl"><table>'
@@ -402,7 +475,7 @@ def build():
 
     # ================= PROCESS =================
     s.append('<section id="process"><h2><span class="n">3</span>💧 පිරිපහදු ක්‍රියාවලිය — filtration දාමය</h2>'
-             '<p class="lead">නළ ළිඳේ සිට බෝතලය දක්වා — අනුපිළිවෙළ වැදගත්</p>')
+             '<p class="lead">නළ ළිඳේ සිට බෝතලය දක්වා — අනුපිළිවෙළ වැදගත් · <b>Water treatment train — well to bottle</b></p>')
     s.append('<div class="flow">')
     steps = [("🕳️ නළ ළිඳ", ""), ("Raw tank", ""), ("⭐ Sand filter<br>(MGSF)", "key"),
              ("⭐ Carbon filter<br>(ACF)", "key"), ("Softener", ""), ("Micron<br>5→1→0.5µm", ""),
@@ -439,7 +512,7 @@ def build():
 
     # ================= PRODUCTION =================
     s.append('<section id="production"><h2><span class="n">4</span>📦 නිෂ්පාදන පරිමාව — බෝතල් Qty</h2>'
-             '<p class="lead">SKU mix අනුව මාසික බෝතල් ප්‍රමාණය</p>')
+             '<p class="lead">SKU mix අනුව මාසික බෝතල් ප්‍රමාණය · <b>Production volumes — monthly bottle quantities by SKU</b></p>')
     s.append('<div class="grid g3">')
     s.append(kpi("Nameplate (100%, 1 shift)", f'{M["nameplate_month"]:,}',
                  f'{M["capacity_bph"]:,} BPH × {M["shift_hours"]}h × {M["work_days"]}d'))
@@ -482,7 +555,7 @@ def build():
 
     # ================= MATERIALS =================
     s.append('<section id="materials"><h2><span class="n">5</span>🏷️ අමුද්‍රව්‍ය සහ ලේබල් Qty</h2>'
-             '<p class="lead">සෑම මාසයකම මිලදී ගත යුතු ප්‍රමාණය (wastage සහිතව)</p>')
+             '<p class="lead">සෑම මාසයකම මිලදී ගත යුතු ප්‍රමාණය (wastage සහිතව) · <b>Raw material &amp; label quantities to buy each month</b></p>')
     s.append('<h3>PET රේඛාව — මාසික අවශ්‍යතා</h3>')
     for label, yr in [("Year 1 (40%)", y1), ("Year 2 (70%)", y2), ("Year 3 (100%)", y3)]:
         s.append(f'<h3 style="font-size:13.5px;color:var(--muted)">{label} — '
@@ -538,7 +611,7 @@ def build():
 
     # ================= BUDGET =================
     s.append('<section id="budget"><h2><span class="n">6</span>💰 සම්පූර්ණ අයවැය — නිෂ්පාදනය ආරම්භ කරන තෙක්</h2>'
-             '<p class="lead">Budget up to the point of manufacturing — සියලු විස්තර සහිතව</p>')
+             '<p class="lead">නිෂ්පාදනය ආරම්භ කරන තෙක් සියලු විස්තර · <b>Full budget to the point of manufacturing — every line item</b></p>')
     s.append('<div class="grid g4">')
     s.append(kpi("ඉදිකිරීම් + යන්ත්‍ර", "Rs " + m(cats["building"] + cats["plant"] + cats["utility"]
                                                   + cats["env"] + cats["logistics"]),
@@ -611,7 +684,7 @@ def build():
 
     # ================= UNIT COST =================
     s.append('<section id="unitcost"><h2><span class="n">7</span>🧮 බෝතලයක පිරිවැය — සම්පූර්ණ ගණනය</h2>'
-             '<p class="lead">Cost per bottle — සෑම සතයක්ම කොහෙද යන්නේ කියා</p>')
+             '<p class="lead">සෑම සතයක්ම කොහෙද යන්නේ කියා · <b>Cost of one bottle — line by line</b></p>')
     s.append('<div class="grid g4">')
     for sk in M["skus"]:
         s.append(kpi(f'{sk["sku"]} — පිරිවැය', f'Rs {sk["variable_cost"]:,.2f}',
@@ -671,7 +744,7 @@ def build():
 
     # ================= PROFIT =================
     s.append('<section id="profit"><h2><span class="n">8</span>📈 ලාභය සහ Break-even</h2>'
-             '<p class="lead">ව්‍යාපාරය ලාභදායී වන්නේ කෙසේද</p>')
+             '<p class="lead">ව්‍යාපාරය ලාභදායී වන්නේ කෙසේද · <b>How the business makes money</b></p>')
     s.append('<div class="grid g4">')
     s.append(kpi("Contribution / බෝතලය", f'Rs {M["blend_contribution"]:,.2f}',
                  f'{M["blend_margin_pct"]}% margin'))
@@ -787,7 +860,7 @@ def build():
 
     # ================= GROWTH =================
     s.append('<section id="growth"><h2><span class="n">9</span>🚀 ව්‍යාපෘතිය ඉක්මනින් වර්ධනය කිරීම</h2>'
-             '<p class="lead">Phase අනුව වර්ධන සැලැස්ම — අවදානම අඩුවෙන්, වේගයෙන්</p>')
+             '<p class="lead">අවදානම අඩුවෙන්, වේගයෙන් · <b>Fast expansion plan — phase by phase</b></p>')
     s.append('<div class="tl">')
     for ph, ttl, body in [
         ("Phase 1", "වසර 1 — පදනම + වෙළඳපොළට පිවිසීම",
@@ -824,7 +897,7 @@ def build():
     s.append('</table></div></section>')
 
     # ================= CHECKLIST =================
-    s.append('<section id="checklist"><h2><span class="n">10</span>✅ ලේඛන සහ අවශ්‍යතා ලැයිස්තුව</h2>'
+    s.append('<section id="checklist"><h2><span class="n">10</span>✅ ලේඛන සහ අවශ්‍යතා ලැයිස්තුව <span class="en" style="font-size:13px;font-weight:600;color:var(--muted)">Documents &amp; requirements</span></h2>'
              f'<p class="lead">අයිතම {len(CL)}ක් · 🔴 Critical {crit} · 🟠 Mandatory {mand} · '
              f'🟡 High {high} — ලකුණු දැමූ පසු browser එකේ සේව් වේ</p>')
     s.append('<div class="card" style="margin-bottom:16px">'
@@ -868,7 +941,7 @@ def build():
 
     # ================= TIMELINE =================
     s.append('<section id="timeline"><h2><span class="n">11</span>🗓️ කාලසටහන — මාස 14–20</h2>'
-             '<p class="lead">Critical path: ළිඳ → ජල පරීක්ෂණ → ඉදිකිරීම් → FCAU</p>')
+             '<p class="lead">Critical path: ළිඳ → ජල පරීක්ෂණ → ඉදිකිරීම් → FCAU · <b>Timeline — 14 to 20 months</b></p>')
     s.append('<div class="tl">')
     for mth, work in [
         ("මාස 1–2", "<b>Phase 0–1</b> — ආයෝජක MOU + Shareholders Agreement · සමාගම් ලියාපදිංචිය (eROC) · TIN · බැංකු ගිණුම · ඉඩම් title report · zoning තහවුරු කිරීම"),
@@ -892,7 +965,7 @@ def build():
 
     # ================= RISKS =================
     s.append('<section id="risks"><h2><span class="n">12</span>⚠️ ප්‍රධාන අවදානම් 8</h2>'
-             '<p class="lead">ව්‍යාපෘතිය අසාර්ථක කළ හැකි දේ සහ ඒවා වළක්වන ආකාරය</p>')
+             '<p class="lead">ව්‍යාපෘතිය අසාර්ථක කළ හැකි දේ සහ ඒවා වළක්වන ආකාරය · <b>Top 8 risks and how to prevent them</b></p>')
     s.append('<div class="tbl"><table><tr><th style="width:30px">#</th><th>අවදානම</th>'
              '<th class="num">අගය</th><th>වළක්වන ආකාරය</th></tr>')
     for i, (r, sc, mt) in enumerate([
@@ -925,6 +998,7 @@ def build():
     body = "\n".join(s)
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS)
             .replace("__BODY__", body)
+            .replace("__HERO__", hero(M, len(CL), REC))
             .replace("__LOCATION__", M["location"])
             .replace("__INVESTOR__", M["investor"]))
 
