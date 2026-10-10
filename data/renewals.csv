@@ -1,0 +1,35 @@
+document,authority,frequency,validity,renewal_lead_time_days,owner,consequence_if_lapsed
+FCAU Bottled Water Registration,Ministry of Health FCAU,Every 3 years,3 years,120,QA Manager,PRODUCTION MUST STOP - illegal to manufacture/sell
+SLS Product Certification Mark Permit,SLSI,Every 3 years,3 years,90,QA Manager,Must remove SLS mark from labels
+SLS 1336 PET bottle certification,SLSI / bottle supplier,Every 3 years,3 years,90,Purchasing,CAA enforcement - cannot sell in polymer containers
+Trade Licence (Annual Licence),Bandarawela Pradeshiya Sabha / Urban Council,Annually,1 year,60,Admin,FCAU renewal blocked + local authority penalty
+Environmental Protection Licence (EPL),CEA / Local Authority (Cat D),Per category: 1/2/3 years,1-3 years,90,Environment Officer,NEA s.23A offence - legal action
+Scheduled Waste Management Licence,CEA,Per category,1-3 years,60,Environment Officer,Cannot dispose of hazardous waste legally
+Fire Certificate,Fire Service Department,Annually/2-3 years,1-3 years,60,Admin,Safety compliance failure
+Food handler medical certificates,Hospital / PHI,Annually,1 year,45,HR,PHI non-compliance
+Pest control contract,Licensed pest control company,Annually,1 year,30,Admin,SLSI/FCAU audit failure
+All insurance policies (fire product liability etc),Insurance company,Annually,1 year,45,Finance,Uninsured loss exposure
+EPF contributions,CBSL EPF Board,Monthly,Monthly,5,HR,Surcharge + Labour Dept action
+ETF contributions,CBSL ETF Board,Monthly,Monthly,5,HR,Surcharge
+VAT return + payment,IRD,Monthly,Monthly,7,Accountant,Penalty + interest
+APIT / PAYE return,IRD,Monthly,Monthly,5,Accountant,Penalty + interest
+Income tax return,IRD,Annually,Annual,30,Accountant,Penalty + interest
+Annual Return (Form 15),DRC / eROC,Annually (after AGM),Annual,30,Company Secretary,Fines + strike-off risk
+AGM,Company,Annually (first within 18 months),Annual,45,Company Secretary,Companies Act breach
+Statutory audit,Chartered Accountant,Annually,Annual,60,Finance,Non-compliant financial statements
+Water quality reports to WRB,Accredited lab -> WRB,Every 6 months,Per test,20,QA Manager,WRB Act enforcement
+Groundwater abstraction log,Internal -> WRB,Daily/Monthly,Ongoing,0,Production,WRB monitoring failure
+Calibration of lab instruments,Accredited calibration lab,Every 6 months,6-12 months,20,QA Manager,SLSI audit failure
+Internal audit,QA,Every 6 months,Per cycle,14,QA Manager,SLSI audit failure
+Preventive maintenance - major machines,Plant suppliers,Every 6 months / per hours,Ongoing,30,Engineering,Breakdown risk
+Generator + compressor servicing,Supplier,Every 250/500 hours,Ongoing,20,Engineering,Backup power failure
+Vehicle revenue licences,DMT,Annually,1 year,30,Logistics,Illegal to operate
+Rates payment,Pradeshiya Sabha,Annually,1 year,30,Admin,Local authority action; blocks permits
+Lease agreement (if land is leased),Land owner / Land Registry,Per term,5+ years (FCAU requirement),180,Legal,FCAU registration cannot be renewed
+Trademark registration,NIPO,Every 10 years,10 years,180,Legal,Loss of brand protection
+ISO 9001 / ISO 22000 surveillance,Certification body,Annually,3 years (cycle),60,QA Manager,Certificate suspension
+HACCP / GMP certificate,Certifying body,Annually/3 years,1-3 years,60,QA Manager,Customer/market access loss
+Staff training (food handling GMP),SLSI / ITI,Annually,1 year,45,HR,FCAU training-document requirement not met
+Waste collection agreement,Licensed collector,Annually,1 year,30,Admin,Waste accumulation - EPL breach
+Distributor agreements,Distributors,Annually/3 years,1-3 years,60,Sales,Channel loss
+Company secretary retainer,Licensed Company Secretary,Annually,1 year,30,Admin,Statutory filing failures
