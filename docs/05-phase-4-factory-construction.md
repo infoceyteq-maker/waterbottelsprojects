@@ -17,13 +17,13 @@
 | Finished goods warehouse | 300–600 | Pallet racking |
 | Raw material warehouse (preforms, chemicals) | 100–200 | වෙන්ව, ආරක්ෂිත |
 | **Quality Control / Laboratory** | 40–80 | Filling room අසල |
-| CIP room | 30–60 | |
+| CIP room | 30–60 | — |
 | Changing rooms + hand wash + footbath + toilets | 60–100 | සේවක ගණන අනුව |
 | Canteen / rest area | 40–80 | **නිෂ්පාදන ප්‍රදේශයෙන් වෙන්ව** |
-| Office / meeting | 40–80 | |
-| Maintenance / workshop | 40–80 | |
+| Office / meeting | 40–80 | — |
+| Maintenance / workshop | 40–80 | — |
 | ETP / effluent treatment + soakaway | 60–150 | CEA අනුමැතිය සඳහා |
-| Loading bay / truck area | 200–400 | |
+| Loading bay / truck area | 200–400 | — |
 | Generator + compressor room | 30–60 | ධ්වනි පාලනය |
 
 ---

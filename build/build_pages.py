@@ -5,7 +5,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from pages_common import (OUT, PAGES, kpi, m, shell, table)   # noqa: E402
+from pages_common import (OUT, PAGES, PAGE_CATEGORY, esc, kpi, m, shell, table)   # noqa: E402
 from dashboard_model import build_model                       # noqa: E402
 
 
@@ -639,20 +639,27 @@ def main():
     builders = {"1": page1, "2": page2, "3": page3, "4": page4, "5": page5, "6": page6,
             "7": page7}
     subs = {
-        "1": "ෆැක්ටරි එක ලියාපදිංචි කර, ගොඩනැඟිල්ල ඉදිකර, යන්ත්‍ර සවිකර, "
-             "වැඩ පටන් ගන්න දවස වෙනකම් වන සම්පූර්ණ පිරිවැය — කාර්යාල උපකරණ ද ඇතුළුව.",
-        "2": "නිෂ්පාදනය පටන් ගත් දවසේ සිට පළමු order stock එක ඉවර වෙනකම් — "
-             "බෝතල්, ලේබල්, පිරවීම, සේවක පඩි.",
-        "3": "ඔබ දුන් ප්‍රමාණ අනුව පළමු stock එකේ බෝතල් පිරිවැය: "
-             "500 ml 5,000 · 1 L 3,000 · 1.5 L 3,000 · 5 L 1,000 · 19 L 150.",
-        "4": "ක්‍රියාවලිය පියවරෙන් පියවර, සෑම පියවරකටම අවශ්‍ය ලේඛන සහ "
-             "ගතවන කාලය.",
-        "5": "රැකියා ධූරාවලිය දෙපාර්තමේන්තු 4ක් අනුව — සෑම තනතුරකම වැටුප, "
-             "EPF 12% සහ ETF 3% සහිතව.",
-        "6": "Factory → Distributor → Retail මිල පඩිපෙළ, නිෂ්පාදනය අනුව ලාභය, "
-             "සහ පළමු stock එකේ ලාභ ප්‍රතිශතය.",
-        "7": "සම්පූර්ණ ආයෝජනය, දවසට විකුණිය යුතු අවම ප්‍රමාණය, ආයෝජනය "
-             "ආපසු ලැබෙන මාස, සහ අවුරුද්දක් තුළ ආපසු ලබා ගැනීමේ ඉලක්කය.",
+        "1": '<span class="si">ෆැක්ටරි එක ලියාපදිංචි කර, ගොඩනැඟිල්ල ඉදිකර, යන්ත්‍ර සවිකර, '
+             'වැඩ පටන් ගන්න දවස වෙනකම් වන සම්පූර්ණ පිරිවැය — කාර්යාල උපකරණ ද ඇතුළුව.</span>'
+             '<span class="en">All costs from company registration through construction, equipment installation and factory readiness, including office equipment.</span>',
+        "2": '<span class="si">නිෂ්පාදනය පටන් ගත් දවසේ සිට පළමු order stock එක ඉවර වෙනකම් — '
+             'බෝතල්, ලේබල්, පිරවීම, සේවක පඩි.</span>'
+             '<span class="en">From production start until the first order stock is complete: bottles, labels, filling and staff wages.</span>',
+        "3": '<span class="si">ඔබ දුන් ප්‍රමාණ අනුව පළමු stock එකේ බෝතල් පිරිවැය: '
+             '500 ml 5,000 · 1 L 3,000 · 1.5 L 3,000 · 5 L 1,000 · 19 L 150.</span>'
+             '<span class="en">First-stock unit costs, calculated separately using your exact quantities for all five products.</span>',
+        "4": '<span class="si">ක්‍රියාවලිය පියවරෙන් පියවර, සෑම පියවරකටම අවශ්‍ය ලේඛන සහ '
+             'ගතවන කාලය.</span>'
+             '<span class="en">A step-by-step process, the documents required at each step and the estimated time.</span>',
+        "5": '<span class="si">රැකියා ධූරාවලිය දෙපාර්තමේන්තු 4ක් අනුව — සෑම තනතුරකම වැටුප, '
+             'EPF 12% සහ ETF 3% සහිතව.</span>'
+             '<span class="en">The four-department job hierarchy, with salary and employer EPF/ETF costs.</span>',
+        "6": '<span class="si">Factory → Distributor → Retail මිල පඩිපෙළ, නිෂ්පාදනය අනුව ලාභය, '
+             'සහ පළමු stock එකේ ලාභ ප්‍රතිශතය.</span>'
+             '<span class="en">Factory-to-distributor-to-retail pricing, product margins and first-stock profit.</span>',
+        "7": '<span class="si">සම්පූර්ණ ආයෝජනය, දවසට විකුණිය යුතු අවම ප්‍රමාණය, ආයෝජනය '
+             'ආපසු ලැබෙන මාස, සහ අවුරුද්දක් තුළ ආපසු ලබා ගැනීමේ ඉලක්කය.</span>'
+             '<span class="en">Total investment, daily break-even volume, payback period and the one-year recovery target.</span>',
     }
     written = []
     for fname, num, si, en in PAGES:
@@ -681,6 +688,15 @@ def main():
         "7": "මුළු අයවැය · දවසට විකුණිය යුතු ප්‍රමාණය · ආයෝජනය ආපසු "
              "ලැබෙන කාලය · අවුරුද්දක ඉලක්කය.",
         }[num]
+        desc_en = {
+            "1": "Registration, construction, machinery and readiness to start production, including office equipment.",
+            "2": "The first production run, from line start until the first order stock is complete.",
+            "3": "A unit-cost breakdown for the specified launch quantities across all five products.",
+            "4": "A step-by-step workflow with required documents and estimated processing times.",
+            "5": "Roles, reporting lines and salaries across four departments, including EPF/ETF.",
+            "6": "Factory, distributor and retail pricing with margins by product.",
+            "7": "Investment summary, daily sales threshold and estimated payback targets.",
+        }[num]
         head = {"1": f'Rs {m(M["doc_totals"]["registration"]+M["doc_totals"]["equipment"]+M["office_total"]+M["doc_totals"]["transport"]+M["doc_totals"]["misc"]+M["hr_one_off_total"])}',
                 "2": f'Rs {m(M["fp_total"])}',
                 "3": f'Rs {M["fs_full_cost"]:,.0f}',
@@ -689,28 +705,29 @@ def main():
                 "6": f'ලාභය Rs {M["sales_totals"][3]:,.0f} ({M["sales_totals"][6]:.1f}%)',
                 "7": f'ආයෝජනය {m(M["final"]["investment"])} · දවසට '
                      f'{M["final"]["be_day"]:,.0f} බෝතල්'}[num]
+        category_si, category_en = PAGE_CATEGORY[num]
         cards.append(
             f'<a class="pcard" href="{fname}">'
-            f'<div class="pc-kicker">පිටුව {num} · Page {num}</div>'
-            f'<h3 class="pc-title">{si}</h3>'
-            f'<div class="pc-en">{en}</div>'
-            f'<div class="pc-desc">{desc}</div>'
+            f'<div class="pc-kicker"><span class="si">{esc(category_si)}</span><span class="en">{esc(category_en)}</span></div>'
+            f'<h3 class="pc-title"><span class="si">{esc(si)}</span></h3>'
+            f'<div class="pc-en en">{esc(en)}</div>'
+            f'<div class="pc-desc"><span class="si">{desc}</span><span class="en">{desc_en}</span></div>'
             f'<div class="pc-head">{head}</div></a>')
 
-    body = ('<h2 class="pg-title">📄 පිටු 7ක් — වෙන වෙනම</h2>'
-            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The seven pages, in the order '
+    body = ('<h2 class="pg-title">📄 ව්‍යාපෘති කොටස් — වෙන වෙනම</h2>'
+            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>Project sections, in the order '
             'you asked for</b></p>'
-            '<div class="grid g2">' + "".join(cards) + '</div>'
+            '<div class="grid g3">' + "".join(cards) + '</div>'
             '<div class="note ol"><b>📊 සම්පූර්ණ Dashboard එක:</b> සියල්ල එක පිටුවක '
             '<a href="dashboard.html">dashboard.html</a> · '
             '<b>📚 ලේඛන 21:</b> <a href="docs.html">docs.html</a></div>')
-    html = shell(M, "0", "බෝතල් ජල කර්මාන්ත ශාලාව", "Bandarawela Bottled Water Plant",
-                 "Mr. Thilakarathna ආයෝජනය කරන, Bandarawela හි පිහිටි "
-                 "6,000 BPH බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාවක්. "
-                 "නිෂ්පාදන 5ක්: 500 ml · 1 L · 1.5 L · 5 L · 19 L.",
+    html = shell(M, "0", "බෝතල් ජල කර්මාන්ත ශාලාව", "Bottled Drinking Water Plant",
+                 '<span class="si">Mr. Thilakarathna ආයෝජනය කරන, Bandarawela හි පිහිටි '
+                 '6,000 BPH බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාවක්. '
+                 'නිෂ්පාදන 5ක්: 500 ml · 1 L · 1.5 L · 5 L · 19 L.</span>'
+                 '<span class="en">A 6,000 BPH bottled drinking water plant in Bandarawela, funded by Mr. Thilakarathna. '
+                 'Five products: 500 ml, 1 L, 1.5 L, 5 L and 19 L.</span>',
                  body)
-    html = html.replace('පිටුව 0 &nbsp;·&nbsp; Page 0 of 4',
-                        'බණ්ඩාරවෙල · ඌව කඳුකරය &nbsp;·&nbsp; Bandarawela, Uva Highlands')
     with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(html)
     print(f"[ok] index.html (landing)          "

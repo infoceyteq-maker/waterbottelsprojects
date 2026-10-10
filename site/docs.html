@@ -1,24 +1,30 @@
 <!doctype html>
 <html lang="si"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title> ලේඛන මුල් පිටුව / Docs Home · බෝතල් ජල කර්මාන්ත ශාලාව — Bandarawela</title>
+<script>
+(function(){
+  var lang='si';
+  try { var saved=localStorage.getItem('wb-project-language');
+    if(saved==='si'||saved==='en') lang=saved;
+  } catch(e) {}
+  document.documentElement.lang=lang;
+  document.documentElement.setAttribute('data-language',lang);
+})();
+</script>
+<title> ලේඛන මුල් පිටුව / Docs Home · බෝතල් ජල කර්මාන්ත ශාලාව — Bottled Drinking Water Plant</title>
 <style>/* =====================================================================
-   Bandarawela Bottled Drinking Water Plant — design system
-   "Premium corporate financial / fintech dashboard"
+   Bandarawela Bottled Drinking Water Plant — shared design system
+   Clean, light agency-site layout inspired by the supplied RapidDev reference.
 
-   Canvas    deep navy #070d18 with layered radial glows
-   Surfaces  white / light-ash data cards, ~14px radius, embossed
-             (inset top highlight + layered drop shadow) — they float
-   Accents   emerald #10b981  -> KPI figures, grand-total rows, positive
-             metallic gold    -> special totals (CASH REQUIRED etc.)
-             red              -> losses and warnings ONLY
-   Glass     frosted top bar + chips (backdrop blur + saturate)
-   Layout    real CSS grids: .g2 .g3 .g4 .g5 (responsive), org chart
-             departments in an auto-fit grid
-   Motion    cards / KPIs lift ~5px and deepen their shadow on hover;
-             table rows tint on hover
+   Canvas    cool off-white with white, lightly bordered content cards
+   Type      system sans stack with large editorial headings
+   Accent    violet / indigo for actions, selected states and data highlights
+   Layout    responsive grids, spacious hero, tidy sticky section navigation
+   Motion    subtle card lift and focus states; reduced-motion is respected
 
-   Every var(--x) used by site/*.html is defined in :root below.
+   Legacy component class names are retained for generated pages. The visual
+   refresh at the end of this file maps those components to the new palette.
+   Every var(--x) used by generated pages is defined below.
    ===================================================================== */
 :root{
   /* canvas (dark) */
@@ -41,8 +47,8 @@
   --ink:#0b1220;
   --ink-2:#2a3649;
   --ink2:#2a3649;          /* alias — landing cards */
-  --muted:#5d6979;
-  --faint:#8491a3;
+  --muted:#465264;
+  --faint:#637083;
   --line:#dce3eb;
   --line-2:#c4cdd9;
   --border2:#c4cdd9;       /* alias — inline controls */
@@ -100,7 +106,7 @@ body{
     radial-gradient(720px 480px at 50% 110%,rgba(16,185,129,.11),transparent 66%),
     linear-gradient(180deg,var(--canvas-3) 0%,var(--canvas) 40%,var(--canvas-2) 100%);
   background-attachment:fixed;
-  font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
        "Helvetica Neue","Noto Sans Sinhala","Iskoola Pota",Arial,sans-serif;
   font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;
 }
@@ -404,7 +410,7 @@ tr.done td:nth-child(3){text-decoration:line-through}
   border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-emboss);
 }
 .org-board .t{font-size:14px;font-weight:700;display:block}
-.org-board .s{font-size:11.5px;color:#b9cbe6;margin-top:2px;display:block}
+.org-board .s{font-size:12.5px;color:#d6deea;margin-top:2px;display:block}
 .org-line{width:2px;height:18px;background:var(--line-2);margin:0 auto}
 .org-hline,.org-depts::before{display:none}
 .org-mgr{
@@ -412,7 +418,7 @@ tr.done td:nth-child(3){text-decoration:line-through}
   box-shadow:var(--shadow-emboss);
 }
 .org-mgr .t{font-size:14.5px;font-weight:700;color:var(--ink);display:block}
-.org-mgr .s{font-size:11.5px;color:var(--muted);margin-top:2px;display:block}
+.org-mgr .s{font-size:12.5px;color:var(--muted);margin-top:2px;display:block}
 /* the four departments: one auto-fit grid */
 .org-depts{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -430,7 +436,7 @@ tr.done td:nth-child(3){text-decoration:line-through}
 }
 .org-dept .hd .ic{display:none}
 .org-dept .hd .t{font-size:14px;font-weight:700;color:var(--ink)}
-.org-dept .hd .e{font-size:11.5px;color:var(--muted);font-weight:500}
+.org-dept .hd .e{font-size:12.5px;color:var(--muted);font-weight:550}
 .org-dept .bd{padding:4px 0}
 .org-dept .ft{
   display:flex;justify-content:space-between;gap:8px;padding:10px 16px;
@@ -451,7 +457,7 @@ tr.done td:nth-child(3){text-decoration:line-through}
 .org-role .rn .lv.l2{background:var(--emerald);color:#052016}
 .org-role .rv{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .org-role .rv b{color:var(--ink);font-weight:700}
-.org-role .rv span{display:block;font-size:11px;color:var(--muted)}
+.org-role .rv span{display:block;font-size:12px;color:var(--muted)}
 
 /* ── controls + filters ── */
 .controls{margin:0 0 12px;padding:6px 0 4px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -517,9 +523,420 @@ footer b{color:var(--ink-2)}
 }
 
 /* =====================================================================
+   RapidDev-inspired visual refresh
+   Bright editorial canvas, charcoal type, violet actions and generous space.
+   Content and project calculations remain unchanged.
+   ===================================================================== */
+:root{
+  --canvas:#f6f7fa;
+  --canvas-2:#f6f7fa;
+  --canvas-3:#f6f7fa;
+  --on-canvas:#22232a;
+  --on-canvas-muted:#737581;
+  --glass:rgba(255,255,255,.94);
+  --glass-line:#ececf1;
+  --surface:#fff;
+  --ash:#f7f7fa;
+  --ash-2:#ededef;
+  --ash-3:#dadbe2;
+  --sheet:#f6f7fa;
+  --ink:#191a21;
+  --ink-2:#343a46;
+  --ink2:#343a46;
+  --muted:#48515f;
+  --faint:#657183;
+  --line:#e7e8ed;
+  --line-2:#d9dae1;
+  --border2:#d9dae1;
+  --emerald:#6658e8;
+  --emerald-2:#8a7cff;
+  --emerald-d:#5144cb;
+  --emerald-soft:#f1efff;
+  --emerald-line:#d9d4ff;
+  --gold:#f0aa45;
+  --gold-d:#a96a12;
+  --gold-soft:#fff6e8;
+  --gold-line:#f4dcad;
+  --gold-grad:linear-gradient(135deg,#fff0c9 0%,#f5c66b 52%,#e69b34 100%);
+  --olive-d:#a96a12;
+  --blue:#353e95;
+  --blue-2:#4f61da;
+  --blue-soft:#eef2ff;
+  --red:#d94c5b;
+  --red-d:#b83a49;
+  --red-soft:#fff0f1;
+  --radius:20px;
+  --radius-sm:14px;
+  --shadow:0 8px 24px -14px rgba(22,24,38,.12);
+  --shadow-emboss:0 12px 34px -22px rgba(24,25,40,.16),0 1px 3px rgba(24,25,40,.035);
+  --shadow-lift:0 20px 44px -24px rgba(55,48,125,.23),0 4px 12px rgba(24,25,40,.06);
+}
+
+html,body{background:var(--canvas)}
+body{
+  color:var(--ink);background:var(--canvas);background-image:none;background-attachment:scroll;
+  font-family:Inter,"Aptos","Segoe UI",Roboto,"Helvetica Neue","Noto Sans Sinhala","Iskoola Pota",Arial,sans-serif;
+  font-size:16px;line-height:1.7;letter-spacing:-.004em;
+}
+a{color:var(--emerald-d);text-decoration:none}
+a:hover{color:var(--emerald);text-decoration:none}
+
+#wrap{min-height:100vh}
+#main{width:100%;max-width:none;margin:0 auto}
+.inner{
+  max-width:1280px;margin:0 auto 56px;padding:8px 34px 56px;
+  background:transparent;border:0;border-radius:0;box-shadow:none;
+}
+
+/* Clean, two-tier navigation with horizontally scrollable section links. */
+#nav{
+  position:sticky;top:0;z-index:30;display:block;color:var(--ink);
+  padding:0 clamp(18px,4vw,52px);background:rgba(255,255,255,.94);
+  border:0;border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(22,24,38,.035);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);
+}
+#nav::after{display:none}
+#nav .brand{
+  max-width:1280px;margin:0 auto;display:flex;flex-wrap:nowrap;align-items:center;gap:12px;
+  min-height:68px;padding:10px 0;border:0;
+}
+#nav .brand .logo{
+  display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;
+  background:linear-gradient(140deg,#776bff,#5548db);border:1px solid rgba(83,70,211,.12);
+  border-radius:13px;box-shadow:0 8px 20px -10px rgba(86,72,220,.65);
+  color:#fff;font-size:0;
+}
+#nav .brand .logo::before{content:"W";font-size:17px;font-weight:800;letter-spacing:-.06em}
+#nav .brand h1{
+  display:flex;flex-direction:column;justify-content:center;margin:0;color:var(--ink);
+  font-size:20px;font-weight:760;line-height:1.18;letter-spacing:-.03em;
+}
+#nav .brand h1 span{
+  display:block;margin-top:3px!important;color:var(--ink-2)!important;font-size:20px!important;
+  font-weight:760!important;letter-spacing:-.03em;text-transform:none;
+}
+#nav .brand h1 .si{
+  margin-top:0!important;color:var(--ink)!important;font-size:20px!important;
+  font-weight:760!important;letter-spacing:-.03em;
+}
+#nav .brand h1 .en{
+  margin-top:2px!important;color:var(--ink-2)!important;font-size:20px!important;
+  font-weight:760!important;letter-spacing:-.03em;
+}
+#nav .brand p{margin:0 0 0 auto;color:var(--ink-2);font-size:13px;line-height:1.5;text-align:right}
+#nav .brand p b{color:var(--ink);font-weight:700}
+#nav .nav-links{
+  display:flex;flex-wrap:wrap;align-items:center;gap:3px;max-width:1280px;margin:0 auto;padding:0 0 9px;
+  overflow:visible;white-space:normal;
+}
+#nav .nav-links::-webkit-scrollbar{display:none}
+#nav .nav-dropdown{position:relative;flex:0 0 auto;margin:0;padding:0}
+#nav .budget-trigger{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+  min-height:36px;margin:0;padding:7px 28px 7px 11px;border:1px solid transparent;border-radius:12px;
+  background:transparent;color:var(--ink-2);font-size:13px;font-weight:680;line-height:1.4;text-align:left;cursor:pointer;
+  list-style:none;transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+#nav .budget-trigger::-webkit-details-marker{display:none}
+#nav .budget-trigger:hover,#nav .nav-dropdown[open] .budget-trigger{
+  background:#f4f3ff;border-color:#eceaff;color:var(--emerald-d);
+}
+#nav .budget-trigger.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);font-weight:700}
+#nav .budget-trigger .en{display:block;color:#525967;font-size:11px;font-weight:600;letter-spacing:0;line-height:1.3}
+#nav .dropdown-caret{position:absolute;right:9px;top:50%;font-size:14px;line-height:1;transform:translateY(-50%);transition:transform .2s ease}
+#nav .nav-dropdown[open] .dropdown-caret{transform:translateY(-50%) rotate(180deg)}
+#nav .dropdown-menu{
+  position:absolute;top:calc(100% + 7px);left:0;z-index:60;display:grid;gap:4px;min-width:235px;
+  padding:7px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 36px rgba(22,24,38,.14);
+}
+#nav .nav-links .dropdown-menu a{
+  display:flex;flex-direction:column;align-items:flex-start;gap:3px;width:100%;margin:0;padding:10px 12px;
+  border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink-2);font-size:13px;font-weight:680;
+  line-height:1.4;white-space:normal;
+}
+#nav .nav-links .dropdown-menu a .en{display:block;color:#525967;font-size:11px;font-weight:550;letter-spacing:0;line-height:1.4}
+#nav .nav-links .dropdown-menu a:hover{background:#f7f6ff;border-color:#eeecff;color:var(--emerald-d);transform:none}
+#nav .nav-links .dropdown-menu a.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);box-shadow:none}
+#nav .nsec{display:none!important}
+#nav .nav-links a{
+  flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:0;padding:7px 11px;
+  border:1px solid transparent;border-radius:12px;background:transparent;color:var(--ink-2);
+  font-size:13px;font-weight:680;line-height:1.4;text-decoration:none;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease;
+}
+#nav .nav-links a .en{display:block;color:#525967;font-size:11px;font-weight:550;letter-spacing:0;text-transform:none;line-height:1.3}
+#nav .nav-links a.on .en{color:#6257bd}
+#nav .nav-links a b{min-width:0;margin:0;padding:0;background:none;color:inherit;font-size:10px}
+#nav .nav-links a:hover{background:#f4f3ff;color:var(--emerald-d);border-color:#eceaff;transform:translateY(-1px)}
+#nav .nav-links a.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);box-shadow:none;font-weight:700}
+#nav .nav-links a[href="dashboard.html"],#nav .nav-links a[href="docs.html"]{
+  margin-left:4px;padding:8px 14px;background:var(--ink);border-color:var(--ink);color:#fff;font-weight:650;
+}
+#nav .nav-links a[href="dashboard.html"]:hover,#nav .nav-links a[href="docs.html"]:hover{
+  background:var(--emerald-d);border-color:var(--emerald-d);color:#fff;
+}
+#nav .nav-links a[href="dashboard.html"] .en,#nav .nav-links a[href="docs.html"] .en{color:rgba(255,255,255,.72)}
+
+/* Oversized, light hero with the existing project photograph as a visual anchor. */
+.hero{
+  min-height:465px;padding:0 0 16px;display:flex;align-items:center;overflow:hidden;
+  color:var(--ink);background-color:#f6f7fa;background-size:auto 100%;
+  background-position:right center;background-repeat:no-repeat;border-bottom:1px solid var(--line);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(420px 300px at 82% 48%,rgba(111,96,244,.16),transparent 74%),
+             linear-gradient(120deg,rgba(255,255,255,.42),transparent 58%);
+}
+.hero::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,#f6f7fa 0%,#f6f7fa 33%,rgba(246,247,250,.96) 47%,rgba(246,247,250,.62) 62%,rgba(246,247,250,.08) 100%);
+}
+.hero .hc{width:100%;max-width:1280px;margin:0 auto;padding:68px 34px 60px;}
+.hero .kicker{
+  display:inline-flex;align-items:center;margin:0 0 22px;padding:7px 12px;border:1px solid var(--emerald-line);
+  border-radius:999px;background:rgba(255,255,255,.88);color:var(--emerald-d);
+  font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+.hero h1{
+  max-width:18ch;margin:0 0 14px;color:var(--ink);font-size:clamp(38px,4.5vw,58px);
+  font-weight:760;line-height:1.08;letter-spacing:-.055em;
+}
+.hero h1 .en{display:block;margin-top:13px;color:var(--ink-2);font-size:clamp(21px,2.2vw,28px);font-weight:650;line-height:1.4;letter-spacing:-.025em}
+.hero .hsub{max-width:59ch;margin:0;color:var(--ink-2);font-size:16px;line-height:1.72}
+.hero .hsub .en{display:block;margin-top:7px;color:var(--muted);font-size:14px;font-weight:500;line-height:1.6;letter-spacing:0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;padding:11px 18px;
+  border:1px solid transparent;border-radius:999px;font-size:13px;font-weight:680;line-height:1.25;
+  text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease,border-color .2s ease;
+}
+.btn span{font-size:16px;line-height:1}
+.btn:hover{transform:translateY(-2px);text-decoration:none}
+.btn-primary{background:var(--emerald);border-color:var(--emerald);color:#fff;box-shadow:0 10px 22px -12px rgba(102,88,232,.8)}
+.btn-primary:hover{background:var(--emerald-d);border-color:var(--emerald-d);color:#fff;box-shadow:0 14px 28px -14px rgba(81,68,203,.7)}
+.btn-secondary{background:rgba(255,255,255,.82);border-color:#dfe0e8;color:var(--ink)}
+.btn-secondary:hover{background:#fff;border-color:#c9c6f2;color:var(--emerald-d)}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;max-width:850px}
+.hero .chip{
+  display:inline-flex;align-items:center;gap:5px;padding:7px 11px;margin:0;border:1px solid rgba(221,222,232,.92);
+  border-radius:10px;background:rgba(255,255,255,.83);box-shadow:0 4px 14px rgba(32,34,52,.035);
+  color:var(--ink-2);font-size:12px;line-height:1.45;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+.hero .chip b{color:var(--ink);font-weight:720}
+.hero .chip:hover{background:#fff;transform:translateY(-2px)}
+
+/* Editorial headings, quiet surfaces and clear numeric hierarchy. */
+section{
+  margin:0 0 22px;padding:28px 30px;background:var(--surface);border:1px solid var(--line);
+  border-radius:22px;box-shadow:var(--shadow-emboss);
+}
+section>h2{margin:0 0 5px;padding:0 0 14px;border-bottom:1px solid var(--line);color:var(--ink);font-size:24px;font-weight:740;letter-spacing:-.035em}
+section>h2 .n{
+  min-width:28px;height:28px;margin-right:10px;padding:0 8px;border-radius:9px;
+  background:var(--emerald-soft);color:var(--emerald-d);box-shadow:none;font-size:11px;
+}
+section>.lead{margin:13px 0 22px;color:var(--muted);font-size:15px}
+.inner>h2.pg-title{
+  margin:20px 0 7px;padding:0 0 12px;border:0;border-bottom:1px solid var(--line);
+  color:var(--ink);font-size:clamp(26px,3.1vw,36px);font-weight:740;letter-spacing:-.045em;line-height:1.22;
+}
+.lead{margin:8px 0 22px;color:var(--muted);font-size:15px;line-height:1.72}
+h3{margin:28px 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line);color:var(--ink);font-size:16px;font-weight:720;letter-spacing:-.02em}
+h3 .en,.bi .en{color:var(--muted);font-size:13.5px}
+
+.kpi,.card,a.pcard,.org-dept{
+  background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-emboss);
+}
+.kpi{min-height:126px;padding:19px 20px 18px 22px}
+.kpi::before{top:18px;bottom:18px;width:3px;background:var(--emerald)}
+.kpi .l{color:#424955;font-size:11.5px;letter-spacing:.06em}
+.kpi .v{color:var(--emerald-d);font-size:29px;font-weight:760;letter-spacing:-.04em}
+.kpi .h{color:var(--muted);font-size:12.5px}
+.card{padding:22px 23px}
+.kpi:hover,.card:hover,.org-dept:hover,a.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+
+.tbl{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+table{font-size:14px}
+th,td{padding:11px 14px;border-bottom:1px solid #efeff2}
+th{background:#f7f7fa;border-bottom-color:var(--line);color:#3f4550;font-size:11px;letter-spacing:.06em}
+tbody tr:nth-child(even){background:#fbfbfd}
+tbody tr:hover{background:#f5f3ff}
+tr.tot td{background:#f5f5f9;border-top:1px solid #dfe0e8}
+tr.grand td{background:var(--emerald-soft);color:var(--emerald-d);border-top:1px solid var(--emerald-line)}
+tr.grand.cash td{background:linear-gradient(110deg,#f1efff,#e5e1ff);color:#4135aa;border-top:1px solid #ccc5ff}
+
+.note{border:1px solid var(--line);border-left:3px solid #8f91a0;border-radius:12px;box-shadow:none;background:#fff;color:var(--ink-2);font-size:14.5px}
+.note.ol{background:#f4f2ff;border-color:#dedaff;border-left-color:var(--emerald)}
+.note.am{background:#fff7e9;border-color:#f4dfb7;border-left-color:var(--gold)}
+.note.rd{background:#fff1f2;border-color:#f3c8ce;border-left-color:var(--red)}
+.badge.ol{background:var(--emerald);color:#fff}
+.chk{accent-color:var(--emerald)}
+.pill.p-ok{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d)}
+.p-mand{background:#333541}
+.flow .st{border-radius:13px;box-shadow:none}
+.flow .st.key{background:#f3f1ff;border-top-color:var(--emerald)}
+.flow .st.star{background:#fff7e8;border-top-color:var(--gold)}
+.flow .ar{color:var(--emerald)}
+.bar{background:#eeedf3;box-shadow:none}
+.bar>i,.bar.ol>i{background:linear-gradient(90deg,#9388ff,#5e51dc)}
+.bar.am>i{background:linear-gradient(90deg,#f8cd79,#e59b35)}
+.org-board{background:linear-gradient(135deg,#5c50db,#7770ee);border:0;box-shadow:var(--shadow)}
+.org-mgr{border-left-color:var(--emerald);box-shadow:var(--shadow)}
+.org-dept{box-shadow:var(--shadow)}
+.org-dept .hd{border-top-color:var(--emerald);background:#f8f8fb}
+.org-dept .ft{background:var(--emerald-soft);border-top-color:var(--emerald-line);color:var(--emerald-d)}
+.org-role .rn .lv.l2{background:var(--emerald);color:#fff}
+.controls{padding:10px 0}
+input[type=search],select{border-radius:999px;border-color:var(--line-2);box-shadow:none}
+input[type=search]:focus,select:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(102,88,232,.15)}
+a.pcard{position:relative;min-height:255px;padding:23px 24px;overflow:hidden;text-decoration:none}
+a.pcard::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--emerald),#9a8cff)}
+a.pcard:hover{text-decoration:none}
+.pc-kicker{color:var(--emerald-d);font-size:11px;letter-spacing:.1em}
+h3.pc-title{font-size:19px;line-height:1.35;letter-spacing:-.025em}
+.pc-en{font-size:13px;color:var(--ink-2)}
+.pc-desc{color:var(--ink-2);font-size:14px;line-height:1.65}
+.pc-desc .en{display:block;margin-top:7px;color:#4b515d;font-size:13px;line-height:1.55}
+.pc-head{color:var(--emerald-d);font-size:18px}
+footer{margin-top:38px;padding:23px 0 0;border-top:1px solid var(--line);color:#4f5662;font-size:12.5px}
+footer b{color:var(--ink-2)}
+
+:focus-visible{outline:3px solid rgba(102,88,232,.34);outline-offset:3px}
+@media (max-width:1040px){
+  .inner{max-width:960px;padding-right:22px;padding-left:22px}
+  .hero .hc{padding-right:24px;padding-left:24px}
+}
+@media (max-width:900px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero{min-height:430px}
+  .hero h1{font-size:clamp(36px,5.4vw,50px)}
+}
+@media (max-width:760px){
+  #nav{padding-right:16px;padding-left:16px}
+  #nav .brand{min-height:60px}
+  #nav .brand p{display:none}
+  #nav .nav-links{margin:0 -2px;padding-bottom:8px}
+  .hero{min-height:0;display:block;padding:0 0 22px;background-size:auto 44%;background-position:right bottom}
+  .hero::before{background:linear-gradient(180deg,rgba(246,247,250,0) 55%,rgba(102,88,232,.09) 100%)}
+  .hero::after{background:linear-gradient(180deg,#f6f7fa 0%,rgba(246,247,250,.98) 56%,rgba(246,247,250,.68) 100%)}
+  .hero .hc{padding:43px 20px 34px}
+  .hero .kicker{margin-bottom:16px}
+  .hero h1{max-width:17ch;font-size:clamp(34px,9vw,45px)}
+  .hero h1 .en{font-size:clamp(19px,5vw,23px);margin-top:10px}
+  .hero .hsub{font-size:15px}
+  .hero-actions{margin-top:18px}
+  .hero .chips{gap:6px;margin-top:18px}
+  .hero .chip{font-size:11px;padding:7px 9px}
+  .inner{margin:0 auto 34px;padding:0 16px 40px}
+  section{padding:21px 18px;border-radius:17px}
+  section>h2{font-size:21px}
+  .inner>h2.pg-title{font-size:27px}
+  .g2,.g3{grid-template-columns:minmax(0,1fr)}
+  .g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi{min-height:112px;padding:16px}
+  .kpi .v{font-size:25px;white-space:normal}
+  .bc-row{grid-template-columns:1fr;gap:4px}
+  .org-role .rv{text-align:left}
+  .tbl{overflow-x:auto}
+  .flow{gap:6px}
+}
+@media (max-width:520px){
+  .g4,.g5{grid-template-columns:minmax(0,1fr)}
+  .btn{min-height:43px;padding:10px 14px;font-size:12px}
+  .hero-actions{gap:8px}
+  .hero .hc{padding-right:17px;padding-left:17px}
+  .hero .chips{max-width:100%}
+  .hero .chip{max-width:100%;white-space:normal}
+  .inner{padding-right:12px;padding-left:12px}
+  section{padding:18px 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+@media print{
+  body{background:#fff;color:#111}
+  #nav{position:static;background:#fff;box-shadow:none}
+  .inner{max-width:none;padding:0}
+  .btn,.hero-actions{display:none}
+  section,.kpi,.card,.tbl,a.pcard{box-shadow:none}
+}
+
+/* Persistent language selector shared by the dashboard and seven project pages. */
+.language-switch{
+  display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;margin:0;padding:6px 9px;
+  border:1px solid var(--line);border-radius:999px;background:#f8f8fb;color:var(--ink-2);
+  font-size:12px;line-height:1.3;white-space:nowrap;
+}
+.language-switch-label{display:inline-flex;gap:4px;align-items:center;font-weight:650}
+.language-switch .language-select{
+  min-width:76px;margin:0;padding:5px 24px 5px 9px;border:1px solid var(--line-2);
+  border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-size:12px;
+}
+.language-switch .language-select:focus{outline:2px solid rgba(102,88,232,.25);outline-offset:1px}
+#nav .brand .language-switch{margin-left:8px}
+#nav .nav-links a .en{white-space:normal}
+.btn .si,.btn .en{display:inline}
+[hidden]{display:none!important}
+@media(max-width:760px){
+  #nav .brand .language-switch{margin-left:auto}
+  .language-switch{padding:5px 7px;font-size:11px}
+}
+@media(max-width:600px){
+  #nav .brand{flex-wrap:wrap;gap:8px 12px}
+  #nav .brand h1{flex:1 1 220px;min-width:0}
+  #nav .brand .language-switch{margin-left:auto}
+}
+@media(max-width:520px){
+  a.pcard{min-height:0;padding:20px 18px}
+  table{font-size:13px}
+  th{font-size:10.5px}
+}
+@media print{.language-switch{display:none!important}}
+
+/* User-action prompts and priority rows are easy to scan and act on. */
+mark.to-complete{
+  padding:1px 5px;border:1px solid #e8d17d;border-radius:5px;
+  background:#fff3bf;color:#6b4d00;font-weight:700;text-decoration:none;
+}
+mark.to-confirm{
+  padding:1px 5px;border:1px solid #f1c5c9;border-radius:5px;
+  background:#fff0f1;color:#982a35;font-weight:700;text-decoration:none;
+}
+.priority-tag{
+  display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;
+  font-weight:750;letter-spacing:.025em;white-space:nowrap;
+}
+.priority-critical{background:var(--red);color:#fff}
+.priority-mandatory{background:#41414b;color:#fff}
+.priority-high{background:var(--gold-grad);color:#2b1d03}
+#cl tbody tr[data-prio="Critical"]:not(.done) td{background:#fff1f2}
+#cl tbody tr[data-prio="Critical"]:not(.done) td:first-child{border-left:3px solid var(--red)}
+#cl tbody tr[data-prio="Mandatory"]:not(.done) td{background:#f3f3f6}
+#cl tbody tr[data-prio="Mandatory"]:not(.done) td:first-child{border-left:3px solid #41414b}
+#cl tbody tr[data-prio="High"]:not(.done) td{background:#fff8e9}
+#cl tbody tr[data-prio="High"]:not(.done) td:first-child{border-left:3px solid var(--gold)}
+#cl tbody tr.done td{background:#f3f4f6;color:var(--muted)}
+body.template-page #main td:empty{
+  min-width:72px;background:#fff8dc;box-shadow:inset 0 0 0 1px #ead58b;
+  border:1px dashed #d7bd63;
+}
+
+/* The dashboard has many in-page anchors; keep its mobile nav swipeable. */
+@media(max-width:760px){
+  body.dashboard-page #nav .nav-links{
+    flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;white-space:nowrap;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  body.dashboard-page #nav .nav-links::-webkit-scrollbar{display:none}
+  body.dashboard-page #nav .nav-links a{flex:0 0 auto;white-space:nowrap}
+}
+
+/* =====================================================================
    Document pack (site/p01-p21, t01-t05, docs.html)
-   Loaded AFTER style.css — same tokens, same canvas, same emboss.
-   The markdown body sits on a white embossed sheet over the navy canvas.
+   Loaded AFTER style.css; shares its light canvas, typography and violet accent.
    ===================================================================== */
 
 /* ── glass top bar with the page index ── */
@@ -626,37 +1043,135 @@ footer b{color:var(--ink-2)}
   #main th,#main td{border-bottom:1px solid #ccc}
   #main th{background:#eee;color:#000}
 }
+
+/* Document pack: same light, spacious visual language as the project pages. */
+#nav{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,270px);grid-template-rows:auto auto;
+  align-items:center;gap:0 22px;padding:10px clamp(16px,4vw,52px) 0;
+}
+#nav h1{
+  grid-column:1;grid-row:1;display:flex;align-items:center;gap:12px;margin:0;padding:0;
+  color:var(--ink);font-size:15px;font-weight:750;letter-spacing:-.025em;
+}
+#nav h1::before{
+  content:"W";display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;
+  border-radius:13px;background:linear-gradient(140deg,#776bff,#5548db);color:#fff;
+  font-size:17px;font-weight:800;letter-spacing:-.06em;box-shadow:0 8px 20px -10px rgba(86,72,220,.65);
+}
+#nav .sub{display:none}
+#nav #q{
+  grid-column:2;grid-row:1;width:100%;margin:0;padding:10px 15px;border:1px solid var(--line);
+  border-radius:999px;background:#f8f8fb;color:var(--ink);font:inherit;font-size:13px;box-shadow:none;
+}
+#nav #q::placeholder{color:var(--faint)}
+#nav #q:focus{border-color:var(--emerald);background:#fff;box-shadow:0 0 0 3px rgba(102,88,232,.14)}
+#nav ol#nl{
+  grid-column:1/-1;grid-row:2;display:flex;flex-wrap:nowrap;gap:4px;width:100%;margin:8px 0 0;padding:0 0 9px;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+#nav ol#nl::-webkit-scrollbar{display:none}
+#nav li{flex:0 0 auto;margin:0}
+#nav a{
+  display:inline-flex;align-items:center;margin:0;padding:7px 10px;border:1px solid transparent;
+  border-radius:999px;background:transparent;color:var(--ink-2);font-size:12.5px;font-weight:600;line-height:1.4;
+  text-decoration:none;white-space:nowrap;transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+#nav a:hover{background:#f4f3ff;border-color:#eceaff;color:var(--emerald-d);text-decoration:none;transform:none}
+#nav a.on{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);font-weight:700}
+#main{
+  width:calc(100% - 48px);max-width:1280px;margin:32px auto 60px;padding:42px clamp(22px,4vw,54px) 58px;
+  border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:var(--shadow-emboss);
+}
+#main h1{color:var(--ink);font-size:clamp(27px,3.4vw,38px);font-weight:760;letter-spacing:-.045em;border-bottom:1px solid var(--line);padding-bottom:17px}
+#main h2{color:var(--ink);font-size:22px;font-weight:740;letter-spacing:-.035em;border-left-color:var(--emerald)}
+#main h3{color:var(--ink);font-size:16px;font-weight:720;letter-spacing:-.02em}
+#main h4{color:var(--ink-2);font-size:14px}
+#main p{color:var(--ink-2);font-size:15px;line-height:1.75}
+#main ul,#main ol{color:var(--ink-2);font-size:15px}
+#main table{border:1px solid var(--line);border-radius:14px;box-shadow:none;font-size:13.5px}
+#main th,#main td{padding:10px 12px;border-bottom:1px solid #efeff2}
+#main th{background:#f7f7fa;color:#3f4550;border-bottom-color:var(--line);font-size:11.5px;letter-spacing:.05em}
+#main tr:nth-child(even) td{background:#fbfbfd}
+#main tr:hover td{background:#f5f3ff}
+#main code{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d)}
+#main pre{border-color:var(--line);border-radius:14px;background:#f7f7fa}
+#main blockquote{border-left-color:var(--emerald);border-radius:0 13px 13px 0;background:#f4f2ff;color:var(--ink-2)}
+#main input[type=text]{border-radius:999px;border-color:var(--line-2);box-shadow:none}
+#main input[type=text]:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(102,88,232,.14)}
+@media(max-width:760px){
+  #nav{grid-template-columns:minmax(0,1fr);gap:8px;padding:10px 14px 0}
+  #nav h1{grid-column:1;grid-row:1;font-size:13px}
+  #nav h1::before{flex-basis:34px;width:34px;height:34px;border-radius:11px}
+  #nav #q{grid-column:1;grid-row:2}
+  #nav ol#nl{grid-column:1;grid-row:3;margin-top:2px}
+  #main{width:calc(100% - 20px);margin:14px auto 36px;padding:24px 17px 38px;border-radius:17px}
+  #main table{display:block;max-width:100%;overflow-x:auto}
+  #main h1{font-size:27px}
+}
+@media print{
+  #main{width:100%;max-width:100%;margin:0;padding:0;border:0;box-shadow:none;border-radius:0}
+}
+
+/* The document pack gets the same persistent language control as the dashboard. */
+#nav .doc-brand{
+  grid-column:1;grid-row:1;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;min-width:0;
+}
+#nav .doc-brand h1{grid-column:auto;grid-row:auto;min-width:0}
+#nav .doc-brand h1::before{content:none;display:none}
+#nav .doc-brand .language-switch{margin-left:8px}
+html[data-language="en"] #nav ol#nl a .en{display:inline!important}
+#nav ol#nl{grid-row:2}
+@media(max-width:760px){
+  #nav .doc-brand{grid-column:1;grid-row:1;flex-wrap:wrap}
+  #nav .doc-brand h1{grid-column:auto;grid-row:auto}
+  #nav .doc-brand .language-switch{margin-left:auto}
+  #nav #q{grid-row:2}
+  #nav ol#nl{grid-row:3}
+}
+@media print{#nav .language-switch{display:none!important}}
 </style></head>
 <body><div id="wrap">
 <nav id="nav">
-  <h1> බෝතල් ජල කර්මාන්ත ශාලාව</h1>
-  <div class="sub">Bottled Water Manufacturing Plant · Bandarawela, Badulla<br>
-  සම්පූර්ණ ලේඛන පැකේජය · v1.1 · SLS 894 · 2026-10-10</div>
+  <div class="brand doc-brand">
+    <div class="logo">W</div>
+    <h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span><span class="en">Bottled Drinking Water Plant</span></h1>
+    <p>Bandarawela, Badulla District, Uva Province<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: Mr. Thilakarathna</b></p>
+    <label class="language-switch">
+  <span class="language-switch-label"><span class="si">භාෂාව</span><span class="en">Language</span></span>
+  <select class="language-select" aria-label="Select language">
+    <option value="si">සිංහල</option>
+    <option value="en">English</option>
+  </select>
+</label>
+  </div>
+  <div class="sub"><span class="en">Bottled Drinking Water Plant · Bandarawela, Badulla</span><br>
+  <span class="si">සම්පූර්ණ ලේඛන පැකේජය</span> · v1.2 · SLS 894 · 2026-10-10</div>
   <input type="text" id="q" placeholder=" පිටු සොයන්න / Filter pages…" oninput="flt()">
-  <ol id="nl"><li><a href="docs.html" id="n-docs.html" class="on"> ලේඛන මුල් පිටුව / Docs Home</a></li>
+  <ol id="nl"><li><a href="docs.html" id="n-docs.html" class="on"><span class="si"> ලේඛන මුල් පිටුව</span><span class="en">Docs Home</span></a></li>
 <li><a href="dashboard.html" id="n-dashboard.html">  ව්‍යාපෘති DASHBOARD (මුදල් + Qty)</a></li>
-<li><a href="p01.html" id="n-p01.html">0 · ආයෝජක එකඟතා / Investor &amp; MOU</a></li>
-<li><a href="p02.html" id="n-p02.html">1 · සමාගම් ලියාපදිංචිය / Company (1st Reg.)</a></li>
-<li><a href="p03.html" id="n-p03.html">2 · ඉඩම සහ ගොඩනැඟිල්ල / Land</a></li>
-<li><a href="p04.html" id="n-p04.html">3 · ජල මූලාශ්‍රය / Water Source (WRB)</a></li>
-<li><a href="p05.html" id="n-p05.html">4 · කර්මාන්ත ශාලාව / Factory</a></li>
-<li><a href="p06.html" id="n-p06.html">5 · යන්ත්‍රෝපකරණ / Machinery</a></li>
-<li><a href="p07.html" id="n-p07.html">6 ·  FCAU ලියාපදිංචිය / MoH Registration</a></li>
-<li><a href="p08.html" id="n-p08.html">7 · SLSI සහතික / SLSI Certification</a></li>
-<li><a href="p09.html" id="n-p09.html">8 · පරිසර / Environment (CEA)</a></li>
-<li><a href="p10.html" id="n-p10.html">9 · බදු සහ ශ්‍රම / Tax &amp; Labour</a></li>
-<li><a href="p11.html" id="n-p11.html">10 · වෙළඳපොළ / Launch &amp; Market</a></li>
+<li><a href="p01.html" id="n-p01.html"><span class="si">ආයෝජක එකඟතා</span><span class="en">Investor &amp; MOU</span></a></li>
+<li><a href="p02.html" id="n-p02.html"><span class="si">සමාගම් ලියාපදිංචිය</span><span class="en">Company (1st Reg.)</span></a></li>
+<li><a href="p03.html" id="n-p03.html"><span class="si">ඉඩම සහ ගොඩනැඟිල්ල</span><span class="en">Land</span></a></li>
+<li><a href="p04.html" id="n-p04.html"><span class="si">ජල මූලාශ්‍රය</span><span class="en">Water Source (WRB)</span></a></li>
+<li><a href="p05.html" id="n-p05.html"><span class="si">කර්මාන්ත ශාලාව</span><span class="en">Factory</span></a></li>
+<li><a href="p06.html" id="n-p06.html"><span class="si">යන්ත්‍රෝපකරණ</span><span class="en">Machinery</span></a></li>
+<li><a href="p07.html" id="n-p07.html"><span class="si"> FCAU ලියාපදිංචිය</span><span class="en">MoH Registration</span></a></li>
+<li><a href="p08.html" id="n-p08.html"><span class="si">SLSI සහතික</span><span class="en">SLSI Certification</span></a></li>
+<li><a href="p09.html" id="n-p09.html"><span class="si">පරිසර</span><span class="en">Environment (CEA)</span></a></li>
+<li><a href="p10.html" id="n-p10.html"><span class="si">බදු සහ ශ්‍රම</span><span class="en">Tax &amp; Labour</span></a></li>
+<li><a href="p11.html" id="n-p11.html"><span class="si">වෙළඳපොළ</span><span class="en">Launch &amp; Market</span></a></li>
 <li><a href="p12.html" id="n-p12.html"> MASTER CHECKLIST</a></li>
-<li><a href="p13.html" id="n-p13.html">13 · අයවැය / Budget</a></li>
-<li><a href="p14.html" id="n-p14.html">14 · කාලසටහන / Timeline</a></li>
-<li><a href="p15.html" id="n-p15.html">15 · Due Diligence</a></li>
-<li><a href="p16.html" id="n-p16.html">16 · අවදානම් / Risk Register</a></li>
-<li><a href="p17.html" id="n-p17.html">17 · ආයතන / Agency Directory</a></li>
-<li><a href="p18.html" id="n-p18.html">18 · නැවුම් කිරීම් / Renewals</a></li>
-<li><a href="p19.html" id="n-p19.html">19 · ලේබල් / Labels</a></li>
-<li><a href="p20.html" id="n-p20.html">20 ·  පිරිපහදුව / Water Treatment Train</a></li>
-<li><a href="p21.html" id="n-p21.html">21 ·  තීරණ / Decisions &amp; Assumptions</a></li>
-<li><a href="t01.html" id="n-t01.html"> MOU / Term Sheet</a></li>
+<li><a href="p13.html" id="n-p13.html"><span class="si">අයවැය</span><span class="en">Budget</span></a></li>
+<li><a href="p14.html" id="n-p14.html"><span class="si">කාලසටහන</span><span class="en">Timeline</span></a></li>
+<li><a href="p15.html" id="n-p15.html">Due Diligence</a></li>
+<li><a href="p16.html" id="n-p16.html"><span class="si">අවදානම්</span><span class="en">Risk Register</span></a></li>
+<li><a href="p17.html" id="n-p17.html"><span class="si">ආයතන</span><span class="en">Agency Directory</span></a></li>
+<li><a href="p18.html" id="n-p18.html"><span class="si">නැවුම් කිරීම්</span><span class="en">Renewals</span></a></li>
+<li><a href="p19.html" id="n-p19.html"><span class="si">ලේබල්</span><span class="en">Labels</span></a></li>
+<li><a href="p20.html" id="n-p20.html"><span class="si"> පිරිපහදුව</span><span class="en">Water Treatment Train</span></a></li>
+<li><a href="p21.html" id="n-p21.html"><span class="si"> තීරණ</span><span class="en">Decisions &amp; Assumptions</span></a></li>
+<li><a href="t01.html" id="n-t01.html"><span class="si"> MOU</span><span class="en">Term Sheet</span></a></li>
 <li><a href="t02.html" id="n-t02.html"> Shareholders Agreement</a></li>
 <li><a href="t03.html" id="n-t03.html"> Board Resolution</a></li>
 <li><a href="t04.html" id="n-t04.html"> ජල පරීක්ෂණ ලිපිය</a></li>
@@ -665,10 +1180,10 @@ footer b{color:var(--ink-2)}
 <main id="main"><h1> බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාව — සම්පූර්ණ ව්‍යාපෘති ලේඛන පැකේජය</h1>
 <h1>Bottled Drinking Water Manufacturing Plant — Complete Project Documentation Pack</h1>
 <blockquote>
-<p><strong>ස්ථානය / Location:</strong> බණ්ඩාරවෙල, බදුල්ල දිස්ත්‍රික්කය, ඌව පළාත — Bandarawela, Badulla District, Uva Province<br />
-<strong>ව්‍යාපෘති වර්ගය / Structure:</strong> ආයෝජක හවුල්කාරිත්වයක් සහිත පෞද්ගලික සමාගමක් (Private Limited Company with an investor partnership)<br />
-<strong>සකස් කළ දිනය / Prepared:</strong> 2026-10-10<br />
-<strong>අනුවාදය / Version:</strong> 1.2</p>
+<p><strong><span class="si">ස්ථානය</span><span class="en">Location:</span></strong> බණ්ඩාරවෙල, බදුල්ල දිස්ත්‍රික්කය, ඌව පළාත — Bandarawela, Badulla District, Uva Province<br />
+<strong><span class="si">ව්‍යාපෘති වර්ගය</span><span class="en">Structure:</span></strong> ආයෝජක හවුල්කාරිත්වයක් සහිත පෞද්ගලික සමාගමක් (Private Limited Company with an investor partnership)<br />
+<strong><span class="si">සකස් කළ දිනය</span><span class="en">Prepared:</span></strong> 2026-10-10<br />
+<strong><span class="si">අනුවාදය</span><span class="en">Version:</span></strong> 1.2</p>
 </blockquote>
 <hr />
 <h2> තහවුරු කළ තීරණ | LOCKED DECISIONS (2026-10-10)</h2>
@@ -682,7 +1197,7 @@ footer b{color:var(--ink-2)}
 <tbody>
 <tr>
 <td> <strong>නිෂ්පාදනය</strong></td>
-<td><strong>"බෝතල් කළ පානීය ජලය / Bottled Drinking Water" — SLS 894</strong></td>
+<td><strong><span class="si">"බෝතල් කළ පානීය ජලය</span><span class="en">Bottled Drinking Water" — SLS 894</span></strong></td>
 </tr>
 <tr>
 <td> <strong>නොකරයි</strong></td>
@@ -690,7 +1205,7 @@ footer b{color:var(--ink-2)}
 </tr>
 <tr>
 <td> <strong>මූලාශ්‍රය</strong></td>
-<td>නළ ළිඳ / භූගත ජලය (deep tube well)</td>
+<td><span class="si">නළ ළිඳ</span><span class="en">භූගත ජලය (deep tube well)</span></td>
 </tr>
 <tr>
 <td> <strong>පිරිපහදුව</strong></td>
@@ -706,7 +1221,7 @@ footer b{color:var(--ink-2)}
 </tr>
 <tr>
 <td> <strong>ධාරිතාව</strong></td>
-<td>6,000 BPH (බෝතල් පැයට) — PET 500ml/1L/1.5L + 19L returnable</td>
+<td><span class="si">6,000 BPH (බෝතල් පැයට) — PET 500ml</span><span class="en">1L/1.5L + 19L returnable</span></td>
 </tr>
 <tr>
 <td> <strong>අයවැය</strong></td>
@@ -718,11 +1233,16 @@ footer b{color:var(--ink-2)}
 </tr>
 </tbody>
 </table>
-<p> <strong><a href="p21.html">තීරණ වාර්තාව / Decision log</a></strong> · <strong><a href="p20.html">ජල පිරිපහදු පද්ධතිය / Treatment train</a></strong></p>
+<p> <strong><a href="p21.html"><span class="si">තීරණ වාර්තාව</span><span class="en">Decision log</span></a></strong> · <strong><a href="p20.html"><span class="si">ජල පිරිපහදු පද්ධතිය</span><span class="en">Treatment train</span></a></strong></p>
+<hr />
+<h2> භාෂාව තෝරන්න | LANGUAGE SELECTOR</h2>
+<p>සෑම website page එකකම ඉහළ ඇති <strong><span class="si">භාෂාව</span><span class="en">Language</span></strong><span class="si"> selector එකෙන් සිංහල හෝ English තෝරන්න. තේරීම අනෙක් pages වෙතත් මතක තබා ගනී. පරිවර්තනයක් නොමැති වචනයක්</span><span class="en">field එකක් අතුරුදහන් නොකර, පවතින මුල් භාෂාවේ fallback එක පෙන්වයි.</span></p>
+<p>Use the <strong><span class="si">භාෂාව</span><span class="en">Language</span></strong> selector at the top of any generated page. Your choice is remembered across pages. Where a translation is not available, the source wording remains visible as a fallback instead of being hidden.</p>
+<p><strong>Tables / වගු:</strong> අදාළ නොවන cells සඳහා <code>—</code>; <mark class="to-confirm">තහවුරු කළ යුතු</mark> හෝ පුරවන්නට ඇති තැන් highlight කර ඇත. නීතිමය templates වල අත්සන් සහ පෞද්ගලික තොරතුරු සඳහා හිස් fields හිතාමතා තබා ඇත.</p>
 <hr />
 <h2> පිටු 7 — ආයෝජකයා ඉල්ලූ පිටු | THE SEVEN PAGES</h2>
 <blockquote>
-<p><strong>බලන්න / View:</strong> <code>site/index.html</code> — පිටු සියල්ලට සබැඳි ඇත · <strong>Build:</strong> <code>python3 build/build_all.py</code></p>
+<p><strong><span class="si">බලන්න</span><span class="en">View:</span></strong> <code>site/index.html</code> — පිටු සියල්ලට සබැඳි ඇත · <strong>Build:</strong> <code>.venv/bin/python build/build_all.py</code> (Windows: <code>.venv\Scripts\python.exe build\build_all.py</code>)</p>
 </blockquote>
 <table>
 <thead>
@@ -756,7 +1276,7 @@ footer b{color:var(--ink-2)}
 <tr>
 <td>5</td>
 <td><a href="site/5-organisation-chart.html"><code>5-organisation-chart.html</code></a></td>
-<td><strong>කර්මාන්ඩල සටහන</strong> — දෙපාර්තමේන්තු 4ක් අනුව රැකියා ධූරාවලිය, වැටුප් + EPF/ETF සහිතව (43 දෙනා · Rs 2,421,900/මාස)</td>
+<td><strong>කර්මාන්ඩල සටහන</strong><span class="si"> — දෙපාර්තමේන්තු 4ක් අනුව රැකියා ධූරාවලිය, වැටුප් + EPF</span><span class="en">ETF සහිතව (43 දෙනා · Rs 2,421,900/මාස)</span></td>
 </tr>
 <tr>
 <td>6</td>
@@ -770,7 +1290,7 @@ footer b{color:var(--ink-2)}
 </tr>
 </tbody>
 </table>
-<h3> ප්‍රධාන ඉලක්කම් / Headline numbers — <a href="site/7-final-summary.html">පිටුව 7</a></h3>
+<h3><span class="si"> ප්‍රධාන ඉලක්කම්</span><span class="en">Headline numbers — </span><a href="site/7-final-summary.html">පිටුව 7</a></h3>
 <table>
 <thead>
 <tr>
@@ -780,11 +1300,11 @@ footer b{color:var(--ink-2)}
 </thead>
 <tbody>
 <tr>
-<td> <strong>මුළු ආයෝජනය / Total investment</strong></td>
+<td> <strong><span class="si">මුළු ආයෝජනය</span><span class="en">Total investment</span></strong></td>
 <td><strong>Rs 196,532,230</strong> = ආරම්භක Rs 193,105,125 + පළමු නිෂ්පාදන Rs 3,427,105</td>
 </tr>
 <tr>
-<td> මුදලින් අවශ්‍ය / Cash to raise</td>
+<td><span class="si"> මුදලින් අවශ්‍ය</span><span class="en">Cash to raise</span></td>
 <td><strong>Rs 184,532,230</strong> — ඉඩම Rs 12M Mr. Thilakarathna ගේ in-kind දායකත්වයකි</td>
 </tr>
 <tr>
@@ -815,8 +1335,8 @@ footer b{color:var(--ink-2)}
 <hr />
 <h2>  ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel</h2>
 <blockquote>
-<p><strong>බලන්න / View:</strong> <code>site/dashboard.html</code> — එය <strong><code>/</code> (site root)</strong> ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.<br />
-<strong>Build:</strong> <code>python3 build/build_all.py</code> (සියල්ල එකවර) · <strong>ලේඛන / Docs:</strong> <code>site/docs.html</code></p>
+<p><strong><span class="si">බලන්න</span><span class="en">View:</span></strong> <code>site/dashboard.html</code> — එය <strong><code>/</code> (site root)</strong> ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.<br />
+<strong>Build:</strong> <code>.venv/bin/python build/build_all.py</code> (සියල්ල එකවර; Windows: <code>.venv\Scripts\python.exe build\build_all.py</code>) · <strong><span class="si">ලේඛන</span><span class="en">Docs:</span></strong> <code>site/docs.html</code></p>
 </blockquote>
 <p>මුළු ව්‍යාපෘතියම <strong>එක පිටුවක</strong> — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:</p>
 <table>
@@ -853,7 +1373,7 @@ footer b{color:var(--ink-2)}
 </tr>
 <tr>
 <td>7⃣ මුළු ආයෝජනය</td>
-<td>A → G පඩිපෙළ · <strong>Rs 214.24M</strong> (working capital Rs 28M ඇතුළුව) · මුදල් අවශ්‍යතාව Rs 202.24M · පිටු 1–7 හි සාරාංශය <strong>Rs 196.53M</strong> — වෙනස working capital buffer එකයි</td>
+<td>Dashboard A → G: <strong>Rs 214.24M</strong> (CAPEX incl. contingency + Rs 28M working capital; cash Rs 202.24M). පිටු 1–7: <strong>Rs 196.53M</strong> (setup + first production; working capital හැර)</td>
 </tr>
 <tr>
 <td>8⃣ <strong>බෝතලයක පිරිවැය</strong></td>
@@ -874,28 +1394,29 @@ footer b{color:var(--ink-2)}
 </tbody>
 </table>
 <blockquote>
-<p> <strong>මෙහි නැත්තේ:</strong> අවුරුදු ගණන් ලාභ/පාඩු ප්‍රක්ෂේපණ, payback, break-even, sensitivity.<br />
+<p> <strong>Budget reconciliation අවශ්‍යයි:</strong> පිටු 1–7 හි cash Rs 184.53223M + Rs 28M buffer = <strong>Rs 212.53223M</strong>; Dashboard Option B cash requirement <strong>Rs 202.2425M</strong>. වෙනස <strong>Rs 10.28973M</strong><span class="si"> — budget දෙකේ ඇතුළත් අයිතම</span><span class="en">පරාස එකිනෙකට වෙනස් බැවින් funding තීරණයකට පෙර line items එකඟ කරගන්න.</span></p>
+<p> <strong>මෙහි නැත්තේ:</strong><span class="si"> අවුරුදු ගණන් ලාභ</span><span class="en">පාඩු ප්‍රක්ෂේපණ, payback, break-even, sensitivity.</span><br />
 ඔබ ඉල්ලූ පරිදි dashboard එක <strong>නිෂ්පාදනය ආරම්භ කරන තැනින් නවතී.</strong> ඒවා පසුව වෙනම සාදමු.</p>
 </blockquote>
 <hr />
-<h2> මෙම පැකේජයෙන් ලැබෙන්නේ මොනවාද? / What is in this pack?</h2>
+<h2><span class="si"> මෙම පැකේජයෙන් ලැබෙන්නේ මොනවාද?</span><span class="en">What is in this pack?</span></h2>
 <p>ඔබ ඉල්ලූ පරිදි — <strong>"1st Registration Document එක ඉඳන්"</strong>, එනම් සමාගම ලියාපදිංචි කිරීමේ පළමු ලේඛනයේ සිට කර්මාන්ත ශාලාව විවෘත කර නිෂ්පාදනය ආරම්භ කරන තෙක් <strong>අවශ්‍ය සියලුම මූලික ලේඛන, අවශ්‍ය දේවල් (උපකරණ/සේවා), සහ සේවා සපයන්නන්</strong> — වෙන වෙනම, පිළිවෙළින්, ලැයිස්තුගත කර ඇත.</p>
 <p>As you asked — from the <strong>very first registration document</strong> (company incorporation) right up to opening the plant and starting production, every required document, every required item and every required service is listed <strong>separately and in order</strong>.</p>
 <hr />
-<h2> ලේඛන සිතියම / Document Map</h2>
+<h2><span class="si"> ලේඛන සිතියම</span><span class="en">Document Map</span></h2>
 <h3>කොටස 1 — පියවර 10 ව්‍යාපෘති මාර්ග සිතියම (Phase-by-phase requirements)</h3>
 <table>
 <thead>
 <tr>
 <th>#</th>
-<th>ලේඛනය / Document</th>
-<th>අන්තර්ගතය / Contents</th>
+<th><span class="si">ලේඛනය</span><span class="en">Document</span></th>
+<th><span class="si">අන්තර්ගතය</span><span class="en">Contents</span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>01</td>
-<td><a href="p01.html">Phase 0 — ආයෝජක එකඟතා / Investor &amp; MOU</a></td>
+<td><a href="p01.html"><span class="si">Phase 0 — ආයෝජක එකඟතා</span><span class="en">Investor &amp; MOU</span></a></td>
 <td>ආයෝජක පරීක්ෂණ ලේඛන, MOU, Term Sheet, හවුල්කාරිත්ව ගිවිසුම්</td>
 </tr>
 <tr>
@@ -905,22 +1426,22 @@ footer b{color:var(--ink-2)}
 </tr>
 <tr>
 <td>03</td>
-<td><a href="p03.html">Phase 2 — ඉඩම සහ ගොඩනැඟිල්ල / Land &amp; Premises</a></td>
-<td>ඔප්පු, සමීක්ෂණ සැලසුම, UDA/ප්‍රා.ස. අනුමැති, Certificate of Conformity</td>
+<td><a href="p03.html"><span class="si">Phase 2 — ඉඩම සහ ගොඩනැඟිල්ල</span><span class="en">Land &amp; Premises</span></a></td>
+<td><span class="si">ඔප්පු, සමීක්ෂණ සැලසුම, UDA</span><span class="en">ප්‍රා.ස. අනුමැති, Certificate of Conformity</span></td>
 </tr>
 <tr>
 <td>04</td>
-<td><a href="p04.html">Phase 3 — ජල මූලාශ්‍රය / Water Source (WRB)</a></td>
-<td>Gazette 2010/23, ළිඳ/නළ ළිඳ, SLS 614:2013 පරීක්ෂණ</td>
+<td><a href="p04.html"><span class="si">Phase 3 — ජල මූලාශ්‍රය</span><span class="en">Water Source (WRB)</span></a></td>
+<td><span class="si">Gazette 2010/23, ළිඳ</span><span class="en">නළ ළිඳ, SLS 614:2013 පරීක්ෂණ</span></td>
 </tr>
 <tr>
 <td>05</td>
-<td><a href="p05.html">Phase 4 — කර්මාන්ත ශාලා ඉදිකිරීම / Factory Construction</a></td>
+<td><a href="p05.html"><span class="si">Phase 4 — කර්මාන්ත ශාලා ඉදිකිරීම</span><span class="en">Factory Construction</span></a></td>
 <td>ආහාර ශ්‍රේණියේ සැලසුම, filling room, utilities, ETP</td>
 </tr>
 <tr>
 <td>06</td>
-<td><a href="p06.html">Phase 5 — යන්ත්‍රෝපකරණ සහ උපකරණ / Machinery &amp; Equipment</a></td>
+<td><a href="p06.html"><span class="si">Phase 5 — යන්ත්‍රෝපකරණ සහ උපකරණ</span><span class="en">Machinery &amp; Equipment</span></a></td>
 <td>සම්පූර්ණ machine list, lab equipment, spare parts, consumables</td>
 </tr>
 <tr>
@@ -930,22 +1451,22 @@ footer b{color:var(--ink-2)}
 </tr>
 <tr>
 <td>08</td>
-<td><a href="p08.html">Phase 7 — SLSI සහතික කිරීම / SLSI Certification</a></td>
+<td><a href="p08.html"><span class="si">Phase 7 — SLSI සහතික කිරීම</span><span class="en">SLSI Certification</span></a></td>
 <td>SLS 894, SLS 1038, SLS 1336:2008 (PET බෝතල්), SLS Mark</td>
 </tr>
 <tr>
 <td>09</td>
-<td><a href="p09.html">Phase 8 — පරිසර අනුමැති / Environmental (CEA)</a></td>
+<td><a href="p09.html"><span class="si">Phase 8 — පරිසර අනුමැති</span><span class="en">Environmental (CEA)</span></a></td>
 <td>EPL, Scheduled Waste Licence, discharge standards</td>
 </tr>
 <tr>
 <td>10</td>
-<td><a href="p10.html">Phase 9 — බදු, ශ්‍රම, වෙනත් නීතිමය / Tax, Labour, Statutory</a></td>
+<td><a href="p10.html"><span class="si">Phase 9 — බදු, ශ්‍රම, වෙනත් නීතිමය</span><span class="en">Tax, Labour, Statutory</span></a></td>
 <td>TIN, VAT, SSCL, EPF/ETF, Factory Ordinance, Annual Return</td>
 </tr>
 <tr>
 <td>11</td>
-<td><a href="p11.html">Phase 10 — වෙළඳපොළට පිවිසීම / Launch &amp; Market</a></td>
+<td><a href="p11.html"><span class="si">Phase 10 — වෙළඳපොළට පිවිසීම</span><span class="en">Launch &amp; Market</span></a></td>
 <td>Trademark, Barcode, Label, Distribution, Export, BOI</td>
 </tr>
 </tbody>
@@ -955,8 +1476,8 @@ footer b{color:var(--ink-2)}
 <thead>
 <tr>
 <th>#</th>
-<th>ලේඛනය / Document</th>
-<th>අන්තර්ගතය / Contents</th>
+<th><span class="si">ලේඛනය</span><span class="en">Document</span></th>
+<th><span class="si">අන්තර්ගතය</span><span class="en">Contents</span></th>
 </tr>
 </thead>
 <tbody>
@@ -967,47 +1488,47 @@ footer b{color:var(--ink-2)}
 </tr>
 <tr>
 <td>13</td>
-<td><a href="p13.html">මූලධන ආයෝජනය සහ අයවැය / Capital Investment Budget</a></td>
+<td><a href="p13.html"><span class="si">මූලධන ආයෝජනය සහ අයවැය</span><span class="en">Capital Investment Budget</span></a></td>
 <td>CAPEX / OPEX, කුඩා–මධ්‍යම–විශාල යන විකල්ප 3</td>
 </tr>
 <tr>
 <td>14</td>
-<td><a href="p14.html">ව්‍යාපෘති කාල සටහන / Project Timeline</a></td>
+<td><a href="p14.html"><span class="si">ව්‍යාපෘති කාල සටහන</span><span class="en">Project Timeline</span></a></td>
 <td>මාස 12–18 Gantt සැලැස්ම</td>
 </tr>
 <tr>
 <td>15</td>
-<td><a href="p15.html">ආයෝජක Due Diligence පැකේජය / Investor Due Diligence</a></td>
+<td><a href="p15.html"><span class="si">ආයෝජක Due Diligence පැකේජය</span><span class="en">Investor Due Diligence</span></a></td>
 <td>ආයෝජකයාට පෙන්විය යුතු ලේඛන</td>
 </tr>
 <tr>
 <td>16</td>
-<td><a href="p16.html">අවදානම් ලේඛනය / Risk Register</a></td>
+<td><a href="p16.html"><span class="si">අවදානම් ලේඛනය</span><span class="en">Risk Register</span></a></td>
 <td>අවදානම් 20ක් + අඩු කිරීමේ ක්‍රියාමාර්ග</td>
 </tr>
 <tr>
 <td>17</td>
-<td><a href="p17.html">ආයතන සහ සේවා සපයන්නන් / Agency &amp; Service Directory</a></td>
+<td><a href="p17.html"><span class="si">ආයතන සහ සේවා සපයන්නන්</span><span class="en">Agency &amp; Service Directory</span></a></td>
 <td>කවුරුන් වෙත කුමක් ලබාගන්නේද — සම්පූර්ණ ලැයිස්තුව</td>
 </tr>
 <tr>
 <td>18</td>
-<td><a href="p18.html">නැවුම් කිරීමේ කාලසටහන / Renewal &amp; Compliance Calendar</a></td>
+<td><a href="p18.html"><span class="si">නැවුම් කිරීමේ කාලසටහන</span><span class="en">Renewal &amp; Compliance Calendar</span></a></td>
 <td>මාසික / වාර්ෂික / වසර 3ක යුතුකම්</td>
 </tr>
 <tr>
 <td>19</td>
-<td><a href="p19.html">ලේබල් අවශ්‍යතා / Label Requirements</a></td>
+<td><a href="p19.html"><span class="si">ලේබල් අවශ්‍යතා</span><span class="en">Label Requirements</span></a></td>
 <td>Food (Labelling &amp; Advertising) Regulations 2005</td>
 </tr>
 <tr>
 <td>20</td>
-<td><a href="p20.html"> <strong>ජල පිරිපහදු පද්ධතිය / Water Treatment Train</strong></a></td>
+<td><a href="p20.html"> <strong><span class="si">ජල පිරිපහදු පද්ධතිය</span><span class="en">Water Treatment Train</span></strong></a></td>
 <td> සම්පූර්ණ <strong>filtration දාමය</strong> — එක් එක් පෙරහන මොනවා ඉවත් කරයිද, CCP 7ක්, media මාරු කිරීමේ කාලසටහන, RO reject, <strong>bromate අවදානම</strong></td>
 </tr>
 <tr>
 <td>21</td>
-<td><a href="p21.html"> <strong>තීරණ සහ උපකල්පන / Decision &amp; Assumption Log</strong></a></td>
+<td><a href="p21.html"> <strong><span class="si">තීරණ සහ උපකල්පන</span><span class="en">Decision &amp; Assumption Log</span></strong></a></td>
 <td> තහවුරු කළ තීරණ, විවෘත ප්‍රශ්න 6ක්, ධාරිතාව පිළිබඳ නිර්දේශය, Phase 1→4 වර්ධන සැලැස්ම</td>
 </tr>
 </tbody>
@@ -1016,7 +1537,7 @@ footer b{color:var(--ink-2)}
 <table>
 <thead>
 <tr>
-<th>ලේඛනය / Template</th>
+<th><span class="si">ලේඛනය</span><span class="en">Template</span></th>
 </tr>
 </thead>
 <tbody>
@@ -1030,7 +1551,7 @@ footer b{color:var(--ink-2)}
 <td><a href="t03.html">Board Resolution — සමාගම ලියාපදිංචි කිරීම සඳහා</a></td>
 </tr>
 <tr>
-<td><a href="t04.html">ජල පරීක්ෂණ ඉල්ලුම් ලිපිය (SLSI/ITI)</a></td>
+<td><a href="t04.html"><span class="si">ජල පරීක්ෂණ ඉල්ලුම් ලිපිය (SLSI</span><span class="en">ITI)</span></a></td>
 </tr>
 <tr>
 <td><a href="t05.html">FCAU අයදුම්පත සඳහා ආවරණ ලිපිය</a></td>
@@ -1041,8 +1562,8 @@ footer b{color:var(--ink-2)}
 <table>
 <thead>
 <tr>
-<th>ගොනුව / File</th>
-<th>භාවිතය / Use</th>
+<th><span class="si">ගොනුව</span><span class="en">File</span></th>
+<th><span class="si">භාවිතය</span><span class="en">Use</span></th>
 </tr>
 </thead>
 <tbody>
@@ -1061,9 +1582,9 @@ footer b{color:var(--ink-2)}
 </tbody>
 </table>
 <hr />
-<h2> ඉක්මන් ආරම්භය / Quick Start — පළමු පියවර 7</h2>
+<h2><span class="si"> ඉක්මන් ආරම්භය</span><span class="en">Quick Start — පළමු පියවර 7</span></h2>
 <ol>
-<li><strong>ඉඩම තහවුරු කරගන්න</strong> — අවම <strong>පර්චස් 160</strong> (FCAU අවශ්‍යතාව). ඔප්පුව/බදු ගිවිසුම (වසර 5+) ලියාපදිංචි කරන්න.</li>
+<li><strong>ඉඩම <mark class="to-confirm">තහවුරු කරගන්න</mark></strong> — අවම <strong>පර්චස් 160</strong> (FCAU අවශ්‍යතාව). ඔප්පුව/බදු ගිවිසුම (වසර 5+) ලියාපදිංචි කරන්න.</li>
 <li><strong>ජල මූලාශ්‍රය පරීක්ෂා කරන්න</strong> — කර්මාන්ත ශාලාව ඉදිකිරීමට <strong>පෙර</strong> ළිඳ සම්පූර්ණ කර <strong>SLS 614:2013</strong> පරීක්ෂණ වාර්තාව ලබාගන්න. මෙය අසමත් වුවහොත් ලියාපදිංචිය නොලැබේ.</li>
 <li><strong>MOU එක අත්සන් කරන්න</strong> — ආයෝජකයා සමඟ කොටස්, පාලනය, පිටවීමේ කොන්දේසි.</li>
 <li><strong>සමාගම ලියාපදිංචි කරන්න (eROC)</strong> — මෙයයි <strong>1st Registration Document</strong>.</li>
@@ -1072,13 +1593,23 @@ footer b{color:var(--ink-2)}
 <li><strong>FCAU අයදුම්පත</strong> → SLSI audit → තාවකාලික ලියාපදිංචිය.</li>
 </ol>
 <hr />
-<h2> වැදගත් සටහන / Important Note</h2>
-<p>මෙම ලේඛනය <strong>මාර්ගෝපදේශයකි (guidance document)</strong>, නීතිමය උපදෙසක් නොවේ. රජයේ ගාස්තු, නීති සහ අවශ්‍යතා වෙනස් විය හැක. එක් එක් අයිතමය සඳහා <strong>"තහවුරු කරන්න / Verify"</strong> ලෙස සලකුණු කර ඇති ස්ථානවලදී අදාළ ආයතනයෙන් (DRC, FCAU, SLSI, CEA, WRB, IRD, ප්‍රාදේශීය ලේකම්/ප්‍රා.ස.) ඍජුවම තහවුරු කරගන්න.</p>
-<p>This is a <strong>guidance document</strong>, not legal advice. Verify all fees and requirements directly with the issuing authority before committing money.</p>
+<h2><span class="si"> වැදගත් සටහන</span><span class="en">Important Note</span></h2>
+<p>මෙම ලේඛනය <strong>මාර්ගෝපදේශයකි (guidance document)</strong>, නීතිමය උපදෙසක් නොවේ. රජයේ ගාස්තු, නීති සහ අවශ්‍යතා වෙනස් විය හැක. එක් එක් අයිතමය සඳහා <strong><span class="si">"<mark class="to-confirm">තහවුරු කරන්න</mark></span><span class="en"><mark class="to-confirm">Verify</mark>"</span></strong> ලෙස සලකුණු කර ඇති ස්ථානවලදී අදාළ ආයතනයෙන් (DRC, FCAU, SLSI, CEA, WRB, IRD, ප්‍රාදේශීය ලේකම්/ප්‍රා.ස.) ඍජුවම <mark class="to-confirm">තහවුරු කරගන්න</mark>.</p>
+<p>This is a <strong>guidance document</strong>, not legal advice. <mark class="to-confirm">Verify</mark> all fees and requirements directly with the issuing authority before committing money.</p>
 <hr />
-<h2> ලේඛන පිරික්සීම / Browse the pack</h2>
-<p><code>site/</code> තුළ ස්ථිතික වෙබ් අඩවියක් උත්පාදනය කර ඇත. නැරඹීමට:</p>
-<pre><code class="language-bash">python3 build/build_all.py &amp;&amp; cd site &amp;&amp; python3 -m http.server 8000 --bind 0.0.0.0
+<h2><span class="si"> ලේඛන පිරික්සීම</span><span class="en">Browse the pack</span></h2>
+<p><code>site/</code> තුළ ස්ථිතික වෙබ් අඩවියක් උත්පාදනය කර ඇත. පළමු වරට build කිරීමට Python 3 සහ <code>requirements.txt</code> හි dependency ස්ථාපනය කරන්න:</p>
+<pre><code class="language-bash">python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python build/build_all.py
+</code></pre>
+<p>Windows PowerShell සඳහා:</p>
+<pre><code class="language-powershell">py -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe build\build_all.py
+</code></pre>
+<p>Build එකෙන් පසු site එක නැරඹීමට:</p>
+<pre><code class="language-bash">cd site &amp;&amp; python3 -m http.server 8000 --bind 0.0.0.0
 </code></pre></main>
 </div>
 <script>
@@ -1086,4 +1617,102 @@ function flt(){var v=document.getElementById('q').value.toLowerCase();
 document.querySelectorAll('#nl a').forEach(function(a){
 a.parentElement.style.display=a.textContent.toLowerCase().indexOf(v)>-1?'':'none';});}
 </script>
+<script>(function(){
+  var KEY='wb-project-language';
+  var SINHALA=/[\u0D80-\u0DFF]/;
+  var BLOCK_TAGS=/^(P|H[1-6]|LI|TD|TH|BUTTON|A|LABEL|SUMMARY)$/;
+  var LANGUAGE_RUNS=/[\u0D80-\u0DFF]+|[^\u0D80-\u0DFF]+/g;
+
+  function nearestBlock(el){
+    var node=el.parentElement;
+    while(node && node!==document.body){
+      if(BLOCK_TAGS.test(node.tagName) || node.classList.contains('pc-desc') ||
+         node.classList.contains('hsub') || node.classList.contains('brand')) return node;
+      node=node.parentElement;
+    }
+    return el.parentElement || document.body;
+  }
+
+  function annotatePairedBlocks(){
+    var blocks=new Set();
+    document.querySelectorAll('.en').forEach(function(el){blocks.add(nearestBlock(el));});
+    blocks.forEach(function(block){
+      if(!block) return;
+      function wrapRuns(node){
+        Array.prototype.slice.call(node.childNodes).forEach(function(child){
+          if(child.nodeType===Node.TEXT_NODE && SINHALA.test(child.nodeValue||'')){
+            var parts=(child.nodeValue||'').match(LANGUAGE_RUNS)||[];
+            var fragment=document.createDocumentFragment();
+            parts.forEach(function(part){
+              if(SINHALA.test(part)){
+                var span=document.createElement('span');
+                span.className='si'; span.textContent=part; fragment.appendChild(span);
+              }else{
+                fragment.appendChild(document.createTextNode(part));
+              }
+            });
+            child.parentNode.replaceChild(fragment,child);
+          }else if(child.nodeType===Node.ELEMENT_NODE &&
+                   !child.matches('script,style,.en,.si,.nav-si')){
+            wrapRuns(child);
+          }
+        });
+      }
+      wrapRuns(block);
+    });
+  }
+
+  function hasSinhalaOutsideEnglish(el){
+    var block=nearestBlock(el);
+    if(!block) return false;
+    var copy=block.cloneNode(true);
+    copy.querySelectorAll('.en').forEach(function(n){n.remove();});
+    return SINHALA.test(copy.textContent || '');
+  }
+
+  function hasEnglishCounterpart(el){
+    var block=nearestBlock(el);
+    if(!block) return false;
+    return Array.prototype.some.call(block.querySelectorAll('.en'),function(n){
+      return n!==el && !el.contains(n);
+    });
+  }
+
+  function applyLanguage(lang, persist){
+    if(lang!=='si' && lang!=='en') lang='si';
+    document.documentElement.lang=lang;
+    document.documentElement.setAttribute('data-language',lang);
+
+    document.querySelectorAll('.en').forEach(function(el){
+      // If the source has no Sinhala counterpart, keep the English wording as
+      // the fallback even in Sinhala mode.
+      el.hidden=(lang==='si' && hasSinhalaOutsideEnglish(el));
+    });
+    document.querySelectorAll('.si,.nav-si').forEach(function(el){
+      // If the source has no English counterpart, keep Sinhala as the fallback.
+      el.hidden=(lang==='en' && hasEnglishCounterpart(el));
+    });
+    document.querySelectorAll('.language-select').forEach(function(select){
+      select.value=lang;
+    });
+    if(persist){
+      try { localStorage.setItem(KEY,lang); } catch(e) {}
+    }
+    document.dispatchEvent(new CustomEvent('wb-language-change',{detail:{language:lang}}));
+  }
+
+  document.addEventListener('change',function(event){
+    if(event.target && event.target.matches('.language-select'))
+      applyLanguage(event.target.value,true);
+  });
+
+  var saved='si';
+  try { var stored=localStorage.getItem(KEY); if(stored==='si'||stored==='en') saved=stored; } catch(e) {}
+  function initializeLanguage(){annotatePairedBlocks();applyLanguage(saved,false);}
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initializeLanguage);
+  }else{
+    initializeLanguage();
+  }
+})();</script>
 </body></html>

@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """One-command build for the whole pack.
 
-    python3 build/build_all.py
+    python3 -m venv .venv
+    .venv/bin/python -m pip install -r requirements.txt
+    .venv/bin/python build/build_all.py
+
+(Windows: use .venv\\Scripts\\python.exe instead of .venv/bin/python.)
 
 Runs, in order:
   1. build_checklist.py  -> docs/12-master-document-checklist.md  (from the CSV)

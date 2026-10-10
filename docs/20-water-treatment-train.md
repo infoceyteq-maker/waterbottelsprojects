@@ -146,7 +146,7 @@ RO එකෙන් ජලයෙන් අඩක් පමණ **අපතේ ය�
 |---|---|---|---|---|
 | **CCP 1** — MGSF | අංශු, iron | Turbidity < 1 NTU | සෑම පැය 4කට | Backwash; ඉදිරියට යාම නවත්වන්න |
 | **CCP 2** — ACF | Chlorine (membrane හානිය) | Free Cl < 0.1 ppm | දෛනික + online | Carbon මාරු කරන්න; batch hold |
-| **CCP 3** — RO | දියවූ ලවණ, බැර ලෝහ | Conductivity ≤ [___] µS/cm; TDS ≤ [___] | **Online, අඛණ්ඩව** | ඉදිරියට යාම නවත්වන්න; batch reject |
+| **CCP 3** — RO | දියවූ ලවණ, බැර ලෝහ | Conductivity ≤ **[To set from validated source-water tests / වලංගු කළ මූලාශ්‍ර ජල පරීක්ෂණ අනුව සකසන්න]** µS/cm; TDS ≤ **[To set from validated source-water tests / වලංගු කළ මූලාශ්‍ර ජල පරීක්ෂණ අනුව සකසන්න]** | **Online, අඛණ්ඩව** | ඉදිරියට යාම නවත්වන්න; batch reject |
 | **CCP 4** — UV | ක්ෂුද්‍ර ජීවී | Dose ≥ 40 mJ/cm²; lamp OK | Lamp hours + intensity alarm | Lamp මාරු කරන්න; batch hold |
 | **CCP 5** — ⭐ **Ozone** | ක්ෂුද්‍ර ජීවී + shelf life | **0.2–0.4 ppm** at filler | **සෑම batch එකකම** | O₃ generator adjust; **batch නිකුත් නොකරන්න** |
 | **CCP 6** — 0.2 µm filter | අවසාන බාධකය | ΔP within spec; integrity OK | Batch එකකට | Filter මාරු කරන්න; batch hold |

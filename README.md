@@ -26,9 +26,19 @@
 
 ---
 
+## 🌐 භාෂාව තෝරන්න | LANGUAGE SELECTOR
+
+සෑම website page එකකම ඉහළ ඇති **භාෂාව / Language** selector එකෙන් සිංහල හෝ English තෝරන්න. තේරීම අනෙක් pages වෙතත් මතක තබා ගනී. පරිවර්තනයක් නොමැති වචනයක්/field එකක් අතුරුදහන් නොකර, පවතින මුල් භාෂාවේ fallback එක පෙන්වයි.
+
+Use the **භාෂාව / Language** selector at the top of any generated page. Your choice is remembered across pages. Where a translation is not available, the source wording remains visible as a fallback instead of being hidden.
+
+**Tables / වගු:** අදාළ නොවන cells සඳහා `—`; තහවුරු කළ යුතු හෝ පුරවන්නට ඇති තැන් highlight කර ඇත. නීතිමය templates වල අත්සන් සහ පෞද්ගලික තොරතුරු සඳහා හිස් fields හිතාමතා තබා ඇත.
+
+---
+
 ## 📄 පිටු 7 — ආයෝජකයා ඉල්ලූ පිටු | THE SEVEN PAGES
 
-> **බලන්න / View:** `site/index.html` — පිටු සියල්ලට සබැඳි ඇත · **Build:** `python3 build/build_all.py`
+> **බලන්න / View:** `site/index.html` — පිටු සියල්ලට සබැඳි ඇත · **Build:** `.venv/bin/python build/build_all.py` (Windows: `.venv\Scripts\python.exe build\build_all.py`)
 
 | # | පිටුව | අන්තර්ගතය |
 |---|---|---|
@@ -60,7 +70,7 @@
 ## 📊 ⭐ ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel
 
 > **බලන්න / View:** `site/dashboard.html` — එය **`/` (site root)** ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.
-> **Build:** `python3 build/build_all.py` (සියල්ල එකවර) · **ලේඛන / Docs:** `site/docs.html`
+> **Build:** `.venv/bin/python build/build_all.py` (සියල්ල එකවර; Windows: `.venv\Scripts\python.exe build\build_all.py`) · **ලේඛන / Docs:** `site/docs.html`
 
 මුළු ව්‍යාපෘතියම **එක පිටුවක** — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:
 
@@ -72,11 +82,13 @@
 | 4️⃣ නිෂ්පාදන 5 | 500 ml · 1 L · 1.5 L · **5 L** · 19 L — වෙන වෙනම Qty |
 | 5️⃣ **අදියර 1** | 💰 **පටන් ගත් දවසේ සිට ෆැක්ටරි එක ඕපන් කරන තෙක්** — Rs 75.15M |
 | 6️⃣ **අදියර 2** | 🏭 **ෆැක්ටරි එක ඕපන් සිට නිෂ්පාදනයට සූදානම් වන තෙක්** — Rs 86.80M |
-| 7️⃣ මුළු ආයෝජනය | A → G පඩිපෙළ · **Rs 214.24M** (working capital Rs 28M ඇතුළුව) · මුදල් අවශ්‍යතාව Rs 202.24M · පිටු 1–7 හි සාරාංශය **Rs 196.53M** — වෙනස working capital buffer එකයි |
+| 7️⃣ මුළු ආයෝජනය | Dashboard A → G: **Rs 214.24M** (CAPEX incl. contingency + Rs 28M working capital; cash Rs 202.24M). පිටු 1–7: **Rs 196.53M** (setup + first production; working capital හැර) |
 | 8️⃣ **බෝතලයක පිරිවැය** | 🧮 **නිෂ්පාදන 5ම වෙන වෙනම** — අයිතම් 10 බැගින් |
 | 9️⃣ අමුද්‍රව්‍ය + ලේබල් | මාසික Qty — wastage සහිතව |
 | 🔟 ලේඛන ලැයිස්තුව | අයිතම් 160 — tick කරන්න, progress bar එකක් සමඟ |
 | 1️⃣1️⃣–1️⃣2️⃣ | කාලසටහන · ප්‍රධාන අවදානම් |
+
+> ⚠️ **Budget reconciliation අවශ්‍යයි:** පිටු 1–7 හි cash Rs 184.53223M + Rs 28M buffer = **Rs 212.53223M**; Dashboard Option B cash requirement **Rs 202.2425M**. වෙනස **Rs 10.28973M** — budget දෙකේ ඇතුළත් අයිතම/පරාස එකිනෙකට වෙනස් බැවින් funding තීරණයකට පෙර line items එකඟ කරගන්න.
 
 > ⛔ **මෙහි නැත්තේ:** අවුරුදු ගණන් ලාභ/පාඩු ප්‍රක්ෂේපණ, payback, break-even, sensitivity.
 > ඔබ ඉල්ලූ පරිදි dashboard එක **නිෂ්පාදනය ආරම්භ කරන තැනින් නවතී.** ඒවා පසුව වෙනම සාදමු.
@@ -166,8 +178,24 @@ This is a **guidance document**, not legal advice. Verify all fees and requireme
 
 ## 🖥️ ලේඛන පිරික්සීම / Browse the pack
 
-`site/` තුළ ස්ථිතික වෙබ් අඩවියක් උත්පාදනය කර ඇත. නැරඹීමට:
+`site/` තුළ ස්ථිතික වෙබ් අඩවියක් උත්පාදනය කර ඇත. පළමු වරට build කිරීමට Python 3 සහ `requirements.txt` හි dependency ස්ථාපනය කරන්න:
 
 ```bash
-python3 build/build_all.py && cd site && python3 -m http.server 8000 --bind 0.0.0.0
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python build/build_all.py
+```
+
+Windows PowerShell සඳහා:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe build\build_all.py
+```
+
+Build එකෙන් පසු site එක නැරඹීමට:
+
+```bash
+cd site && python3 -m http.server 8000 --bind 0.0.0.0
 ```

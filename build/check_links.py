@@ -128,6 +128,12 @@ def check_csv():
     else:
         ok("no blank phase/item_en values")
 
+    blank_notes = [r["id"] for r in rows if not r["notes"].strip()]
+    if blank_notes:
+        fail(f"rows with blank Notes cells: {blank_notes[:10]}")
+    else:
+        ok("all checklist Notes cells are explicit (text or —)")
+
     phases = []
     for r in rows:
         if r["phase"] not in phases:
@@ -148,7 +154,12 @@ def check_data_files():
         if not rows:
             fail(f"data/{name} is empty")
         else:
-            ok(f"data/{name}: {len(rows)} rows, {len(rows[0])} columns")
+            blank_cells = [(i + 2, key) for i, row in enumerate(rows)
+                           for key, value in row.items() if not (value or "").strip()]
+            if blank_cells:
+                fail(f"data/{name} has blank cells: {blank_cells[:8]}")
+            else:
+                ok(f"data/{name}: {len(rows)} rows, {len(rows[0])} columns; no blank cells")
 
 
 def check_site(item_count):
@@ -184,6 +195,38 @@ def check_site(item_count):
         fail(f"site/p12.html shows {rows_in_html} checklist rows but CSV has {item_count}")
     else:
         ok(f"site/p12.html in sync with CSV ({rows_in_html} checklist rows)")
+
+    # Every generated page family must expose the persistent language picker.
+    html_files = [name for name in os.listdir(site) if name.endswith(".html")]
+    missing_switch = []
+    for name in html_files:
+        with open(os.path.join(site, name), encoding="utf-8") as fh:
+            page = fh.read()
+        required = ('class="language-select"', 'option value="si"',
+                    'option value="en"', 'wb-project-language')
+        if any(token not in page for token in required):
+            missing_switch.append(name)
+    if missing_switch:
+        fail(f"language selector or persistence script missing from: {missing_switch}")
+    else:
+        ok(f"Sinhala/English selector and saved preference present on all {len(html_files)} generated pages")
+
+    # Non-template output must not leave cells blank; templates retain highlighted
+    # blank input/signature fields by design.
+    blank_pages = []
+    template_pages = []
+    for name in html_files:
+        with open(os.path.join(site, name), encoding="utf-8") as fh:
+            page = fh.read()
+        blanks = len(re.findall(r'<td(?:\s[^>]*)?>\s*</td>', page, re.I))
+        if 'class="template-page"' in page:
+            template_pages.append(name)
+        elif blanks:
+            blank_pages.append((name, blanks))
+    if blank_pages:
+        fail(f"non-template pages have unfilled table cells: {blank_pages}")
+    else:
+        ok("generated tables are complete; intentional template fields remain blank and highlighted")
 
 
 def check_csv_in_sync(item_count):

@@ -23,19 +23,33 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_dashboard import CSS, ASSET, plain   # noqa: E402
 from dashboard_model import build_model         # noqa: E402
+from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
+                              fill_empty_table_cells, highlight_prompts,
+                              mark_bilingual_pairs)  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "site")
 
 PAGES = [
-    ("1-setup-budget.html", "1", "ආරම්භක අයවැය", "Setup budget"),
-    ("2-first-production.html", "2", "පළමු නිෂ්පාදන අයවැය", "First production"),
-    ("3-first-stock-cost.html", "3", "පළමු stock එකේ පිරිවැය", "First stock cost"),
-    ("4-process-documents.html", "4", "ක්‍රියාවලිය + ලේඛන", "Process & documents"),
-    ("5-organisation-chart.html", "5", "කර්මාන්ඩල සටහන", "Organisation chart"),
-    ("6-sales-marketing.html", "6", "අලෙවි සහ නාමකරණ", "Sales & marketing"),
-    ("7-final-summary.html", "7", "අවසන් සාරාංශය", "Final summary"),
+    ("1-setup-budget.html", "1", "ආරම්භක අයවැය", "Setup Budget"),
+    ("2-first-production.html", "2", "පළමු නිෂ්පාදන අයවැය", "First Production Budget"),
+    ("3-first-stock-cost.html", "3", "පළමු stock එකේ පිරිවැය", "First Stock Cost"),
+    ("4-process-documents.html", "4", "ක්‍රියාවලිය", "Process"),
+    ("5-organisation-chart.html", "5", "කළමනාකරණය සහ මූල්‍ය", "Management & Finance"),
+    ("6-sales-marketing.html", "6", "අලෙවිය සහ අලෙවිකරණය", "Sales & Marketing"),
+    ("7-final-summary.html", "7", "අවසන් සාරාංශය", "Final Summary"),
 ]
+
+PAGE_CATEGORY = {
+    "0": ("බණ්ඩාරවෙල · ඌව කඳුකරය", "Bandarawela · Uva Highlands"),
+    "1": ("අයවැය", "Budget"),
+    "2": ("අයවැය", "Budget"),
+    "3": ("අයවැය", "Budget"),
+    "4": ("ක්‍රියාවලිය", "Process"),
+    "5": ("කළමනාකරණය සහ මූල්‍ය", "Management & Finance"),
+    "6": ("අලෙවිය සහ අලෙවිකරණය", "Sales & Marketing"),
+    "7": ("අවසන් සාරාංශය", "Final Summary"),
+}
 
 
 def esc(t):
@@ -63,24 +77,41 @@ def cover_bg():
 
 def shell(M, num, title_si, title_en, subtitle, body):
     """One column: a slim top bar, a masthead, then every block stacked."""
-    n = len(PAGES)
-    nav = ['<div class="brand"><h1>බෝතල් ජල කර්මාන්ත ශාලාව'
-           '<span>Bottled Drinking Water Plant</span></h1>'
-           f'<p>{M["location"]}<br><b>ආයෝජක / Investor: '
-           f'{M["investor"]}</b></p></div>',
-           f'<div class="nsec">පිටු {n} / The {n} pages</div>']
-    for fname, pn, si, en in PAGES:
+    budget_open = " open" if num in {"1", "2", "3"} else ""
+    budget_active = " on" if budget_open else ""
+    nav = ['<div class="brand"><div class="logo">W</div><h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span>'
+           '<span class="en">Bottled Drinking Water Plant</span></h1>'
+           f'<p>{M["location"]}<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: '
+           f'{M["investor"]}</b></p>{LANGUAGE_SWITCH}</div>',
+           '<div class="nav-links">',
+           f'<details class="nav-dropdown budget-dropdown"{budget_open}>',
+           f'<summary class="budget-trigger{budget_active}"><span class="si">අයවැය</span>'
+           '<span class="en">Budget</span><span class="dropdown-caret" aria-hidden="true">⌄</span></summary>',
+           '<div class="dropdown-menu">']
+    for fname, pn, si, en in PAGES[:3]:
         on = ' class="on"' if pn == num else ""
-        nav.append(f'<a href="{fname}"{on}><b>{pn.zfill(2)}</b>{si}</a>')
-    nav.append('<div class="nsec">අමතර / Also</div>')
-    nav.append('<a href="dashboard.html"><b>&mdash;</b>සම්පූර්ණ Dashboard</a>')
-    nav.append('<a href="docs.html"><b>&mdash;</b>ලේඛන පැකේජය</a>')
+        nav.append(f'<a href="{fname}"{on}><span class="si">{esc(si)}</span><span class="en">{esc(en)}</span></a>')
+    nav.append('</div></details>')
+    fname, pn, si, en = PAGES[3]
+    on = ' class="on"' if pn == num else ""
+    nav.append(f'<a href="{fname}"{on}><span class="si">{esc(si)}</span><span class="en">{esc(en)}</span></a>')
+    nav.append('<a href="dashboard.html"><span class="si">Dashboard</span>'
+               '<span class="en">Dashboard</span></a>')
+    for fname, pn, si, en in PAGES[4:]:
+        on = ' class="on"' if pn == num else ""
+        nav.append(f'<a href="{fname}"{on}><span class="si">{esc(si)}</span><span class="en">{esc(en)}</span></a>')
+    nav.append('<a href="docs.html"><span class="si">ලේඛන පැකේජය</span>'
+               '<span class="en">Document Pack</span></a>')
+    nav.append('</div>')
+
+    category_si, category_en = PAGE_CATEGORY.get(num, PAGE_CATEGORY["0"])
 
     doc = f"""<!doctype html>
 <html lang="si"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(title_si)} — {esc(title_en)} | Bandarawela Water Plant</title>
+{LANGUAGE_BOOTSTRAP}
+<title>{esc(title_si)} — {esc(title_en)} | Bottled Drinking Water Plant</title>
 <style>{CSS}</style>
 </head><body>
 <div id="wrap">
@@ -88,8 +119,8 @@ def shell(M, num, title_si, title_en, subtitle, body):
 <main id="main">
 <div class="hero" style="{cover_bg()}">
   <div class="hc">
-    <div class="kicker">පිටුව {num} &nbsp;/&nbsp; Page {num} of {n}</div>
-    <h1>{title_si}<br><span class="en">{esc(title_en)}</span></h1>
+    <div class="kicker"><span class="si">{category_si}</span><span class="en">{category_en}</span></div>
+    <h1><span class="si">{title_si}</span><span class="en">{esc(title_en)}</span></h1>
     <p class="hsub">{subtitle}</p>
   </div>
 </div>
@@ -106,8 +137,10 @@ def shell(M, num, title_si, title_en, subtitle, body):
 </div>
 </main>
 </div>
+<script>{LANGUAGE_JS}</script>
 </body></html>"""
-    return plain(doc)
+    rendered = mark_bilingual_pairs(plain(doc))
+    return highlight_prompts(fill_empty_table_cells(rendered))
 
 
 def table(head, rows, total=None, total_label="මුළු / TOTAL"):

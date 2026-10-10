@@ -2,46 +2,46 @@ category,item,scale_small_2000bph_low_lkr,scale_small_2000bph_high_lkr,scale_med
 Land,Land purchase (Bandarawela area),3000000,8000000,8000000,20000000,25000000,80000000,Minimum 160 perches (FCAU)
 Civil & Building,Factory building shell + civil works,8000000,18000000,20000000,45000000,50000000,120000000,Food-grade finishes
 Civil & Building,Cleanroom (filling room ISO 8),2000000,5000000,4000000,10000000,10000000,25000000,Positive pressure + HEPA
-Civil & Building,Warehouse + racking + offices,1500000,4000000,4000000,12000000,10000000,30000000,
+Civil & Building,Warehouse + racking + offices,1500000,4000000,4000000,12000000,10000000,30000000,—
 Water Treatment,Raw water tank + pumps + dosing,800000,2000000,1500000,4000000,3500000,9000000,SS304/food grade
-Water Treatment,Sand filter + ACF + softener,900000,2500000,1800000,5000000,4000000,11000000,
+Water Treatment,Sand filter + ACF + softener,900000,2500000,1800000,5000000,4000000,11000000,—
 Water Treatment,Micron filtration,300000,900000,600000,2000000,1500000,4000000,5 to 0.5 micron
 Water Treatment,Reverse Osmosis plant,1500000,4000000,4000000,12000000,9000000,28000000,CORE ASSET
 Water Treatment,Ozone generator + UV,400000,1200000,800000,2200000,1800000,5000000,Mandatory for bottled water
 Water Treatment,CIP system + SS316L piping,600000,1800000,1200000,4000000,3000000,9000000,Sanitary grade
 Bottle Production,PET blow moulding machine (optional),0,0,5000000,15000000,12000000,28000000,Or buy bottles externally
 Bottle Production,Bottle moulds per size,0,0,1000000,4000000,2500000,8000000,One per SKU
-Bottle Production,Preform hopper + leak tester,0,0,700000,2500000,1800000,6000000,
+Bottle Production,Preform hopper + leak tester,0,0,700000,2500000,1800000,6000000,—
 Filling,Rinsing-filling-capping monoblock,3500000,8000000,8000000,20000000,18000000,45000000,CORE ASSET
-Filling,Infeed conveyor + cap sorter,500000,1500000,1000000,3000000,2500000,7000000,
+Filling,Infeed conveyor + cap sorter,500000,1500000,1000000,3000000,2500000,7000000,—
 Filling,Level inspection + reject,400000,1200000,800000,2500000,1800000,6000000,Vision system
 Filling,Date/batch coder,300000,900000,450000,1500000,800000,2500000,Label law requirement
 Packing,Labelling machine,700000,2000000,1500000,5000000,3500000,12000000,Sleeve or adhesive
-Packing,Shrink wrap multi-pack,600000,1800000,1200000,4000000,2800000,9000000,
-Packing,Palletizer + stretch wrapper,300000,1000000,600000,2500000,1500000,6000000,
+Packing,Shrink wrap multi-pack,600000,1800000,1200000,4000000,2800000,9000000,—
+Packing,Palletizer + stretch wrapper,300000,1000000,600000,2500000,1500000,6000000,—
 19L Line,19L/5-gallon line (optional),0,0,3000000,10000000,8000000,22000000,Highest margin segment
-QC Laboratory,pH TDS turbidity meters,150000,400000,250000,700000,500000,1500000,
+QC Laboratory,pH TDS turbidity meters,150000,400000,250000,700000,500000,1500000,—
 QC Laboratory,Microbiology (incubator autoclave LAF),700000,2000000,1200000,3500000,2800000,8000000,Mandatory for SLSI
 QC Laboratory,Physical tests (torque burst top-load),200000,800000,400000,1500000,900000,3500000,SLS 1336
 Utilities,CEB connection + main panel + MCC,600000,2000000,1200000,4000000,3000000,9000000,Deposits scale with load
 Utilities,Oil-free food-grade air compressor,600000,1800000,1200000,3500000,2800000,8000000,ISO 8573-1 Class 0
-Utilities,Water chiller,400000,1200000,800000,2500000,1800000,6000000,
+Utilities,Water chiller,400000,1200000,800000,2500000,1800000,6000000,—
 Utilities,Standby generator,1500000,4000000,3500000,10000000,8000000,22000000,60-80% of full load
 Environmental,Effluent treatment plant (ETP),500000,1500000,1200000,4000000,3000000,9000000,CEA Gazette 2264/17
-Environmental,Fire systems + extinguishers + exits,200000,700000,400000,1500000,900000,3500000,
-Environmental,Pest control setup + waste systems,100000,400000,200000,800000,450000,2000000,
+Environmental,Fire systems + extinguishers + exits,200000,700000,400000,1500000,900000,3500000,—
+Environmental,Pest control setup + waste systems,100000,400000,200000,800000,450000,2000000,—
 Logistics,Delivery vehicles,4000000,10000000,12000000,30000000,25000000,60000000,2-6 vehicles
-Logistics,Forklift + pallets + pallet trucks,600000,2000000,1200000,4000000,3000000,9000000,
-Pre-operating,Legal (NDA MOU SHA land contracts),150000,500000,250000,900000,500000,1800000,
+Logistics,Forklift + pallets + pallet trucks,600000,2000000,1200000,4000000,3000000,9000000,—
+Pre-operating,Legal (NDA MOU SHA land contracts),150000,500000,250000,900000,500000,1800000,—
 Pre-operating,Company registration + secretarial,25000,60000,30000,80000,50000,150000,eROC + certified copies
-Pre-operating,Feasibility + financial model,75000,250000,150000,500000,300000,1000000,
+Pre-operating,Feasibility + financial model,75000,250000,150000,500000,300000,1000000,—
 Pre-operating,Hydrogeological survey + drilling,2000000,6000000,2500000,8000000,5000000,15000000,Includes well construction
-Pre-operating,Water testing (SLS 614 + heavy metals) x4,100000,350000,150000,500000,300000,900000,
-Pre-operating,Building approvals + architect + structural,400000,1200000,700000,2200000,1500000,5000000,
-Pre-operating,FCAU + SLSI + HACCP/GMP consultancy,500000,1500000,1000000,3500000,2000000,7000000,
-Pre-operating,CEA EPL + environmental consultant,150000,500000,300000,1200000,600000,2500000,
+Pre-operating,Water testing (SLS 614 + heavy metals) x4,100000,350000,150000,500000,300000,900000,—
+Pre-operating,Building approvals + architect + structural,400000,1200000,700000,2200000,1500000,5000000,—
+Pre-operating,FCAU + SLSI + HACCP/GMP consultancy,500000,1500000,1000000,3500000,2000000,7000000,—
+Pre-operating,CEA EPL + environmental consultant,150000,500000,300000,1200000,600000,2500000,—
 Pre-operating,Trademark + branding + label design,150000,600000,300000,1200000,600000,2500000,NIPO + designer
 Pre-operating,Training (SLSI GMP machine operation),100000,400000,250000,900000,500000,2000000,FCAU required documents
-Pre-operating,Insurance + medicals + initial pest control,200000,800000,400000,1600000,800000,3200000,
+Pre-operating,Insurance + medicals + initial pest control,200000,800000,400000,1600000,800000,3200000,—
 Working Capital,Working capital (3-6 months),8000000,18000000,15000000,45000000,40000000,110000000,PET caps labels power wages
 Contingency,Contingency 15%,4000000,10000000,10000000,30000000,25000000,75000000,Construction cost overruns

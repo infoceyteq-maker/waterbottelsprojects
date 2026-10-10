@@ -87,5 +87,39 @@ print("  1-yr after tax   %.1f%% of capacity  %s"
          else "MISMATCH"))
 ok &= not F["one_year"]["feasible_tax"]
 
+# Keep the published Option A forecast in the decision log synchronized with
+# the current financial model. These figures previously drifted from the model.
+print("\n  decision-log forecast")
+with open(os.path.join(dm.ROOT, "docs", "21-decisions-and-assumptions.md"),
+          encoding="utf-8") as fh:
+    decision_log = fh.read()
+forecast_ok = True
+for p in M["projection"]:
+    expected = (
+        f"| {p['year']} | {p['utilisation']:.0%} | {p['pet_bottles_m']:,} | "
+        f"Rs {p['revenue_m'] / 1_000_000:.1f}M | "
+        f"**Rs {p['pat_y'] / 1_000_000:.1f}M** |"
+    )
+    present = expected in decision_log
+    print(f"  {p['year']:16s} {expected.strip()}  "
+          f"{'OK' if present else 'MISMATCH'}")
+    forecast_ok &= present
+
+scenario_a = M["scenarios"][0]
+expected_be = (
+    f"**Break-even (PET පමණක්, conservative):** බෝතල් "
+    f"**{M['breakeven_pet']:,}/මාස** = ධාරිතාවෙන් "
+    f"**{M['breakeven_pct'] * 100:.0f}%** පමණයි"
+)
+expected_payback = (
+    f"**Payback:** Year {M['payback_year']} මාස {M['payback_months']:.1f} දී "
+    f"(Option A මුදල් Rs {scenario_a['cash_investment'] / 1_000_000:.1f}M)"
+)
+for label, expected in (("break-even", expected_be), ("payback", expected_payback)):
+    present = expected in decision_log
+    print(f"  {label:16s} {expected}  {'OK' if present else 'MISMATCH'}")
+    forecast_ok &= present
+ok &= forecast_ok
+
 print("\n%s" % ("ALL CHECKS OK" if ok else "SOMETHING DID NOT RECONCILE"))
 sys.exit(0 if ok else 1)

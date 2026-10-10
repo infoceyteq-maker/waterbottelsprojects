@@ -2,7 +2,7 @@
 """
 Build the static documentation site into site/
 
-Run:  python3 build/build_site.py
+Run:  .venv/bin/python build/build_site.py (after installing requirements.txt)
 View: cd site && python3 -m http.server 8000 --bind 0.0.0.0
 """
 import os
@@ -11,6 +11,11 @@ import html
 import markdown
 
 from build_dashboard import plain  # noqa: E402
+from dashboard_model import INVESTOR, LOCATION  # noqa: E402
+from language_support import (LANGUAGE_BOOTSTRAP, LANGUAGE_JS, LANGUAGE_SWITCH,
+                              fill_empty_table_cells, highlight_prompts,
+                              highlight_table_priorities,
+                              mark_bilingual_pairs)  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "site")
@@ -19,27 +24,27 @@ OUT = os.path.join(ROOT, "site")
 NAV = [
     ("README.md", "docs.html", "🏠 ලේඛන මුල් පිටුව / Docs Home"),
     (None, "dashboard.html", "📊 ⭐ ව්‍යාපෘති DASHBOARD (මුදල් + Qty)"),
-    ("docs/01-phase-0-investor-mou.md", "p01.html", "0 · ආයෝජක එකඟතා / Investor & MOU"),
-    ("docs/02-phase-1-company-registration.md", "p02.html", "1 · සමාගම් ලියාපදිංචිය / Company (1st Reg.)"),
-    ("docs/03-phase-2-land-premises.md", "p03.html", "2 · ඉඩම සහ ගොඩනැඟිල්ල / Land"),
-    ("docs/04-phase-3-water-source-wrb.md", "p04.html", "3 · ජල මූලාශ්‍රය / Water Source (WRB)"),
-    ("docs/05-phase-4-factory-construction.md", "p05.html", "4 · කර්මාන්ත ශාලාව / Factory"),
-    ("docs/06-phase-5-machinery-equipment.md", "p06.html", "5 · යන්ත්‍රෝපකරණ / Machinery"),
-    ("docs/07-phase-6-moh-fcau-bottled-water-registration.md", "p07.html", "6 · ⭐ FCAU ලියාපදිංචිය / MoH Registration"),
-    ("docs/08-phase-7-slsi-certification.md", "p08.html", "7 · SLSI සහතික / SLSI Certification"),
-    ("docs/09-phase-8-environment-cea.md", "p09.html", "8 · පරිසර / Environment (CEA)"),
-    ("docs/10-phase-9-tax-labour-statutory.md", "p10.html", "9 · බදු සහ ශ්‍රම / Tax & Labour"),
-    ("docs/11-phase-10-launch-market.md", "p11.html", "10 · වෙළඳපොළ / Launch & Market"),
+    ("docs/01-phase-0-investor-mou.md", "p01.html", "ආයෝජක එකඟතා / Investor & MOU"),
+    ("docs/02-phase-1-company-registration.md", "p02.html", "සමාගම් ලියාපදිංචිය / Company (1st Reg.)"),
+    ("docs/03-phase-2-land-premises.md", "p03.html", "ඉඩම සහ ගොඩනැඟිල්ල / Land"),
+    ("docs/04-phase-3-water-source-wrb.md", "p04.html", "ජල මූලාශ්‍රය / Water Source (WRB)"),
+    ("docs/05-phase-4-factory-construction.md", "p05.html", "කර්මාන්ත ශාලාව / Factory"),
+    ("docs/06-phase-5-machinery-equipment.md", "p06.html", "යන්ත්‍රෝපකරණ / Machinery"),
+    ("docs/07-phase-6-moh-fcau-bottled-water-registration.md", "p07.html", "⭐ FCAU ලියාපදිංචිය / MoH Registration"),
+    ("docs/08-phase-7-slsi-certification.md", "p08.html", "SLSI සහතික / SLSI Certification"),
+    ("docs/09-phase-8-environment-cea.md", "p09.html", "පරිසර / Environment (CEA)"),
+    ("docs/10-phase-9-tax-labour-statutory.md", "p10.html", "බදු සහ ශ්‍රම / Tax & Labour"),
+    ("docs/11-phase-10-launch-market.md", "p11.html", "වෙළඳපොළ / Launch & Market"),
     ("docs/12-master-document-checklist.md", "p12.html", "⭐ MASTER CHECKLIST"),
-    ("docs/13-capital-investment-budget.md", "p13.html", "13 · අයවැය / Budget"),
-    ("docs/14-project-timeline.md", "p14.html", "14 · කාලසටහන / Timeline"),
-    ("docs/15-investor-due-diligence-pack.md", "p15.html", "15 · Due Diligence"),
-    ("docs/16-risk-register.md", "p16.html", "16 · අවදානම් / Risk Register"),
-    ("docs/17-agency-service-directory.md", "p17.html", "17 · ආයතන / Agency Directory"),
-    ("docs/18-renewal-compliance-calendar.md", "p18.html", "18 · නැවුම් කිරීම් / Renewals"),
-    ("docs/19-label-requirements.md", "p19.html", "19 · ලේබල් / Labels"),
-    ("docs/20-water-treatment-train.md", "p20.html", "20 · 💧 පිරිපහදුව / Water Treatment Train"),
-    ("docs/21-decisions-and-assumptions.md", "p21.html", "21 · 📋 තීරණ / Decisions & Assumptions"),
+    ("docs/13-capital-investment-budget.md", "p13.html", "අයවැය / Budget"),
+    ("docs/14-project-timeline.md", "p14.html", "කාලසටහන / Timeline"),
+    ("docs/15-investor-due-diligence-pack.md", "p15.html", "Due Diligence"),
+    ("docs/16-risk-register.md", "p16.html", "අවදානම් / Risk Register"),
+    ("docs/17-agency-service-directory.md", "p17.html", "ආයතන / Agency Directory"),
+    ("docs/18-renewal-compliance-calendar.md", "p18.html", "නැවුම් කිරීම් / Renewals"),
+    ("docs/19-label-requirements.md", "p19.html", "ලේබල් / Labels"),
+    ("docs/20-water-treatment-train.md", "p20.html", "💧 පිරිපහදුව / Water Treatment Train"),
+    ("docs/21-decisions-and-assumptions.md", "p21.html", "📋 තීරණ / Decisions & Assumptions"),
     ("templates/01-MOU-term-sheet.md", "t01.html", "📄 MOU / Term Sheet"),
     ("templates/02-shareholders-agreement-heads-of-terms.md", "t02.html", "📄 Shareholders Agreement"),
     ("templates/03-board-resolution-incorporation.md", "t03.html", "📄 Board Resolution"),
@@ -61,13 +66,19 @@ CSS = _css("style.css") + "\n" + _css("style_docs.css")
 PAGE = """<!doctype html>
 <html lang="si"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title} · බෝතල් ජල කර්මාන්ත ශාලාව — Bandarawela</title>
+__LANG_BOOTSTRAP__
+<title>{title} · බෝතල් ජල කර්මාන්ත ශාලාව — Bottled Drinking Water Plant</title>
 <style>{css}</style></head>
 <body><div id="wrap">
 <nav id="nav">
-  <h1>💧 බෝතල් ජල කර්මාන්ත ශාලාව</h1>
-  <div class="sub">Bottled Water Manufacturing Plant · Bandarawela, Badulla<br>
-  සම්පූර්ණ ලේඛන පැකේජය · v1.1 · SLS 894 · 2026-10-10</div>
+  <div class="brand doc-brand">
+    <div class="logo">W</div>
+    <h1><span class="si">බෝතල් ජල කර්මාන්ත ශාලාව</span><span class="en">Bottled Drinking Water Plant</span></h1>
+    <p>__LOCATION__<br><b><span class="si">ආයෝජක</span><span class="en">Investor</span>: __INVESTOR__</b></p>
+    __LANGUAGE_SWITCH__
+  </div>
+  <div class="sub"><span class="en">Bottled Drinking Water Plant · Bandarawela, Badulla</span><br>
+  <span class="si">සම්පූර්ණ ලේඛන පැකේජය</span> · v1.2 · SLS 894 · 2026-10-10</div>
   <input type="text" id="q" placeholder="🔍 පිටු සොයන්න / Filter pages…" oninput="flt()">
   <ol id="nl">{nav}</ol>
 </nav>
@@ -78,6 +89,7 @@ function flt(){{var v=document.getElementById('q').value.toLowerCase();
 document.querySelectorAll('#nl a').forEach(function(a){{
 a.parentElement.style.display=a.textContent.toLowerCase().indexOf(v)>-1?'':'none';}});}}
 </script>
+<script>{LANG_JS}</script>
 </body></html>"""
 
 
@@ -117,7 +129,13 @@ def main():
 
     nav_html = []
     for src, out, title in NAV:
-        nav_html.append(f'<li><a href="{out}" id="n-{out}">{html.escape(title)}</a></li>')
+        if " / " in title:
+            title_si, title_en = title.split(" / ", 1)
+            label = (f'<span class="si">{html.escape(title_si)}</span>'
+                     f'<span class="en">{html.escape(title_en)}</span>')
+        else:
+            label = html.escape(title)  # source has one language; retain it as fallback
+        nav_html.append(f'<li><a href="{out}" id="n-{out}">{label}</a></li>')
     nav_html = "\n".join(nav_html)
 
     written = 0
@@ -131,12 +149,25 @@ def main():
         with open(path, encoding="utf-8") as fh:
             text = fh.read()
         md.reset()
-        body = fix_links(md.convert(text), mapping)
-        page = PAGE.format(title=html.escape(title), css=CSS, nav=nav_html, body=body)
-        # mark active
+        body = mark_bilingual_pairs(fix_links(md.convert(text), mapping))
+        page = PAGE.format(title=html.escape(title), css=CSS, nav=nav_html, body=body,
+                            LANG_JS=LANGUAGE_JS)
+        page = (page.replace("__LANG_BOOTSTRAP__", LANGUAGE_BOOTSTRAP)
+                    .replace("__LANGUAGE_SWITCH__", LANGUAGE_SWITCH)
+                    .replace("__LOCATION__", html.escape(LOCATION))
+                    .replace("__INVESTOR__", html.escape(INVESTOR)))
+        # mark active and visually identify fill-in templates without filling them
         page = page.replace(f'id="n-{out}"', f'id="n-{out}" class="on"')
+        is_template = src.startswith("templates/")
+        if is_template:
+            page = page.replace("<body>", '<body class="template-page">')
+        rendered = plain(page)
+        if not is_template:
+            rendered = fill_empty_table_cells(rendered)
+        rendered = highlight_prompts(rendered)
+        rendered = highlight_table_priorities(rendered)
         with open(os.path.join(OUT, out), "w", encoding="utf-8") as fh:
-            fh.write(plain(page))
+            fh.write(rendered)
         written += 1
 
     # copy the data files
