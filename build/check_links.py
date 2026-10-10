@@ -196,6 +196,80 @@ def check_csv_in_sync(item_count):
         ok(f"generated checklist in sync ({rows} rows)")
 
 
+def check_dashboard(item_count):
+    print("\n[7] Dashboard (site/dashboard.html)")
+    fp = os.path.join(ROOT, "site", "dashboard.html")
+    if not os.path.exists(fp):
+        warn("dashboard not built - run: python3 build/build_dashboard.py")
+        return
+    with open(fp, encoding="utf-8") as fh:
+        html_src = fh.read()
+
+    rows = len(re.findall(r'<tr data-id="', html_src))
+    if rows != item_count:
+        fail(f"dashboard embeds {rows} checklist rows but CSV has {item_count} "
+             f"- re-run: python3 build/build_dashboard.py")
+    else:
+        ok(f"dashboard checklist in sync ({rows} rows)")
+
+    # every checklist id from the CSV must appear in the dashboard
+    ids = [r["id"] for r in load_csv_rows()]
+    missing = [i for i in ids if f'data-id="{i}"' not in html_src]
+    if missing:
+        fail(f"{len(missing)} checklist ids missing from dashboard, e.g. {missing[:5]}")
+    else:
+        ok(f"all {len(ids)} checklist ids present in dashboard")
+
+    # tag balance
+    from html.parser import HTMLParser
+
+    class V(HTMLParser):
+        VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+                "link", "meta", "source", "track", "wbr"}
+
+        def __init__(self):
+            super().__init__()
+            self.stack = []
+            self.errs = []
+
+        def handle_starttag(self, t, a):
+            if t not in self.VOID:
+                self.stack.append(t)
+
+        def handle_endtag(self, t):
+            if t in self.VOID:
+                return
+            if not self.stack:
+                self.errs.append(f"stray </{t}>")
+            elif self.stack[-1] != t:
+                self.errs.append(f"mismatch: open <{self.stack[-1]}> closed by </{t}>")
+            else:
+                self.stack.pop()
+
+    v = V()
+    v.feed(html_src)
+    if v.stack or v.errs:
+        fail(f"unbalanced HTML in dashboard: unclosed={v.stack[:5]} errors={v.errs[:5]}")
+    else:
+        ok("dashboard HTML tags balanced")
+
+    # the model numbers must be present and non-trivial
+    for token, label in [("Mr. Thilakarathna", "investor name"),
+                         ("Bandarawela", "location"),
+                         ("SLS 894", "product standard"),
+                         ("Break-even", "break-even block"),
+                         ("LKR", None)]:
+        if label and token not in html_src:
+            fail(f"dashboard missing expected content: {label} ('{token}')")
+    ok("dashboard contains investor, location, SLS 894 and break-even content")
+
+
+def load_csv_rows():
+    with open(os.path.join(ROOT, "data", "master-checklist.csv"), newline="",
+              encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))
+
+
 def main():
     print("=" * 68)
     print("waterbottelsprojects - documentation pack self-check")
@@ -206,6 +280,7 @@ def main():
     check_data_files()
     check_csv_in_sync(item_count)
     check_site(item_count)
+    check_dashboard(item_count)
 
     print("\n" + "=" * 68)
     if failures:

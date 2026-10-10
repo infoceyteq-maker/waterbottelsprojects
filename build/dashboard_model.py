@@ -1,0 +1,387 @@
+#!/usr/bin/env python3
+"""
+Build the interactive project dashboard -> site/dashboard.html
+
+Single self-contained HTML file (no CDN, no external JS) so it works offline
+and inside the sandbox preview. Data is read from data/master-checklist.csv
+and from the financial model defined below, so the dashboard can never drift
+out of sync with the checklist.
+
+Run:  python3 build/build_dashboard.py
+"""
+import csv
+import json
+import os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, "site", "dashboard.html")
+
+# =============================================================================
+# FINANCIAL MODEL
+# =============================================================================
+INVESTOR = "Mr. Thilakarathna"
+LOCATION = "Bandarawela, Badulla District, Uva Province"
+
+CAPACITY_BPH = 6000          # nameplate, PET line
+SHIFT_HOURS = 8
+WORK_DAYS_MONTH = 25
+NAMEPLATE_MONTH = CAPACITY_BPH * SHIFT_HOURS * WORK_DAYS_MONTH   # 1,200,000 bottles
+
+# SKU mix (share of PET bottle count) and unit economics in LKR
+SKUS = [
+    {
+        "sku": "500 ml", "share": 0.45, "volume_l": 0.5,
+        "costs": {
+            "PET bottle (purchased, SLS 1336 marked)": 12.50,
+            "Cap (PCO 1881)": 3.00,
+            "Shrink sleeve label": 3.20,
+            "Shrink film / packing": 1.20,
+            "Water + treatment chemicals": 0.60,
+            "Power": 1.80,
+            "Consumables (filters, lab)": 0.50,
+            "Direct labour": 2.20,
+            "Maintenance & spares": 0.80,
+            "Rejects & losses (3%)": 0.90,
+        },
+        "ex_factory_price": 48.00,
+        "retail_price": 75.00,
+    },
+    {
+        "sku": "1 L", "share": 0.30, "volume_l": 1.0,
+        "costs": {
+            "PET bottle (purchased, SLS 1336 marked)": 18.50,
+            "Cap (PCO 1881)": 3.00,
+            "Shrink sleeve label": 3.80,
+            "Shrink film / packing": 1.40,
+            "Water + treatment chemicals": 1.00,
+            "Power": 2.60,
+            "Consumables (filters, lab)": 0.70,
+            "Direct labour": 2.60,
+            "Maintenance & spares": 1.00,
+            "Rejects & losses (3%)": 1.15,
+        },
+        "ex_factory_price": 65.00,
+        "retail_price": 100.00,
+    },
+    {
+        "sku": "1.5 L", "share": 0.25, "volume_l": 1.5,
+        "costs": {
+            "PET bottle (purchased, SLS 1336 marked)": 23.00,
+            "Cap (PCO 1881)": 3.00,
+            "Shrink sleeve label": 4.40,
+            "Shrink film / packing": 1.60,
+            "Water + treatment chemicals": 1.40,
+            "Power": 3.20,
+            "Consumables (filters, lab)": 0.85,
+            "Direct labour": 2.80,
+            "Maintenance & spares": 1.20,
+            "Rejects & losses (3%)": 1.35,
+        },
+        "ex_factory_price": 82.00,
+        "retail_price": 130.00,
+    },
+]
+
+# 19 L returnable line (separate economics)
+SKU_19L = {
+    "sku": "19 L (returnable)", "volume_l": 19.0,
+    "costs": {
+        "PC bottle amortised (Rs 1,200 / 40 trips)": 30.00,
+        "Cap amortised": 3.00,
+        "Handle tag / label": 4.00,
+        "Water + treatment chemicals": 6.00,
+        "Power": 6.00,
+        "Washing & sanitation chemicals": 4.00,
+        "Labour + reverse logistics": 25.00,
+        "Maintenance & spares": 5.00,
+    },
+    "ex_factory_price": 320.00,
+    "retail_price": 420.00,
+    "volume_month_y1": 20000,
+}
+
+# Fixed monthly operating costs, Year 1 (LKR)
+FIXED_Y1 = {
+    "Salaries (35 staff incl. sales team)": 2200000,
+    "EPF 12% + ETF 3%": 330000,
+    "Sales commission": 400000,
+    "Marketing & trade promotion": 1500000,
+    "Distribution (fuel, drivers, vehicle running)": 1800000,
+    "Administration, office, IT, software": 250000,
+    "Insurance (fire, product liability, transit)": 200000,
+    "Maintenance contracts & spares": 350000,
+    "Laboratory, calibration, external testing": 120000,
+    "Pest control & waste disposal": 80000,
+    "Utilities - non-production": 150000,
+    "Depreciation (CAPEX / 10 years)": 1336000,
+    "Working capital finance cost": 250000,
+    "Professional fees (audit, CA, legal, secretarial)": 180000,
+}
+
+# CAPEX - everything needed up to the point of manufacturing (LKR)
+CAPEX = [
+    ("Land (Mr. Thilakarathna's contribution - in kind)", 12000000, "land", True),
+    ("Factory building shell + civil works (approx. 18,000 sq ft)", 26000000, "building", False),
+    ("Cleanroom filling room (ISO 8 / Class 100,000)", 6000000, "building", False),
+    ("Warehouse, offices, racking", 8000000, "building", False),
+    ("Raw tank + sand filter (MGSF) + carbon filter (ACF) + softener", 4500000, "plant", False),
+    ("Reverse Osmosis plant (10 m3/hr) + membranes", 9000000, "plant", False),
+    ("Ozone generator + UV sterilizer + 0.2 micron sterile filter", 2500000, "plant", False),
+    ("CIP system + SS316L piping + treated water tanks", 4500000, "plant", False),
+    ("Re-mineralisation dosing + antiscalant dosing", 700000, "plant", False),
+    ("Rinsing-Filling-Capping monoblock (6,000 BPH)", 13000000, "plant", False),
+    ("Infeed conveyor + cap sorter + reject system", 2500000, "plant", False),
+    ("Date / batch coder (inkjet)", 1200000, "plant", False),
+    ("Shrink sleeve labelling machine + heat tunnel", 4500000, "plant", False),
+    ("Shrink wrap multi-packer", 2800000, "plant", False),
+    ("Palletizer + stretch wrapper", 1500000, "plant", False),
+    ("19 L / 5 gallon line (wash-fill-cap)", 7000000, "plant", False),
+    ("Quality control laboratory (micro + chemical)", 3500000, "plant", False),
+    ("CEB 3-phase connection + main panel + MCC", 3500000, "utility", False),
+    ("Oil-free food-grade air compressor + dryer", 3200000, "utility", False),
+    ("Water chiller", 2000000, "utility", False),
+    ("Standby generator 250 kVA", 7500000, "utility", False),
+    ("Effluent treatment plant (ETP) + soakaway", 2200000, "env", False),
+    ("Fire systems, extinguishers, emergency lighting", 900000, "env", False),
+    ("Pest control setup + waste management", 400000, "env", False),
+    ("Delivery vehicles (3 lorries / vans)", 18000000, "logistics", False),
+    ("Forklift + pallets + pallet trucks", 2500000, "logistics", False),
+    ("Legal (NDA, MOU, shareholders agreement, land contracts)", 900000, "pre", False),
+    ("Feasibility study + financial model", 350000, "pre", False),
+    ("Hydrogeological survey + borewell drilling", 4500000, "pre", False),
+    ("Water testing (SLS 614 + bromide + heavy metals, 4 rounds)", 500000, "pre", False),
+    ("Architect + structural engineer + building approvals", 1800000, "pre", False),
+    ("FCAU registration + SLSI audit + HACCP/GMP consultancy", 1800000, "pre", False),
+    ("CEA EPL + environmental consultant", 600000, "pre", False),
+    ("Trademark + branding + label design", 900000, "pre", False),
+    ("Staff training (SLSI, GMP, machine operation)", 500000, "pre", False),
+    ("Insurance + medical certificates + initial pest control", 700000, "pre", False),
+]
+CONTINGENCY_PCT = 0.15
+WORKING_CAPITAL = 28000000
+
+# Capacity ramp - CONSERVATIVE. A brand-new bottled water brand does not hit
+# 40% of nameplate in year 1; it ramps. Year 1 average of 25% assumes a slow
+# first quarter building up to ~40% by year end.
+YEARS = [
+    {"year": "Year 1", "utilisation": 0.25, "fixed_growth": 1.00, "v19l": 12000},
+    {"year": "Year 2", "utilisation": 0.50, "fixed_growth": 1.18, "v19l": 30000},
+    {"year": "Year 3", "utilisation": 0.75, "fixed_growth": 1.35, "v19l": 55000},
+    {"year": "Year 4", "utilisation": 1.00, "fixed_growth": 1.55, "v19l": 80000},
+]
+TAX_RATE = 0.30
+
+# Budget scenarios - line items deferred to a later phase to cut start-up cash.
+SCENARIOS = [
+    {
+        "name": "Option A — Lean Start",
+        "tag": "⭐ නිර්දේශිත / Recommended",
+        "drop": ["Delivery vehicles (3 lorries / vans)",
+                 "19 L / 5 gallon line (wash-fill-cap)",
+                 "Forklift + pallets + pallet trucks",
+                 "Palletizer + stretch wrapper",
+                 "Shrink wrap multi-packer"],
+        "reduce": {"Standby generator 250 kVA": 4500000,
+                   "Rinsing-Filling-Capping monoblock (6,000 BPH)": 10500000},
+        "wc": 20000000,
+        "note": "වාහන වෙනුවට 3PL බෙදාහැරීම · 19L රේඛාව Phase 2 · අතින් pallet trucks · "
+                "කුඩා generator · කුඩා monoblock. වෙළඳපොළ තහවුරු වූ පසු Phase 2 එකතු කරන්න.",
+    },
+    {
+        "name": "Option B — Full Build",
+        "tag": "සම්පූර්ණ / As costed",
+        "drop": [],
+        "reduce": {},
+        "wc": 28000000,
+        "note": "සියල්ල එකවර — වාහන, 19L රේඛාව, forklift, සම්පූර්ණ packing. "
+                "ඉක්මන් වර්ධනයට හැකියි නමුත් ආරම්භක මුදල් අවශ්‍යතාව ඉහළයි.",
+    },
+    {
+        "name": "Option C — Minimum Viable",
+        "tag": "අවම / Smallest",
+        "drop": ["Delivery vehicles (3 lorries / vans)",
+                 "19 L / 5 gallon line (wash-fill-cap)",
+                 "Forklift + pallets + pallet trucks",
+                 "Palletizer + stretch wrapper",
+                 "Shrink wrap multi-packer",
+                 "Shrink sleeve labelling machine + heat tunnel",
+                 "Warehouse, offices, racking"],
+        "reduce": {"Standby generator 250 kVA": 3500000,
+                   "Rinsing-Filling-Capping monoblock (6,000 BPH)": 7000000,
+                   "Cleanroom filling room (ISO 8 / Class 100,000)": 4000000,
+                   "Factory building shell + civil works (approx. 18,000 sq ft)": 18000000,
+                   "Warehouse, offices, racking": 0,
+                   "Quality control laboratory (micro + chemical)": 2500000},
+        "wc": 14000000,
+        "note": "කුඩා ගොඩනැඟිල්ල · self-adhesive ලේබල් (sleeve නොවේ) · සම්පූර්ණ 3PL · "
+                "අවම QC lab. වේගයෙන් ආරම්භ කළ හැකි නමුත් ධාරිතාව සහ වර්ධන හැකියාව සීමිතයි.",
+    },
+]
+
+
+def money(n, dp=0):
+    return f"{n:,.{dp}f}"
+
+
+def build_model():
+    for s in SKUS:
+        s["variable_cost"] = round(sum(s["costs"].values()), 2)
+        s["contribution"] = round(s["ex_factory_price"] - s["variable_cost"], 2)
+        s["margin_pct"] = round(s["contribution"] / s["ex_factory_price"] * 100, 1)
+        s["label_qty_factor"] = 1.04          # 4% label wastage
+        s["cap_qty_factor"] = 1.03            # 3% cap wastage
+        s["bottle_qty_factor"] = 1.03         # 3% bottle wastage
+
+    SKU_19L["variable_cost"] = round(sum(SKU_19L["costs"].values()), 2)
+    SKU_19L["contribution"] = round(SKU_19L["ex_factory_price"] - SKU_19L["variable_cost"], 2)
+    SKU_19L["margin_pct"] = round(SKU_19L["contribution"] / SKU_19L["ex_factory_price"] * 100, 1)
+
+    blend_variable = round(sum(s["share"] * s["variable_cost"] for s in SKUS), 2)
+    blend_price = round(sum(s["share"] * s["ex_factory_price"] for s in SKUS), 2)
+    blend_contribution = round(blend_price - blend_variable, 2)
+
+    subtotal = sum(c[1] for c in CAPEX)
+    land_value = sum(c[1] for c in CAPEX if c[2] == "land")
+    contingency = round(subtotal * CONTINGENCY_PCT)
+    total_capex = subtotal + contingency
+    cash_capex = total_capex - land_value
+    total_investment = total_capex + WORKING_CAPITAL
+    cash_investment = cash_capex + WORKING_CAPITAL
+
+    dep_month = round(total_capex / 10 / 12)
+    # keep depreciation in the fixed-cost block consistent with the actual CAPEX
+    FIXED_Y1["Depreciation (CAPEX / 10 years)"] = dep_month
+
+    # ---- budget scenarios ----
+    scenarios = []
+    for sc in SCENARIOS:
+        items = []
+        for name, amt, cat, inkind in CAPEX:
+            if name in sc["drop"]:
+                continue
+            amt2 = sc["reduce"].get(name, amt)
+            if amt2 == 0:
+                continue
+            items.append((name, amt2, cat, inkind))
+        sub = sum(i[1] for i in items)
+        cont = round(sub * CONTINGENCY_PCT)
+        tc = sub + cont
+        cc = tc - sum(i[1] for i in items if i[2] == "land")
+        scenarios.append({
+            "name": sc["name"], "tag": sc["tag"], "note": sc["note"],
+            "subtotal": sub, "contingency": cont, "total_capex": tc,
+            "working_capital": sc["wc"], "cash_capex": cc,
+            "total_investment": tc + sc["wc"], "cash_investment": cc + sc["wc"],
+            "items_dropped": len(sc["drop"]),
+        })
+
+    proj = []
+    for y in YEARS:
+        pet_bottles = round(NAMEPLATE_MONTH * y["utilisation"])
+        pet_contribution = pet_bottles * blend_contribution
+        v19 = y["v19l"]
+        l19_contribution = v19 * SKU_19L["contribution"]
+        revenue_pet = pet_bottles * blend_price
+        revenue_19 = v19 * SKU_19L["ex_factory_price"]
+        fixed = round(sum(FIXED_Y1.values()) * y["fixed_growth"])
+        pbt_m = pet_contribution + l19_contribution - fixed
+        pat_m = pbt_m * (1 - TAX_RATE)
+        proj.append({
+            "year": y["year"],
+            "utilisation": y["utilisation"],
+            "pet_bottles_m": pet_bottles,
+            "pet_bottles_y": pet_bottles * 12,
+            "v19_m": v19,
+            "revenue_m": revenue_pet + revenue_19,
+            "revenue_y": (revenue_pet + revenue_19) * 12,
+            "variable_m": pet_bottles * blend_variable + v19 * SKU_19L["variable_cost"],
+            "contribution_m": pet_contribution + l19_contribution,
+            "fixed_m": fixed,
+            "pbt_m": pbt_m,
+            "pbt_y": pbt_m * 12,
+            "pat_m": pat_m,
+            "pat_y": pat_m * 12,
+            "volume_l_m": round(pet_bottles * sum(s["share"] * s["volume_l"] for s in SKUS)
+                                + v19 * 19),
+        })
+
+    fixed_base = sum(FIXED_Y1.values())
+    breakeven_pet = round(fixed_base / blend_contribution)
+    breakeven_pct = breakeven_pet / NAMEPLATE_MONTH
+
+    # ---- sensitivity: net profit per year at different utilisations ----
+    sensitivity = []
+    for u in (0.15, 0.25, 0.35, 0.50, 0.70, 1.00):
+        pb = round(NAMEPLATE_MONTH * u)
+        c = pb * blend_contribution + 12000 * SKU_19L["contribution"] - fixed_base
+        sensitivity.append({
+            "util": u, "bottles": pb,
+            "revenue_m": pb * blend_price + 12000 * SKU_19L["ex_factory_price"],
+            "contribution_m": c + fixed_base,
+            "pat_y": c * 12 * (1 - TAX_RATE),
+        })
+
+    # ---- sensitivity: price pressure on contribution ----
+    price_sens = []
+    for delta in (-0.15, -0.10, -0.05, 0.0, 0.05, 0.10):
+        p = blend_price * (1 + delta)
+        price_sens.append({
+            "delta": delta, "price": p, "contribution": p - blend_variable,
+            "margin": (p - blend_variable) / p * 100 if p else 0,
+            "breakeven": round(fixed_base / (p - blend_variable)) if p > blend_variable else None,
+        })
+
+    # cumulative payback (on the recommended scenario = scenarios[0])
+    target = scenarios[0]["cash_investment"]
+    cumulative = 0.0
+    payback_year = None
+    payback_months = None
+    for i, p in enumerate(proj, start=1):
+        prev = cumulative
+        cumulative += p["pat_y"]
+        if cumulative >= target and payback_year is None:
+            payback_year = i
+            payback_months = round((target - prev) / p["pat_y"] * 12, 1) if p["pat_y"] > 0 else 0
+
+    return {
+        "investor": INVESTOR,
+        "location": LOCATION,
+        "capacity_bph": CAPACITY_BPH,
+        "shift_hours": SHIFT_HOURS,
+        "work_days": WORK_DAYS_MONTH,
+        "nameplate_month": NAMEPLATE_MONTH,
+        "skus": SKUS,
+        "sku19": SKU_19L,
+        "blend_variable": blend_variable,
+        "blend_price": blend_price,
+        "blend_contribution": blend_contribution,
+        "blend_margin_pct": round(blend_contribution / blend_price * 100, 1),
+        "fixed_y1": FIXED_Y1,
+        "fixed_total_y1": sum(FIXED_Y1.values()),
+        "capex": CAPEX,
+        "capex_subtotal": subtotal,
+        "land_value": land_value,
+        "contingency": contingency,
+        "total_capex": total_capex,
+        "cash_capex": cash_capex,
+        "working_capital": WORKING_CAPITAL,
+        "total_investment": total_investment,
+        "cash_investment": cash_investment,
+        "depreciation_month": dep_month,
+        "projection": proj,
+        "scenarios": scenarios,
+        "recommended": scenarios[0],
+        "sensitivity": sensitivity,
+        "price_sens": price_sens,
+        "breakeven_pet": breakeven_pet,
+        "breakeven_pct": breakeven_pct,
+        "payback_year": payback_year,
+        "payback_months": payback_months,
+        "tax_rate": TAX_RATE,
+    }
+
+
+def load_checklist():
+    with open(os.path.join(ROOT, "data", "master-checklist.csv"), newline="",
+              encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))

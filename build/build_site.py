@@ -16,6 +16,7 @@ OUT = os.path.join(ROOT, "site")
 # Ordered navigation: (source path relative to repo root, output name, nav title)
 NAV = [
     ("README.md", "index.html", "🏠 මුල් පිටුව / Home"),
+    (None, "dashboard.html", "📊 ⭐ ව්‍යාපෘති DASHBOARD (මුදල් + Qty)"),
     ("docs/01-phase-0-investor-mou.md", "p01.html", "0 · ආයෝජක එකඟතා / Investor & MOU"),
     ("docs/02-phase-1-company-registration.md", "p02.html", "1 · සමාගම් ලියාපදිංචිය / Company (1st Reg.)"),
     ("docs/03-phase-2-land-premises.md", "p03.html", "2 · ඉඩම සහ ගොඩනැඟිල්ල / Land"),
@@ -116,6 +117,8 @@ def build_link_map():
     """basename(source.md) -> output page name"""
     mapping = {}
     for src, out, _ in NAV:
+        if src is None:
+            continue
         mapping[os.path.basename(src)] = out
     return mapping
 
@@ -151,6 +154,8 @@ def main():
 
     written = 0
     for src, out, title in NAV:
+        if src is None:
+            continue  # nav-only entry (the dashboard is built by build_dashboard.py)
         path = os.path.join(ROOT, src)
         if not os.path.exists(path):
             print(f"[skip] missing {src}")

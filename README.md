@@ -17,8 +17,33 @@
 | 💧 **මූලාශ්‍රය** | නළ ළිඳ / භූගත ජලය (deep tube well) |
 | 🔬 **පිරිපහදුව** | සම්පූර්ණ filtration — **MGSF → ACF → Softener → Micron → RO → UV → Ozone → 0.2µm** |
 | 🏷️ **ලේබල්** | "Bottled Drinking Water" — "Natural Mineral Water" / "Spring Water" **භාවිත කළ නොහැක** |
+| 💵 **ආයෝජකයා** | **Mr. Thilakarathna** — මුදල් සපයයි; **ඉඩම පමණක්** දැනට ඇති වත්කමයි |
+| 🏭 **ධාරිතාව** | 6,000 BPH (බෝතල් පැයට) — PET 500ml/1L/1.5L + 19L returnable |
+| 💰 **අයවැය** | ⭐ **Option A "Lean Start" Rs 163.3M** (Full Build Rs 214.2M · Minimum Rs 125.1M) |
+| 🧾 **බෝතලයක පිරිවැය** | **Rs 33.44** (blended) — ex-factory Rs 61.60 → ලාභය **Rs 28.16 (45.7%)** |
 
 👉 **[තීරණ වාර්තාව / Decision log](docs/21-decisions-and-assumptions.md)** · **[ජල පිරිපහදු පද්ධතිය / Treatment train](docs/20-water-treatment-train.md)**
+
+---
+
+## 📊 ⭐ ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel
+
+> **බලන්න:** `site/dashboard.html` (build කරන්න: `python3 build/build_dashboard.py`)
+
+මුළු ව්‍යාපෘතියම **එක පිටුවක** — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:
+
+| අංශය | අන්තර්ගතය |
+|---|---|
+| 1️⃣ ව්‍යාපෘති සාරාංශය | Mr. Thilakarathna · Bandarawela · දැනට ඇත්තේ ඉඩම පමණයි |
+| 2️⃣ නිෂ්පාදන සැලැස්ම | **බෝතල් Qty** — 500ml 135,000 · 1L 90,000 · 1.5L 75,000 /මාස (Y1) |
+| 3️⃣ පිරිපහදු ක්‍රියාවලිය | 8 පියවර · 7 CCPs · SLS 894 පරීක්ෂණ |
+| 4️⃣ ද්‍රව්‍ය අවශ්‍යතා | **බෝතල් + ලේබල් Qty** — ලේබල් = බෝතල් × 1.04 (4% waste) |
+| 5️⃣ සම්පූර්ණ අයවැය | **36 CAPEX අයිතම්** + අයවැය විකල්ප 3ක් |
+| 6️⃣ ඒකක පිරිවැය | **බෝතලයක ලාභය** — අයිතම-අයිතම 10-අයිතම් breakdown |
+| 7️⃣ ලාභ ප්‍රක්ෂේපණය | වසර 4ක් · break-even 28% · **sensitivity වගු 2ක්** |
+| 8️⃣ වේගවත් වර්ධනය | Phase 1→5 ක්‍රියාකාරී සැලැස්ම |
+| 9️⃣ අවදානම් | ඉහළම අවදානම් 8 + ආරක්ෂක පියවර |
+| 🔟 ලේඛන ලැයිස්තුව | **සම්පූර්ණ අයිතම් 160** — tick කරන්න, progress bar එකක් සමඟ |
 
 ---
 
