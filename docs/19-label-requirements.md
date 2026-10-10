@@ -90,4 +90,8 @@
 
 ---
 
-**⬅️ ආපසු:** [නැවුම් කිරීමේ කාලසටහන](18-renewal-compliance-calendar.md) | **➡️ ආකෘති පත්‍ර:** [MOU Term Sheet](../templates/01-MOU-term-sheet.md)
+> ✅ **තීරණය (2026-10-10):** අපේ නිෂ්පාදනය **"බෝතල් කළ පානීය ජලය / Bottled Drinking Water" (SLS 894)** වේ. උල්පතක් නොමැති බැවින් **"Natural Mineral Water"** හෝ **"Spring Water"** යන වචන **භාවිත කළ නොහැක.** 👉 [තීරණ වාර්තාව](21-decisions-and-assumptions.md)
+
+---
+
+**⬅️ ආපසු:** [නැවුම් කිරීමේ කාලසටහන](18-renewal-compliance-calendar.md) | **➡️ ඊළඟට:** [ජල පිරිපහදු පද්ධතිය](20-water-treatment-train.md)

@@ -7,6 +7,9 @@
 
 ## 5.1 — සම්පූර්ණ නිෂ්පාදන රේඛාව | Full production line (in process order)
 
+> ✅ **තීරණය (2026-10-10):** නිෂ්පාදනය **Bottled Drinking Water (SLS 894)** — සම්පූර්ණ **RO + UV + Ozone** දාමය.
+> ⭐ **පිරිපහදු පද්ධතියේ සම්පූර්ණ තාක්ෂණික විස්තරය (එක් එක් පෙරහන, CCP, media ආයු කාලය): [Phase 20 — ජල පිරිපහදු පද්ධතිය](20-water-treatment-train.md)**
+
 ### A. ජල පිරිපහදු පද්ධතිය / Water Treatment Plant (WTP)
 
 | # | උපකරණය / Equipment | විස්තරය | උපකල්පිත මිල (LKR) ⚠️ |

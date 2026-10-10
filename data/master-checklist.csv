@@ -53,6 +53,9 @@ D-051,3 - Water,WRB,Borewell completion certificate,නළ ළිඳ සම්�
 D-052,3 - Water,Technical,Pumping / yield test report,පොම්ප කිරීමේ / ඵලදායිතා පරීක්ෂණ වාර්තාව,Hydrogeologist,After drilling,40000-120000,Permanent,Mandatory,
 D-053,3 - Water,Lab,Source water test report - SLS 614:2013 (before treatment),මූලාශ්‍ර ජල පරීක්ෂණ වාර්තාව - SLS 614:2013,SLSI / ISO 17025 lab,Before building the factory,25000-90000,Per test,Critical,FCAU will NOT register if this fails
 D-054,3 - Water,Lab,Heavy metals + pesticide + fluoride/arsenic panel,බැර ලෝහ + කීටනාශක පරීක්ෂණ,Accredited lab,Before building the factory,40000-150000,Per test,Critical,
+D-149,3 - Water,Lab,Bromide (Br-) test of source water,මූලාශ්‍ර ජලයේ බ්‍රෝමයිඩ් පරීක්ෂණය,Accredited lab,Before ozone system design,25000-80000,Per test,Critical,Ozone + bromide = BROMATE (carcinogen). Controls ozone dose
+D-150,3 - Water,Lab,SDI + LSI + full cation/anion profile + silica/barium,RO සැලසුම සඳහා SDI LSI සහ සම්පූර්ණ අයන පැතිකඩ,Accredited lab / RO supplier,Before RO plant order,40000-120000,Per test,Critical,RO supplier needs this to size membranes and antiscalant
+D-151,3 - Water,Lab,Dry-season + wet-season source samples,වියළි සහ වැසි කාල දෙකෙහිම නියැදි,Accredited lab,Across the year,50000-180000,Per test,High,Groundwater quality varies seasonally
 D-055,3 - Water,Technical,Sanitary / pollution source survey,සනීපාරක්ෂක / දූෂණ මූලාශ්‍ර සමීක්ෂණය,Hydrogeologist / PHI,With source test,25000-75000,Permanent,High,
 D-056,3 - Water,Equipment,Flow meter + daily abstraction log,ජල මාපකය + දෛනික වාර්තා පොත,Supplier,After drilling,30000-150000,Ongoing,Mandatory,Required above 30000 L/month
 D-057,3 - Water,Construction,Well head protection structure,ළිඳ මුඛ ආරක්ෂණ ව්‍යුහය,Contractor,During construction,100000-400000,Permanent,Mandatory,
@@ -84,11 +87,16 @@ D-082,5 - Machinery,Equipment,Oil-free food-grade air compressor,ආහාර �
 D-083,5 - Machinery,Equipment,Standby generator,විකල්ප ජනක යන්ත්‍රය,Supplier,Construction phase,3000000-15000000,10 years,High,
 D-084,5 - Machinery,Equipment,Quality control laboratory equipment,තත්ත්ව පාලන පරීක්ෂණාගාර උපකරණ,Lab supplier,Construction phase,2000000-6000000,8 years,Mandatory,SLSI requires in-house QC
 D-085,5 - Machinery,Equipment,CIP (Clean-in-Place) system,CIP පිරිසිදු කිරීමේ පද්ධතිය,Plant supplier,Construction phase,400000-1800000,10 years,Mandatory,
+D-152,5 - Machinery,Equipment,Re-mineralisation dosing system (Ca/Mg/bicarbonate),ඛනිජ යළි එකතු කිරීමේ පද්ධතිය,Plant supplier,Construction phase,200000-700000,10 years,High,RO water tastes flat; must stay within SLS 894 limits
+D-153,5 - Machinery,Equipment,0.2 micron sterile filter before filler,පිරවීමට පෙර 0.2 මයික්‍රෝන් වන්ධ්‍යා පෙරහන,Plant supplier,Construction phase,150000-600000,10 years,Mandatory,Final microbial barrier - CCP 6
+D-154,5 - Machinery,Equipment,UV sterilizer with validated dose and intensity sensor,සත්‍යාපිත මාත්‍රාවක් සහිත UV විෂබීජහරණ යන්ත්‍රය,Plant supplier,Construction phase,150000-700000,10 years,Mandatory,Dose >= 40 mJ/cm2 - CCP 4; lamp change yearly
+D-155,5 - Machinery,Equipment,RO reject water recovery / reuse system,RO අප ජල නැවත භාවිත පද්ධතිය,Contractor,Construction phase,500000-2500000,10 years,High,RO rejects 25-50% of feed; CEA discharge limits apply
 D-086,5 - Machinery,Equipment,Spare parts initial stock,ආරම්භක අමතර කොටස් තොගය,Suppliers,At commissioning,500000-3000000,Ongoing,High,
 D-087,5 - Machinery,Service,Preventive maintenance contracts,වැළැක්වීමේ නඩත්තු ගිවිසුම්,Plant suppliers,At commissioning,Annual fee,1 year,Mandatory,
 D-088,5 - Machinery,Service,Calibration services (pH/balance/thermometer/flow),මාපාංකන සේවා,Accredited calibration lab,Annually,50000-250000,6-12 months,Mandatory,SLSI audit evidence
 D-089,5 - Machinery,Service,Pest control contract,කීට පාලන ගිවිසුම,Licensed pest control,Monthly,120000-480000,1 year,Mandatory,FCAU/SLSI requirement
 D-090,5 - Machinery,Service,Staff training (food handling / GMP / machines),සේවක පුහුණුව,SLSI / ITI / supplier,Annually,100000-500000,1 year,Mandatory,FCAU required doc R10
+D-156,5 - Machinery,Service,Filter media replacement schedule and log,පෙරහන් මාධ්‍ය මාරු කිරීමේ කාලසටහන සහ වාර්තාව,QA Manager,Ongoing,500000-2000000,Ongoing,Mandatory,Carbon 1-2 yrs; cartridges 1-3 months; membranes 2-5 yrs
 D-091,6 - MoH FCAU,Registration,FCAU bottled water registration application,FCAU බෝතල් ජල ලියාපදිංචි අයදුම්පත,Food Control Administration Unit,After plant is ready,Fee,Ongoing,Mandatory,Food Act 26/1980 + Regs 2011
 D-092,6 - MoH FCAU,Registration,Two specimen labels,ලේබල් නියැදි දෙකක්,Printer,FCAU application,10000-50000,Per design,Mandatory,Food (Labelling) Regs 2005
 D-093,6 - MoH FCAU,Registration,Organization chart,සංවිධාන ප්‍රස්තාරය,HR,FCAU application,0,Ongoing,Mandatory,FCAU required doc R8
@@ -102,7 +110,10 @@ D-100,6 - MoH FCAU,Registration,SLSI recommendation letter (valid 1 year),SLSI �
 D-101,6 - MoH FCAU,Registration,PHI / MOH / FDI inspection recommendations,PHI / MOH / FDI පරීක්ෂණ නිර්දේශ,Local health authorities,After SLSI audit,0,Project,Mandatory,
 D-102,6 - MoH FCAU,Registration,Conditional temporary registration (1 year),කොන්දේසි සහිත තාවකාලික ලියාපදිංචිය,Chief Food Authority,After all recommendations,0,1 year,Mandatory,
 D-103,6 - MoH FCAU,Registration,Full registration after SLSI audit 2 (2 more years),SLSI දෙවන විගණනයෙන් පසු සම්පූර්ණ ලියාපදිංචිය,Chief Food Authority,Within year 1,0,2 years,Mandatory,Total validity 3 years
-D-104,6 - MoH FCAU,Quality,Finished product test reports - SLS 894 / SLS 1038,අවසාන නිෂ්පාදන පරීක්ෂණ වාර්තා,SLSI / accredited lab,Monthly + per audit,25000-90000,Per test,Mandatory,
+D-104,6 - MoH FCAU,Quality,Finished product test reports - SLS 894 (Bottled Drinking Water),අවසාන නිෂ්පාදන පරීක්ෂණ වාර්තා - SLS 894,SLSI / accredited lab,Monthly + per audit,25000-90000,Per test,Mandatory,SLS 1038 not applicable - product decision 2026-10-10
+D-157,6 - MoH FCAU,Quality,Ozone residual monitoring records (CCP 5) - 0.2-0.4 ppm,ඕසෝන් අවශේෂ අධීක්ෂණ වාර්තා - 0.2-0.4 ppm,QA lab,Every batch,0,2 years retention,Critical,Determines shelf life; below 0.15 ppm = microbial growth
+D-158,6 - MoH FCAU,Quality,Bromate testing of finished product,අවසාන නිෂ්පාදනයේ බ්‍රෝමේට් පරීක්ෂණය,SLSI / accredited lab,Monthly + per audit,25000-90000,Per test,Critical,Ozonation by-product; carcinogenic if bromide present in source
+D-159,6 - MoH FCAU,Quality,Shelf life validation study (6 / 12 months at 30C and 40C),ගබඩා කාල වලංගු අධ්‍යයනය,Accredited lab,Before launch,100000-400000,Per product,Mandatory,Sets the Best Before date on the label
 D-105,7 - SLSI,Certification,SLSI application form + fee,SLSI අයදුම්පත + ගාස්තුව,SLSI,After MoH process starts,Fee,Project,Mandatory,
 D-106,7 - SLSI,Certification,Quality manual + documented QMS,තත්ත්ව අත්පොත + ලේඛනගත QMS,QA Manager,Before SLSI audit,150000-600000,Ongoing,Mandatory,
 D-107,7 - SLSI,Certification,Internal audit + management review records,අභ්‍යන්තර විගණන + කළමනාකරණ සමාලෝචන වාර්තා,QA,Before SLSI audit,0,Ongoing,Mandatory,
@@ -110,7 +121,7 @@ D-108,7 - SLSI,Certification,Raw material specs + supplier CoAs,අමුද්�
 D-109,7 - SLSI,Certification,Batch production records + traceability,කාණ්ඩ නිෂ්පාදන වාර්තා + සොයාගැනීමේ හැකියාව,Production,Ongoing,0,2 years,Mandatory,
 D-110,7 - SLSI,Certification,Complaint handling + product recall procedure,පැමිණිලි කළමනාකරණය + නිෂ්පාදන ආපසු කැඳවීම,QA Manager,Before SLSI audit,0,Ongoing,Mandatory,
 D-111,7 - SLSI,Certification,SLS 1336:2008 certification for PET bottles,PET බෝතල් සඳහා SLS 1336:2008 සහතිකය,SLSI (own) or bottle supplier,Ongoing,Fee,3 years,Mandatory,CAA enforced since 01.09.2016 (Gazette 1918/18)
-D-112,7 - SLSI,Certification,SLS Product Certification Mark permit (SLS 894/1038),SLS නිෂ්පාදන සහතික ලකුණ,SLSI,After 2 conforming samples,Annual fee on turnover,3 years,High,Voluntary but commercially essential
+D-112,7 - SLSI,Certification,SLS Product Certification Mark permit (SLS 894 - Bottled Drinking Water),SLS නිෂ්පාදන සහතික ලකුණ - SLS 894,SLSI,After 2 conforming samples,Annual fee on turnover,3 years,High,Voluntary but commercially essential; SLS 1038 not applicable
 D-113,7 - SLSI,Certification,Agreement with SLSI (permit conditions),SLSI සමඟ ගිවිසුම,SLSI,With permit,0,3 years,Mandatory,Indemnity / misuse / cancellation clauses
 D-114,8 - Environment,Licence,EPL category determination (A/B/C/D),EPL ප්‍රවර්ග තීරණය,CEA Badulla District Office,Early in project,0,Ongoing,Mandatory,Gazette 2264/18 (27.01.2022)
 D-115,8 - Environment,Licence,EIA / IEE screening determination,EIA / IEE තීරණය,CEA,Early in project,0,Ongoing,High,Only if prescribed project / sensitive area
@@ -140,6 +151,7 @@ D-138,10 - Launch,IP,Trademark search + registration,වෙළඳ ලකුණ �
 D-139,10 - Launch,IP,Logo and packaging copyright,ලෝගෝ සහ ඇසුරුම් ප්‍රකාශන හිමිකම,NIPO,With branding,75000-400000,Life of author,High,
 D-140,10 - Launch,Product,GS1 Sri Lanka barcode membership,GS1 ශ්‍රී ලංකා barcode සාමාජිකත්වය,GS1 Sri Lanka,Before retail,Annual fee,1 year,Mandatory,One GTIN per SKU
 D-141,10 - Launch,Product,Label compliance check (Food Labelling Regs 2005),ලේබල් අනුකූලතා පරීක්ෂාව,QA / FCAU,Before printing,0,Per design,Mandatory,
+D-160,10 - Launch,Product,Label wording locked to Bottled Drinking Water only,ලේබල් නාමය බෝතල් කළ පානීය ජලය ලෙස සීමා කිරීම,QA / legal,Before label print,0,Ongoing,Critical,No spring means Natural Mineral Water and Spring Water are illegal claims
 D-142,10 - Launch,Quality,Shelf life validation study,ගබඩා කාල වලංගු අධ්‍යයනය,Accredited lab,Before launch,100000-400000,Per product,Mandatory,
 D-143,10 - Launch,Operations,Distributor / dealer agreements,බෙදාහරින්නන්ගේ ගිවිසුම්,Lawyer,Before launch,25000-100000 each,1-3 years,High,
 D-144,10 - Launch,Operations,Vehicle revenue licences + permits,වාහන බලපත්‍ර,DMT / Pradeshiya Sabha,Annually,Fee,1 year,Mandatory,

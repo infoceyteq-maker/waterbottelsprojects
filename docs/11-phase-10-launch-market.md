@@ -31,17 +31,23 @@
 
 ## 10.3 — නිෂ්පාදන පෙළ | Product portfolio
 
-| නිෂ්පාදනය | භාජනය | ඉලක්ක වෙළඳපොළ |
-|---|---|---|
-| **500 ml** | PET | Retail, hotels, events |
-| **1 L** | PET | Retail, households |
-| **1.5 L** | PET | Households |
-| **250 ml** (mini) | PET | Hotels, airlines, weddings |
-| **19 L / 5 gallon** | Polycarbonate/PET | ⭐ **Offices, hotels, hospitals** — ඉහළ ලාභ, නැවත භාවිත |
-| **Natural Mineral Water** (උල්පතක් ඇත්නම්) | PET/Glass | Premium, hotels, export |
-| **Sparkling / flavoured** (phase 2) | PET | Youth market |
+> ## ✅ තීරණය / DECISION (2026-10-10)
+> සියලුම නිෂ්පාදන **"බෝතල් කළ පානීය ජලය / Bottled Drinking Water" — SLS 894** වේ.
+> **Natural Mineral Water දැන් නොකරයි.** 👉 [තීරණ වාර්තාව](21-decisions-and-assumptions.md)
 
-> 💡 **19L line එක ආරම්භයේදීම සලකා බලන්න.** උඩරට හෝටල්/නිවාඩු නිකේතන සහ කාර්යාල සඳහා ඉල්ලුම වැඩියි; bottle returnable නිසා ඇසුරුම් පිරිවැය අඩුයි.
+| නිෂ්පාදනය | භාජනය | ඉලක්ක වෙළඳපොළ | තත්ත්වය |
+|---|---|---|---|
+| **500 ml** — Bottled Drinking Water | PET | Retail, hotels, events | ✅ Phase 1 |
+| **1 L** — Bottled Drinking Water | PET | Retail, households | ✅ Phase 1 |
+| **1.5 L** — Bottled Drinking Water | PET | Households | ✅ Phase 1 |
+| **250 ml** (mini) | PET | Hotels, airlines, weddings | 🔵 Phase 2 |
+| **19 L / 5 gallon** | Polycarbonate/PET | ⭐ **Offices, hotels, hospitals** — ඉහළ ලාභ, නැවත භාවිත | ⭐ **නිර්දේශිතයි — Phase 1** |
+| ~~Natural Mineral Water~~ | — | — | ⏸️ **අනාගතයේදී පමණි** — සැබෑ උල්පතක් අවශ්‍යයි (SLS 1038) |
+| Sparkling / flavoured | PET | Youth market | ⏸️ Phase 3 |
+
+> 💡 **19L line එක ආරම්භයේදීම සලකා බලන්න.** උඩරට හෝටල්/නිවාඩු නිකේතන සහ කාර්යාල සඳහා ඉල්ලුම වැඩියි; bottle returnable නිසා ඇසුරුම් පිරිවැය අඩුයි; gross margin **60–75%** දක්වා.
+
+> 🔴 **ලේබල් නීතිය:** උල්පතක් නොමැති නිසා **"Natural Mineral Water" හෝ "Spring Water" යන වචන භාවිත කළ නොහැක.** ලේබලයේ **"Bottled Drinking Water"** සහ **"RO treated & ozonated"** ලෙස සඳහන් කරන්න. 👉 [Phase 19](19-label-requirements.md)
 
 ---
 

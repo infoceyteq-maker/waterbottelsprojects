@@ -5,7 +5,7 @@
 > Auto-generated from [`data/master-checklist.csv`](../data/master-checklist.csv) — edit the CSV and re-run
 > `python3 build/build_checklist.py`.
 
-**අයිතම ගණන / Total items: 148**
+**අයිතම ගණන / Total items: 160**
 
 ## දර්ශක / Legend
 
@@ -26,15 +26,15 @@
 | **0 - Investor** | 10 | 2 | 4 | 3 |
 | **1 - Company** | 18 | 0 | 16 | 1 |
 | **2 - Land** | 18 | 1 | 10 | 4 |
-| **3 - Water** | 12 | 3 | 8 | 1 |
+| **3 - Water** | 15 | 5 | 8 | 2 |
 | **4 - Factory** | 15 | 0 | 12 | 3 |
-| **5 - Machinery** | 17 | 2 | 10 | 5 |
-| **6 - MoH FCAU** | 14 | 0 | 14 | 0 |
+| **5 - Machinery** | 22 | 2 | 13 | 7 |
+| **6 - MoH FCAU** | 17 | 2 | 15 | 0 |
 | **7 - SLSI** | 9 | 0 | 8 | 1 |
 | **8 - Environment** | 10 | 0 | 6 | 2 |
 | **9 - Tax/Statutory** | 14 | 1 | 12 | 1 |
-| **10 - Launch** | 11 | 1 | 4 | 5 |
-| **මුළු / TOTAL** | **148** | **10** | **104** | **26** |
+| **10 - Launch** | 12 | 2 | 4 | 5 |
+| **මුළු / TOTAL** | **160** | **15** | **108** | **29** |
 
 ---
 
@@ -195,6 +195,9 @@
 |:--:|---|---|---|---|---|---|:--:|---|
 | ☐ | `D-053` | **Source water test report - SLS 614:2013 (before treatment)**<br><sub>මූලාශ්‍ර ජල පරීක්ෂණ වාර්තාව - SLS 614:2013</sub> | SLSI / ISO 17025 lab | Before building the factory | 25000-90000 | Per test | 🔴 Critical | FCAU will NOT register if this fails |
 | ☐ | `D-054` | **Heavy metals + pesticide + fluoride/arsenic panel**<br><sub>බැර ලෝහ + කීටනාශක පරීක්ෂණ</sub> | Accredited lab | Before building the factory | 40000-150000 | Per test | 🔴 Critical |  |
+| ☐ | `D-149` | **Bromide (Br-) test of source water**<br><sub>මූලාශ්‍ර ජලයේ බ්‍රෝමයිඩ් පරීක්ෂණය</sub> | Accredited lab | Before ozone system design | 25000-80000 | Per test | 🔴 Critical | Ozone + bromide = BROMATE (carcinogen). Controls ozone dose |
+| ☐ | `D-150` | **SDI + LSI + full cation/anion profile + silica/barium**<br><sub>RO සැලසුම සඳහා SDI LSI සහ සම්පූර්ණ අයන පැතිකඩ</sub> | Accredited lab / RO supplier | Before RO plant order | 40000-120000 | Per test | 🔴 Critical | RO supplier needs this to size membranes and antiscalant |
+| ☐ | `D-151` | **Dry-season + wet-season source samples**<br><sub>වියළි සහ වැසි කාල දෙකෙහිම නියැදි</sub> | Accredited lab | Across the year | 50000-180000 | Per test | 🟡 High | Groundwater quality varies seasonally |
 
 ## Equipment
 
@@ -272,6 +275,10 @@
 | ☐ | `D-083` | **Standby generator**<br><sub>විකල්ප ජනක යන්ත්‍රය</sub> | Supplier | Construction phase | 3000000-15000000 | 10 years | 🟡 High |  |
 | ☐ | `D-084` | **Quality control laboratory equipment**<br><sub>තත්ත්ව පාලන පරීක්ෂණාගාර උපකරණ</sub> | Lab supplier | Construction phase | 2000000-6000000 | 8 years | 🟠 Mandatory | SLSI requires in-house QC |
 | ☐ | `D-085` | **CIP (Clean-in-Place) system**<br><sub>CIP පිරිසිදු කිරීමේ පද්ධතිය</sub> | Plant supplier | Construction phase | 400000-1800000 | 10 years | 🟠 Mandatory |  |
+| ☐ | `D-152` | **Re-mineralisation dosing system (Ca/Mg/bicarbonate)**<br><sub>ඛනිජ යළි එකතු කිරීමේ පද්ධතිය</sub> | Plant supplier | Construction phase | 200000-700000 | 10 years | 🟡 High | RO water tastes flat; must stay within SLS 894 limits |
+| ☐ | `D-153` | **0.2 micron sterile filter before filler**<br><sub>පිරවීමට පෙර 0.2 මයික්‍රෝන් වන්ධ්‍යා පෙරහන</sub> | Plant supplier | Construction phase | 150000-600000 | 10 years | 🟠 Mandatory | Final microbial barrier - CCP 6 |
+| ☐ | `D-154` | **UV sterilizer with validated dose and intensity sensor**<br><sub>සත්‍යාපිත මාත්‍රාවක් සහිත UV විෂබීජහරණ යන්ත්‍රය</sub> | Plant supplier | Construction phase | 150000-700000 | 10 years | 🟠 Mandatory | Dose >= 40 mJ/cm2 - CCP 4; lamp change yearly |
+| ☐ | `D-155` | **RO reject water recovery / reuse system**<br><sub>RO අප ජල නැවත භාවිත පද්ධතිය</sub> | Contractor | Construction phase | 500000-2500000 | 10 years | 🟡 High | RO rejects 25-50% of feed; CEA discharge limits apply |
 | ☐ | `D-086` | **Spare parts initial stock**<br><sub>ආරම්භක අමතර කොටස් තොගය</sub> | Suppliers | At commissioning | 500000-3000000 | Ongoing | 🟡 High |  |
 
 ## Service
@@ -282,6 +289,7 @@
 | ☐ | `D-088` | **Calibration services (pH/balance/thermometer/flow)**<br><sub>මාපාංකන සේවා</sub> | Accredited calibration lab | Annually | 50000-250000 | 6-12 months | 🟠 Mandatory | SLSI audit evidence |
 | ☐ | `D-089` | **Pest control contract**<br><sub>කීට පාලන ගිවිසුම</sub> | Licensed pest control | Monthly | 120000-480000 | 1 year | 🟠 Mandatory | FCAU/SLSI requirement |
 | ☐ | `D-090` | **Staff training (food handling / GMP / machines)**<br><sub>සේවක පුහුණුව</sub> | SLSI / ITI / supplier | Annually | 100000-500000 | 1 year | 🟠 Mandatory | FCAU required doc R10 |
+| ☐ | `D-156` | **Filter media replacement schedule and log**<br><sub>පෙරහන් මාධ්‍ය මාරු කිරීමේ කාලසටහන සහ වාර්තාව</sub> | QA Manager | Ongoing | 500000-2000000 | Ongoing | 🟠 Mandatory | Carbon 1-2 yrs; cartridges 1-3 months; membranes 2-5 yrs |
 
 
 # 📁 6 - MoH FCAU
@@ -309,7 +317,10 @@
 | ☐ | `D-097` | **HACCP plan and food safety management system**<br><sub>HACCP සැලැස්ම සහ ආහාර සුරක්ෂිතතා පද්ධතිය</sub> | Food safety consultant | Before SLSI audit | 250000-900000 | Ongoing | 🟠 Mandatory |  |
 | ☐ | `D-098` | **GMP manual + SOPs**<br><sub>GMP අත්පොත + සම්මත ක්‍රියාපටිපාටි</sub> | QA Manager | Before SLSI audit | 150000-500000 | Ongoing | 🟠 Mandatory |  |
 | ☐ | `D-099` | **Food handler medical certificates**<br><sub>ආහාර හසුරුවන්නන්ගේ වෛද්‍ය සහතික</sub> | Hospital / PHI | Annually | 5000-15000 per person | 1 year | 🟠 Mandatory |  |
-| ☐ | `D-104` | **Finished product test reports - SLS 894 / SLS 1038**<br><sub>අවසාන නිෂ්පාදන පරීක්ෂණ වාර්තා</sub> | SLSI / accredited lab | Monthly + per audit | 25000-90000 | Per test | 🟠 Mandatory |  |
+| ☐ | `D-104` | **Finished product test reports - SLS 894 (Bottled Drinking Water)**<br><sub>අවසාන නිෂ්පාදන පරීක්ෂණ වාර්තා - SLS 894</sub> | SLSI / accredited lab | Monthly + per audit | 25000-90000 | Per test | 🟠 Mandatory | SLS 1038 not applicable - product decision 2026-10-10 |
+| ☐ | `D-157` | **Ozone residual monitoring records (CCP 5) - 0.2-0.4 ppm**<br><sub>ඕසෝන් අවශේෂ අධීක්ෂණ වාර්තා - 0.2-0.4 ppm</sub> | QA lab | Every batch | 0 | 2 years retention | 🔴 Critical | Determines shelf life; below 0.15 ppm = microbial growth |
+| ☐ | `D-158` | **Bromate testing of finished product**<br><sub>අවසාන නිෂ්පාදනයේ බ්‍රෝමේට් පරීක්ෂණය</sub> | SLSI / accredited lab | Monthly + per audit | 25000-90000 | Per test | 🔴 Critical | Ozonation by-product; carcinogenic if bromide present in source |
+| ☐ | `D-159` | **Shelf life validation study (6 / 12 months at 30C and 40C)**<br><sub>ගබඩා කාල වලංගු අධ්‍යයනය</sub> | Accredited lab | Before launch | 100000-400000 | Per product | 🟠 Mandatory | Sets the Best Before date on the label |
 
 
 # 📁 7 - SLSI
@@ -326,7 +337,7 @@
 | ☐ | `D-109` | **Batch production records + traceability**<br><sub>කාණ්ඩ නිෂ්පාදන වාර්තා + සොයාගැනීමේ හැකියාව</sub> | Production | Ongoing | 0 | 2 years | 🟠 Mandatory |  |
 | ☐ | `D-110` | **Complaint handling + product recall procedure**<br><sub>පැමිණිලි කළමනාකරණය + නිෂ්පාදන ආපසු කැඳවීම</sub> | QA Manager | Before SLSI audit | 0 | Ongoing | 🟠 Mandatory |  |
 | ☐ | `D-111` | **SLS 1336:2008 certification for PET bottles**<br><sub>PET බෝතල් සඳහා SLS 1336:2008 සහතිකය</sub> | SLSI (own) or bottle supplier | Ongoing | Fee | 3 years | 🟠 Mandatory | CAA enforced since 01.09.2016 (Gazette 1918/18) |
-| ☐ | `D-112` | **SLS Product Certification Mark permit (SLS 894/1038)**<br><sub>SLS නිෂ්පාදන සහතික ලකුණ</sub> | SLSI | After 2 conforming samples | Annual fee on turnover | 3 years | 🟡 High | Voluntary but commercially essential |
+| ☐ | `D-112` | **SLS Product Certification Mark permit (SLS 894 - Bottled Drinking Water)**<br><sub>SLS නිෂ්පාදන සහතික ලකුණ - SLS 894</sub> | SLSI | After 2 conforming samples | Annual fee on turnover | 3 years | 🟡 High | Voluntary but commercially essential; SLS 1038 not applicable |
 | ☐ | `D-113` | **Agreement with SLSI (permit conditions)**<br><sub>SLSI සමඟ ගිවිසුම</sub> | SLSI | With permit | 0 | 3 years | 🟠 Mandatory | Indemnity / misuse / cancellation clauses |
 
 
@@ -413,6 +424,7 @@
 |:--:|---|---|---|---|---|---|:--:|---|
 | ☐ | `D-140` | **GS1 Sri Lanka barcode membership**<br><sub>GS1 ශ්‍රී ලංකා barcode සාමාජිකත්වය</sub> | GS1 Sri Lanka | Before retail | Annual fee | 1 year | 🟠 Mandatory | One GTIN per SKU |
 | ☐ | `D-141` | **Label compliance check (Food Labelling Regs 2005)**<br><sub>ලේබල් අනුකූලතා පරීක්ෂාව</sub> | QA / FCAU | Before printing | 0 | Per design | 🟠 Mandatory |  |
+| ☐ | `D-160` | **Label wording locked to Bottled Drinking Water only**<br><sub>ලේබල් නාමය බෝතල් කළ පානීය ජලය ලෙස සීමා කිරීම</sub> | QA / legal | Before label print | 0 | Ongoing | 🔴 Critical | No spring means Natural Mineral Water and Spring Water are illegal claims |
 
 ## Quality
 

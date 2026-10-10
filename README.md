@@ -4,7 +4,21 @@
 > **ස්ථානය / Location:** බණ්ඩාරවෙල, බදුල්ල දිස්ත්‍රික්කය, ඌව පළාත — Bandarawela, Badulla District, Uva Province
 > **ව්‍යාපෘති වර්ගය / Structure:** ආයෝජක හවුල්කාරිත්වයක් සහිත පෞද්ගලික සමාගමක් (Private Limited Company with an investor partnership)
 > **සකස් කළ දිනය / Prepared:** 2026-10-10
-> **අනුවාදය / Version:** 1.0
+> **අනුවාදය / Version:** 1.1
+
+---
+
+## ✅ තහවුරු කළ තීරණ | LOCKED DECISIONS (2026-10-10)
+
+| තීරණය | විස්තරය |
+|---|---|
+| 🎯 **නිෂ්පාදනය** | **"බෝතල් කළ පානීය ජලය / Bottled Drinking Water" — SLS 894** |
+| ❌ **නොකරයි** | Natural Mineral Water (SLS 1038) — සැබෑ උල්පතක් අවශ්‍ය බැවින් |
+| 💧 **මූලාශ්‍රය** | නළ ළිඳ / භූගත ජලය (deep tube well) |
+| 🔬 **පිරිපහදුව** | සම්පූර්ණ filtration — **MGSF → ACF → Softener → Micron → RO → UV → Ozone → 0.2µm** |
+| 🏷️ **ලේබල්** | "Bottled Drinking Water" — "Natural Mineral Water" / "Spring Water" **භාවිත කළ නොහැක** |
+
+👉 **[තීරණ වාර්තාව / Decision log](docs/21-decisions-and-assumptions.md)** · **[ජල පිරිපහදු පද්ධතිය / Treatment train](docs/20-water-treatment-train.md)**
 
 ---
 
@@ -46,6 +60,8 @@ As you asked — from the **very first registration document** (company incorpor
 | 17 | [ආයතන සහ සේවා සපයන්නන් / Agency & Service Directory](docs/17-agency-service-directory.md) | කවුරුන් වෙත කුමක් ලබාගන්නේද — සම්පූර්ණ ලැයිස්තුව |
 | 18 | [නැවුම් කිරීමේ කාලසටහන / Renewal & Compliance Calendar](docs/18-renewal-compliance-calendar.md) | මාසික / වාර්ෂික / වසර 3ක යුතුකම් |
 | 19 | [ලේබල් අවශ්‍යතා / Label Requirements](docs/19-label-requirements.md) | Food (Labelling & Advertising) Regulations 2005 |
+| 20 | [💧 **ජල පිරිපහදු පද්ධතිය / Water Treatment Train**](docs/20-water-treatment-train.md) | ⭐ සම්පූර්ණ **filtration දාමය** — එක් එක් පෙරහන මොනවා ඉවත් කරයිද, CCP 7ක්, media මාරු කිරීමේ කාලසටහන, RO reject, **bromate අවදානම** |
+| 21 | [📋 **තීරණ සහ උපකල්පන / Decision & Assumption Log**](docs/21-decisions-and-assumptions.md) | ⭐ තහවුරු කළ තීරණ, විවෘත ප්‍රශ්න 6ක්, ධාරිතාව පිළිබඳ නිර්දේශය, Phase 1→4 වර්ධන සැලැස්ම |
 
 ### කොටස 3 — සූදානම් කරගත හැකි ආකෘති පත්‍ර (Ready-to-use templates)
 

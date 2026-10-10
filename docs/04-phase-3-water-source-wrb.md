@@ -41,11 +41,13 @@
 
 ## 3.3 — මූලාශ්‍ර වර්ග | Source types
 
+> ✅ **තීරණය (2026-10-10):** අපේ මූලාශ්‍රය **නළ ළිඳකි (deep tube well)** — "ස්වාභාවික ඛනිජ ජලය" නොකරන බැවින් උල්පතක් අවශ්‍ය නැත.
+
 | වර්ගය / Type | ප්‍රායෝගිකත්වය | සටහන් |
 |---|---|---|
-| **Deep tube well (ගැඹුරු නළ ළිඳ)** | ✅ වඩාත් පොදු | WRB අනුමැතිය අනිවාර්ය; 60–200 m |
+| **Deep tube well (ගැඹුරු නළ ළිඳ)** | ✅ **අපේ තේරීම** | WRB අනුමැතිය අනිවාර්ය; 60–200 m |
 | **Dug well (සාමාන්‍ය ළිඳ)** | ⚠️ | 4 m+ ගැඹුර නම් WRB අවසරය අවශ්‍ය; දූෂණ අවදානම වැඩියි |
-| **Natural spring (ස්වාභාවික උල්පත)** | ✅ උඩරටට හොඳයි | **"Natural Mineral Water" (SLS 1038)** ලෙස සලකුණු කළ හැක — ඉහළ වටිනාකමක්; නමුත් WRB අධීක්ෂණය + විශේෂ අනුමැති |
+| ~~Natural spring (ස්වාභාවික උල්පත)~~ | ⏸️ **දැන් අවශ්‍ය නැත** | Natural Mineral Water (SLS 1038) නොකරන බැවින් |
 | **Piped water (NWS&DB)** | ❌ | FCAU සාමාන්‍යයෙන් **පිළිගනු නොලැබේ** — ස්වාධීන මූලාශ්‍රයක් අවශ්‍යයි |
 | **Rainwater harvesting** | ⚠️ | අතිරේක පමණි; ප්‍රධාන මූලාශ්‍රය ලෙස පිළිගැනීම සැක සහිතයි |
 
@@ -73,6 +75,24 @@
 | Pesticides / organochlorines | Heavy metals panel |
 
 > 🔴 **අසමත් වුවහොත්:** ළිඳ වෙනස් කිරීම, ගැඹුරු කිරීම, හෝ RO + additional treatment යෙදීම. **නමුත් FCAU නීතිය පැහැදිලිය — මූලාශ්‍ර ජලය (before treatment) SLSI පානීය ජල ප්‍රමිතියට අනුකූල නොවේ නම් ලියාපදිංචිය නොලැබේ.** එබැවින් RO මත පමණක් රඳා පැවතීම උපායමාර්ගයක් නොවේ.
+
+---
+
+## 3.4b — ⭐ RO සැලසුම් කිරීමට අමතරව අවශ්‍ය පරීක්ෂණ | Extra tests needed for RO plant design
+
+> මේවා SLS 614 පරීක්ෂණයට **අමතරව** ඉල්ලන්න. RO පද්ධතිය සැලසුම් කරන්නේ මේවා මතයි.
+> සම්පූර්ණ filtration දාමය 👉 [Phase 20](20-water-treatment-train.md)
+
+| පරීක්ෂණය | ඇයි අවශ්‍යද |
+|---|---|
+| 🔴 **Bromide (Br⁻)** | **Ozone + Bromide → Bromate (පිළිකා කාරක).** මෙය නොදැන සිටියොත් ඔබේ නිෂ්පාදනය අනතුරුදායක විය හැක |
+| **SDI (Silt Density Index)** | RO membrane fouling අනාවැකිය; RO design එකට අත්‍යවශ්‍යයි |
+| **LSI (Langelier Saturation Index)** | Scaling potential; antiscalant මාත්‍රාව |
+| **සම්පූර්ණ cation/anion profile** (Ca, Mg, Na, K, Cl, SO₄, HCO₃, CO₃) | RO recovery %, re-mineralisation design |
+| **Silica (SiO₂)** | Membrane scaling |
+| **Barium, Strontium** | Scaling |
+| **Alkalinity / CO₂** | pH control, degassing අවශ්‍යද යන්න |
+| **වසරේ වියළි + වැසි කාල දෙකෙහිම නියැදි** | වාර්ෂික විචලනය |
 
 👉 පරීක්ෂණ ඉල්ලුම් ලිපිය: [`templates/04-water-source-test-request.md`](../templates/04-water-source-test-request.md)
 

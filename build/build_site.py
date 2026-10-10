@@ -35,6 +35,8 @@ NAV = [
     ("docs/17-agency-service-directory.md", "p17.html", "17 · ආයතන / Agency Directory"),
     ("docs/18-renewal-compliance-calendar.md", "p18.html", "18 · නැවුම් කිරීම් / Renewals"),
     ("docs/19-label-requirements.md", "p19.html", "19 · ලේබල් / Labels"),
+    ("docs/20-water-treatment-train.md", "p20.html", "20 · 💧 පිරිපහදුව / Water Treatment Train"),
+    ("docs/21-decisions-and-assumptions.md", "p21.html", "21 · 📋 තීරණ / Decisions & Assumptions"),
     ("templates/01-MOU-term-sheet.md", "t01.html", "📄 MOU / Term Sheet"),
     ("templates/02-shareholders-agreement-heads-of-terms.md", "t02.html", "📄 Shareholders Agreement"),
     ("templates/03-board-resolution-incorporation.md", "t03.html", "📄 Board Resolution"),
@@ -96,7 +98,7 @@ PAGE = """<!doctype html>
 <nav id="nav">
   <h1>💧 බෝතල් ජල කර්මාන්ත ශාලාව</h1>
   <div class="sub">Bottled Water Manufacturing Plant · Bandarawela, Badulla<br>
-  සම්පූර්ණ ලේඛන පැකේජය · v1.0 · 2026-10-10</div>
+  සම්පූර්ණ ලේඛන පැකේජය · v1.1 · SLS 894 · 2026-10-10</div>
   <input type="text" id="q" placeholder="🔍 පිටු සොයන්න / Filter pages…" oninput="flt()">
   <ol id="nl">{nav}</ol>
 </nav>
