@@ -402,6 +402,44 @@ def check_dashboard(item_count):
         ok("all seven pages built and well formed")
 
 
+VAR_USE_RE = re.compile(r"var\((--[A-Za-z0-9_-]+)")
+VAR_DEF_RE = re.compile(r"(--[A-Za-z0-9_-]+)\s*:")
+
+
+def check_css_variables():
+    """Every var(--x) used by the stylesheets or the built pages must be
+    defined in a :root block of build/style.css (the only :root in the pack)."""
+    print("\n[8] CSS variables: every var(--x) is defined in :root")
+    here = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(here, "style.css"), encoding="utf-8") as fh:
+        css = fh.read()
+    roots = re.findall(r":root\s*\{([^}]*)\}", css)
+    defined = set()
+    for block in roots:
+        defined.update(VAR_DEF_RE.findall(block))
+    used = {}
+    for name in ("style.css", "style_docs.css"):
+        with open(os.path.join(here, name), encoding="utf-8") as fh:
+            text = re.sub(r"/\*.*?\*/", "", fh.read(), flags=re.S)  # comments don't count
+            for v in VAR_USE_RE.findall(text):
+                used.setdefault(v, set()).add(name)
+    site = os.path.join(ROOT, "site")
+    if os.path.isdir(site):
+        for name in sorted(os.listdir(site)):
+            if name.endswith(".html"):
+                with open(os.path.join(site, name), encoding="utf-8") as fh:
+                    text = re.sub(r"/\*.*?\*/", "", fh.read(), flags=re.S)
+                    for v in VAR_USE_RE.findall(text):
+                        used.setdefault(v, set()).add(name)
+    undefined = sorted(v for v in used if v not in defined)
+    if undefined:
+        fail("undefined CSS variables: " + ", ".join(
+            f"{v} (used in {', '.join(sorted(used[v]))[:80]})" for v in undefined))
+    else:
+        ok(f"{len(used)} distinct variables used, all defined in :root "
+           f"({len(defined)} defined)")
+
+
 def load_csv_rows():
     with open(os.path.join(ROOT, "data", "master-checklist.csv"), newline="",
               encoding="utf-8") as fh:
@@ -419,6 +457,7 @@ def main():
     check_csv_in_sync(item_count)
     check_site(item_count)
     check_dashboard(item_count)
+    check_css_variables()
 
     print("\n" + "=" * 68)
     if failures:

@@ -4,326 +4,517 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ක්‍රියාවලිය + ලේඛන — Process &amp; documents | Bandarawela Water Plant</title>
 <style>/* =====================================================================
-   Bandarawela Bottled Drinking Water Plant — stylesheet
-   Single-column · ash + white · blue / black / red only
+   Bandarawela Bottled Drinking Water Plant — design system
+   "Premium corporate financial / fintech dashboard"
+
+   Canvas    deep navy #070d18 with layered radial glows
+   Surfaces  white / light-ash data cards, ~14px radius, embossed
+             (inset top highlight + layered drop shadow) — they float
+   Accents   emerald #10b981  -> KPI figures, grand-total rows, positive
+             metallic gold    -> special totals (CASH REQUIRED etc.)
+             red              -> losses and warnings ONLY
+   Glass     frosted top bar + chips (backdrop blur + saturate)
+   Layout    real CSS grids: .g2 .g3 .g4 .g5 (responsive), org chart
+             departments in an auto-fit grid
+   Motion    cards / KPIs lift ~5px and deepen their shadow on hover;
+             table rows tint on hover
+
+   Every var(--x) used by site/*.html is defined in :root below.
    ===================================================================== */
 :root{
-  --ash:#eceef1;
-  --ash-2:#e2e6ea;
+  /* canvas (dark) */
+  --canvas:#070d18;
+  --canvas-2:#0a1424;
+  --canvas-3:#101c33;
+  --on-canvas:#dbe5f2;
+  --on-canvas-muted:#8ea0b8;
+  --glass:rgba(10,18,34,.60);
+  --glass-line:rgba(255,255,255,.10);
+
+  /* surfaces (light) */
   --surface:#ffffff;
-  --ink:#0b0d10;
-  --ink-2:#2b323b;
-  --muted:#67707d;
-  --line:#d8dde3;
-  --line-2:#c3cad3;
-  --blue:#17396e;
-  --blue-2:#214f8f;
-  --blue-soft:#eef2f8;
-  --red:#a3161d;
-  --red-soft:#fbf1f1;
-  --shadow:0 1px 2px rgba(11,13,16,.05);
+  --ash:#f2f5f8;
+  --ash-2:#e6ebf1;
+  --ash-3:#d4dce6;
+  --sheet:#eef2f6;
+
+  /* ink + neutrals */
+  --ink:#0b1220;
+  --ink-2:#2a3649;
+  --ink2:#2a3649;          /* alias — landing cards */
+  --muted:#5d6979;
+  --faint:#8491a3;
+  --line:#dce3eb;
+  --line-2:#c4cdd9;
+  --border2:#c4cdd9;       /* alias — inline controls */
+
+  /* emerald — KPI figures, grand totals, positive figures */
+  --emerald:#10b981;
+  --emerald-2:#34d399;
+  --emerald-d:#047857;
+  --emerald-soft:#ecfdf5;
+  --emerald-line:#a7f3d0;
+
+  /* metallic gold — special totals */
+  --gold:#c9a13b;
+  --gold-d:#8a6417;
+  --gold-soft:#fbf7ea;
+  --gold-line:#e6cf85;
+  --gold-grad:linear-gradient(135deg,#f8e9b0 0%,#d9af4c 36%,#9a7122 62%,#ecd283 100%);
+  --olive-d:#8a6417;       /* alias — landing cards (now gold) */
+
+  /* info blue — secondary, used sparingly */
+  --blue:#1e3a8a;
+  --blue-2:#2563eb;
+  --blue-soft:#eff4ff;
+
+  /* red — losses & warnings ONLY */
+  --red:#dc2626;
+  --red-d:#b91c1c;
+  --red-soft:#fef2f2;
+
+  --radius:14px;
+  --radius-sm:10px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+
+  --shadow:0 1px 2px rgba(7,13,24,.06),0 6px 16px -8px rgba(7,13,24,.22);
+  --shadow-emboss:inset 0 1px 0 rgba(255,255,255,.95),
+                  inset 0 -1px 0 rgba(7,13,24,.035),
+                  0 1px 2px rgba(7,13,24,.06),
+                  0 10px 24px -12px rgba(7,13,24,.30),
+                  0 2px 6px rgba(7,13,24,.04);
+  --shadow-lift:inset 0 1px 0 rgba(255,255,255,.95),
+                0 2px 4px rgba(7,13,24,.08),
+                0 24px 42px -16px rgba(7,13,24,.46),
+                0 8px 16px rgba(7,13,24,.08);
 }
+
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;background:var(--canvas)}
 body{
-  margin:0;background:var(--ash);color:var(--ink);
+  margin:0;min-height:100vh;color:var(--ink);
+  background-color:var(--canvas);
+  background-image:
+    radial-gradient(900px 520px at 8% -6%,rgba(16,185,129,.17),transparent 62%),
+    radial-gradient(860px 560px at 96% 4%,rgba(37,99,235,.22),transparent 60%),
+    radial-gradient(1100px 700px at 50% 42%,rgba(30,58,138,.20),transparent 70%),
+    radial-gradient(720px 480px at 50% 110%,rgba(16,185,129,.11),transparent 66%),
+    linear-gradient(180deg,var(--canvas-3) 0%,var(--canvas) 40%,var(--canvas-2) 100%);
+  background-attachment:fixed;
   font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
        "Helvetica Neue","Noto Sans Sinhala","Iskoola Pota",Arial,sans-serif;
   font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;
 }
-a{color:var(--blue-2);text-decoration:none}
+a{color:var(--emerald-d);text-decoration:none}
 a:hover{text-decoration:underline}
 
-/* ── single column: everything stacked, one below another ── */
+/* ── page frame ── */
 #wrap{display:block;min-height:100vh}
-#main{display:block;width:100%}
-.inner{max-width:980px;margin:0 auto;padding:30px 24px 70px;display:block}
-.grid,.g2,.g3,.g4,.g5{display:block}
-.grid>*,.g2>*,.g3>*,.g4>*,.g5>*{margin:0 0 10px}
-.grid>*:last-child,.g4>*:last-child{margin-bottom:0}
+#main{display:block;width:100%;position:relative}
+.inner{
+  position:relative;z-index:1;
+  max-width:1000px;margin:-30px auto 40px;padding:28px 26px 40px;
+  background:linear-gradient(180deg,#f7f9fb 0%,var(--sheet) 100%);
+  border:1px solid rgba(255,255,255,.07);border-radius:22px;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.65),0 0 0 1px rgba(7,13,24,.25);
+}
 
-/* ── top bar ── */
+/* ── layout grids (real CSS grids, responsive) ── */
+.grid,.g2,.g3,.g4,.g5{display:grid;gap:16px;margin:14px 0 18px;align-items:stretch}
+.grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.grid>*,.g2>*,.g3>*,.g4>*,.g5>*{min-width:0;margin:0}
+
+/* ── glass top bar ── */
 #nav{
-  position:sticky;top:0;z-index:30;background:var(--ink);color:#fff;
-  border-bottom:3px solid var(--blue);padding:0 22px;
+  position:sticky;top:0;z-index:30;color:#fff;
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(16px) saturate(170%);
+          backdrop-filter:blur(16px) saturate(170%);
+  border-bottom:1px solid var(--glass-line);
+  padding:0 22px;
+  box-shadow:0 14px 30px -20px rgba(0,0,0,.9);
+}
+#nav::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--emerald) 30%,var(--emerald-2) 70%,transparent);
+  opacity:.85;
 }
 #nav .brand{
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;
-  padding:11px 0 9px;border-bottom:1px solid #23282f;
+  display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;
+  padding:10px 0 8px;border-bottom:1px solid var(--glass-line);
 }
 #nav .brand .logo{display:none}
-#nav .brand h1{margin:0;font-size:14.5px;font-weight:700;letter-spacing:.01em;color:#fff}
+#nav .brand h1{margin:0;font-size:15px;font-weight:700;letter-spacing:.01em;color:#fff}
 #nav .brand h1 span{
   display:block;font-size:10.5px !important;font-weight:500 !important;
-  color:#8f99a6 !important;margin-top:1px !important;letter-spacing:.06em;
+  color:var(--on-canvas-muted) !important;margin-top:2px !important;letter-spacing:.08em;
+  text-transform:uppercase;
 }
-#nav .brand p{margin:0 0 0 auto;font-size:11.5px;color:#98a2b3;line-height:1.5}
+#nav .brand p{margin:0 0 0 auto;font-size:11.5px;color:var(--on-canvas-muted);line-height:1.5}
 #nav .brand p b{color:#fff;font-weight:600}
 #nav .nsec{display:none}
 #nav a{
   display:inline-flex;align-items:center;gap:6px;
-  margin:7px 5px 7px 0;padding:4px 10px;border:1px solid transparent;
-  border-radius:2px;color:#c6ced8;font-size:12px;font-weight:500;
-  line-height:1.5;text-decoration:none;
+  margin:6px 6px 6px 0;padding:4px 11px;
+  border:1px solid var(--glass-line);border-radius:999px;
+  background:rgba(255,255,255,.04);color:#c9d4e3;
+  font-size:12px;font-weight:500;line-height:1.5;text-decoration:none;
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s var(--ease),box-shadow .2s ease;
 }
 #nav a .en{display:none}
-#nav a:hover{color:#fff;border-color:#3c4653;text-decoration:none}
-#nav a.on{background:var(--blue);border-color:var(--blue-2);color:#fff}
+#nav a:hover{color:#fff;background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.24);text-decoration:none;transform:translateY(-1px)}
+#nav a.on{
+  background:linear-gradient(135deg,#34d399,#10b981);border-color:transparent;
+  color:#052016;font-weight:600;box-shadow:0 8px 18px -8px rgba(16,185,129,.8);
+}
+#nav a b{
+  display:inline-block;min-width:18px;margin-right:2px;padding:0 5px;
+  background:rgba(255,255,255,.10);color:#c9d4e3;border-radius:999px;
+  font-size:10px;font-weight:700;letter-spacing:.03em;text-align:center;
+}
+#nav a.on b{background:rgba(5,32,22,.18);color:#052016}
+#nav a:hover b{background:rgba(255,255,255,.18);color:#fff}
 
-/* ── masthead / cover ── */
+/* ── hero / cover ── */
 .hero{
-  position:relative;background:#12161c;color:#fff;
-  background-size:cover;background-position:center;
-  border-bottom:1px solid var(--line);
+  position:relative;overflow:hidden;color:#fff;
+  background-color:#0a1222;background-size:cover;background-position:center;background-repeat:no-repeat;
+  padding-bottom:20px;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(640px 320px at 88% 8%,rgba(16,185,129,.30),transparent 70%),
+             radial-gradient(520px 300px at 6% 100%,rgba(37,99,235,.22),transparent 70%);
 }
 .hero::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(100deg,rgba(9,12,16,.95) 0%,rgba(12,17,24,.88) 45%,rgba(23,57,110,.72) 100%);
+  background:linear-gradient(100deg,rgba(7,13,24,.97) 0%,rgba(7,13,24,.88) 46%,rgba(7,13,24,.58) 100%),
+             linear-gradient(0deg,var(--canvas) 0%,rgba(7,13,24,0) 45%);
 }
 .hero .nofallback{display:none !important}
-.hero .hc{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:40px 24px 34px}
+.hero .hc{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:52px 26px 56px}
 .hero .kicker{
-  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;color:#8fb0e4;border:1px solid #2f4a72;
-  padding:4px 10px;margin-bottom:16px;border-radius:2px;background:rgba(23,57,110,.28);
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#86efc4;border:1px solid rgba(52,211,153,.38);
+  padding:5px 12px;margin-bottom:18px;border-radius:999px;
+  background:rgba(16,185,129,.12);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
-.hero h1{margin:0 0 10px;font-size:29px;font-weight:700;line-height:1.28;letter-spacing:-.01em}
-.hero .hsub{margin:0;font-size:14.5px;color:#c3cbd6;max-width:74ch;line-height:1.62}
-.hero .chips{display:block;margin-top:18px;padding-top:16px;border-top:1px solid #2b3542}
+.hero h1{margin:0 0 12px;font-size:32px;font-weight:700;line-height:1.25;letter-spacing:-.015em;color:#fff}
+.hero h1 .en{
+  display:block;font-size:16px;font-weight:600;color:#a9b8cd;
+  margin-top:10px;letter-spacing:0;line-height:1.45;
+}
+.hero .hsub{margin:0;font-size:15px;color:#b9c6d8;max-width:76ch;line-height:1.66}
+.hero .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;padding:0;border:0}
 .hero .chip{
-  display:block;font-size:12.5px;color:#9fb4cf;padding:3px 0;
-  border:0;background:none;margin:0;border-radius:0;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;color:#c4d0e0;padding:7px 14px;margin:0;
+  border:1px solid rgba(255,255,255,.14);border-radius:999px;
+  background:rgba(255,255,255,.07);
+  -webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 20px -12px rgba(0,0,0,.6);
+  transition:transform .25s var(--ease),background-color .25s ease;
 }
+.hero .chip:hover{transform:translateY(-2px);background:rgba(255,255,255,.13)}
 .hero .chip b{color:#fff;font-weight:600}
 
-/* ── sections ── */
-section{background:var(--surface);border:1px solid var(--line);border-radius:3px;
-  padding:24px 26px;margin:0 0 18px;box-shadow:var(--shadow)}
+/* ── sections (dashboard) ── */
+section{
+  background:var(--surface);border:1px solid rgba(7,13,24,.04);border-radius:var(--radius);
+  padding:26px 28px;margin:0 0 22px;box-shadow:var(--shadow-emboss);
+}
 section>h2{
-  margin:0 0 4px;font-size:18px;font-weight:700;letter-spacing:-.005em;
-  padding-bottom:12px;border-bottom:2px solid var(--ink);color:var(--ink);
+  margin:0 0 4px;font-size:20px;font-weight:700;letter-spacing:-.01em;
+  padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--ink);
 }
 section>h2 .n{
-  display:inline-block;min-width:26px;margin-right:9px;padding:1px 7px;
-  background:var(--ink);color:#fff;font-size:11.5px;font-weight:700;
-  border-radius:2px;vertical-align:2px;letter-spacing:.04em;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:28px;height:22px;margin-right:10px;padding:0 8px;
+  background:linear-gradient(135deg,#34d399,#059669);color:#fff;
+  font-size:11.5px;font-weight:700;border-radius:8px;vertical-align:2px;letter-spacing:.03em;
+  box-shadow:0 6px 14px -6px rgba(16,185,129,.8);
 }
-section>.lead{margin:14px 0 20px;font-size:14px;color:var(--muted);line-height:1.66}
+section>.lead{margin:12px 0 22px;font-size:14px;color:var(--muted);line-height:1.66}
+
+/* ── page title (the seven pages + landing) ── */
+.inner>h2.pg-title{
+  margin:4px 0 6px;padding-left:14px;border-left:4px solid var(--emerald);
+  font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--ink);line-height:1.3;
+}
+.lead{margin:6px 0 20px;font-size:14px;color:var(--muted);line-height:1.66}
+
 h3{
-  margin:34px 0 12px;font-size:15px;font-weight:700;color:var(--ink);
+  margin:30px 0 10px;font-size:15px;font-weight:700;color:var(--ink);
   padding:0 0 8px;border-bottom:1px solid var(--line-2);letter-spacing:-.005em;
 }
 h3:first-child{margin-top:4px}
-h3 .en,.bi .en{
-  font-weight:500;font-size:12.5px;color:var(--muted);letter-spacing:0;
-}
+h3 .en,.bi .en{font-weight:500;font-size:12.5px;color:var(--muted);letter-spacing:0}
 .bi .en{display:block;font-size:11.5px;color:var(--muted)}
 .bullets{margin:12px 0;padding-left:20px;font-size:13.5px;color:var(--ink-2)}
 .bullets li{margin:7px 0}
 .bad{color:var(--red);font-weight:600}
 
-/* ── summary lines (were multi-column KPI cards) ── */
+/* ── KPI tiles: emerald figures, coloured accent rail ── */
 .kpi{
-  position:relative;display:flex;align-items:baseline;gap:18px;
-  background:var(--surface);border:1px solid var(--line);border-radius:3px;
-  padding:15px 18px 15px 21px;box-shadow:var(--shadow);
+  position:relative;display:flex;flex-direction:column;gap:6px;overflow:hidden;
+  background:var(--surface);border:1px solid rgba(7,13,24,.04);border-radius:var(--radius);
+  padding:18px 20px 16px 22px;box-shadow:var(--shadow-emboss);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
 }
-.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:var(--line-2);border-radius:3px 0 0 3px}
-.kpi.bl::before{background:var(--blue)}
-.kpi.am::before{background:var(--ink)}
-.kpi.ol::before{background:var(--blue-2)}
+.kpi::before{
+  content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;
+  border-radius:0 3px 3px 0;background:var(--line-2);
+}
+.kpi.ol::before{background:var(--emerald)}
+.kpi.am::before{background:var(--gold-grad)}
+.kpi.bl::before{background:var(--blue-2)}
 .kpi.rd::before{background:var(--red)}
-.kpi .l{flex:0 1 auto;font-size:12px;font-weight:700;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--muted);line-height:1.45}
-.kpi .v{margin-left:auto;font-size:24px;font-weight:700;color:var(--ink);
-  letter-spacing:-.02em;white-space:nowrap;line-height:1.2}
-.kpi .v em{font-style:normal;font-size:13px;font-weight:600;color:var(--muted);
-  margin-left:3px;letter-spacing:0}
-.kpi .v.sm{font-size:17px}
-.kpi .h{position:absolute;left:21px;bottom:-1px;font-size:11.5px;color:var(--muted)}
+.kpi .l{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.45}
+.kpi .v{font-size:26px;font-weight:700;color:var(--emerald);letter-spacing:-.02em;line-height:1.15;white-space:nowrap}
+.kpi .v em{font-style:normal;font-size:13px;font-weight:600;color:var(--muted);margin-left:3px;letter-spacing:0}
+.kpi .v.sm{font-size:18px}
+.kpi .h{font-size:12px;color:var(--muted);line-height:1.5}
 
 /* ── cards ── */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;
-  padding:20px 22px;box-shadow:var(--shadow)}
+.card{
+  background:var(--surface);border:1px solid rgba(7,13,24,.04);border-radius:var(--radius);
+  padding:20px 22px;box-shadow:var(--shadow-emboss);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.card>h3:first-child{margin-top:0}
+
+/* hover lift — cards, KPIs, org departments, landing cards */
+.kpi:hover,.card:hover,.org-dept:hover,a.pcard:hover{
+  transform:translateY(-5px);box-shadow:var(--shadow-lift);
+}
 
 /* ── tables ── */
-.tbl{background:var(--surface);border:1px solid var(--line);border-radius:3px;
-  overflow:hidden;margin:12px 0 18px;box-shadow:var(--shadow)}
+.tbl{
+  background:var(--surface);border:1px solid rgba(7,13,24,.04);border-radius:var(--radius-sm);
+  overflow:hidden;margin:14px 0 20px;box-shadow:var(--shadow-emboss);
+}
 .tbl.scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
-th,td{padding:9px 13px;text-align:left;vertical-align:top;
-  border-bottom:1px solid var(--ash-2)}
-th{background:var(--ash);font-size:10.5px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--line-2);
-  white-space:nowrap}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--ash-2)}
+th{
+  background:var(--ash);font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--line-2);white-space:nowrap;
+}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-tbody tr:nth-child(even){background:#fafbfc}
-tbody tr:hover{background:var(--blue-soft)}
+tbody tr{transition:background-color .2s ease}
+tbody tr:nth-child(even){background:#fafbfd}
+tbody tr:hover{background:rgba(16,185,129,.09)}
 tbody tr:last-child td{border-bottom:0}
 tr.sub td{background:var(--ash);font-weight:600;border-top:1px solid var(--line-2)}
-tr.tot td,tr.grand td{
-  background:#f2f5f9;font-weight:700;font-size:13.5px;color:var(--ink);
-  border-top:2px solid var(--ink);border-bottom:0;
+tr.tot td{background:#f3f6f9;font-weight:700;color:var(--ink);border-top:2px solid var(--ink-2)}
+/* grand totals — emerald */
+tr.grand td{
+  background:var(--emerald-soft);font-weight:700;font-size:13.5px;color:var(--emerald-d);
+  border-top:2px solid var(--emerald);border-bottom:0;
 }
-tr.grand td .num,tr.grand td.num{font-weight:700}
-tr.grand.cash td{background:var(--blue-soft);border-top:2px solid var(--blue)}
-tr.grp td{background:#eef1f4;font-weight:700;font-size:11px;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--blue)}
+/* special total (CASH REQUIRED) — metallic gold */
+tr.grand.cash td{background:var(--gold-grad);color:#2b1d03;border-top:2px solid var(--gold-d)}
+tr.grp td{background:var(--ash);font-weight:700;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2)}
 tr.land td{color:var(--muted);font-style:italic}
 tr.done td{color:var(--muted)}
 tr.done td:nth-child(3){text-decoration:line-through}
 
 /* ── notes ── */
-.note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--blue);
-  border-radius:2px;padding:13px 17px;margin:14px 0;font-size:13.5px;
-  color:var(--ink-2);line-height:1.65}
+.note{
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ink-2);
+  border-radius:var(--radius-sm);padding:13px 17px;margin:14px 0;font-size:13.5px;
+  color:var(--ink-2);line-height:1.65;box-shadow:var(--shadow);
+}
 .note b{color:var(--ink)}
-.note.am{border-left-color:var(--ink)}
-.note.ol{border-left-color:var(--blue-2);background:var(--blue-soft)}
-.note.rd{border-left-color:var(--red);background:var(--red-soft)}
+.note.am{background:var(--gold-soft);border-color:var(--gold-line);border-left-color:var(--gold)}
+.note.ol{background:var(--emerald-soft);border-color:var(--emerald-line);border-left-color:var(--emerald)}
+.note.rd{background:var(--red-soft);border-color:#fecaca;border-left-color:var(--red)}
 
 /* ── badges / pills ── */
-.badge{display:inline-block;padding:2px 8px;border-radius:2px;font-size:10.5px;
-  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  background:var(--ash-2);color:var(--ink-2);border:1px solid var(--line-2)}
-.badge.am{background:var(--ink);color:#fff;border-color:var(--ink)}
-.badge.ol{background:var(--blue);color:#fff;border-color:var(--blue)}
-.badge.rd{background:var(--red);color:#fff;border-color:var(--red)}
-.pill{display:inline-block;padding:3px 10px;border:1px solid var(--line-2);
-  border-radius:2px;background:var(--surface);font-size:12px;color:var(--ink-2)}
-.chk{color:var(--blue);font-weight:700}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;background:var(--ash-2);color:var(--ink-2);border:1px solid var(--line-2)}
+.badge.am{background:var(--gold-grad);color:#2b1d03;border-color:transparent}
+.badge.ol{background:var(--emerald);color:#052016;border-color:transparent}
+.badge.rd{background:var(--red);color:#fff;border-color:transparent}
+.pill{display:inline-block;padding:3px 10px;border:1px solid var(--line-2);border-radius:999px;
+  background:var(--surface);font-size:12px;color:var(--ink-2)}
+.pill.p-ok{background:var(--emerald-soft);border-color:var(--emerald-line);color:var(--emerald-d);font-weight:600}
+.pill.p-gold{background:var(--gold-grad);border-color:transparent;color:#2b1d03;font-weight:600}
+.chk{accent-color:var(--emerald);width:16px;height:16px;cursor:pointer}
 
-/* ── priority tags ── */
+/* ── priority tags (Critical = the only red tag) ── */
+.p-crit,.p-high,.p-med,.p-low,.p-mand{
+  display:inline-block;padding:2px 9px;border-radius:999px;font-size:10.5px;
+  font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+}
 .p-crit{background:var(--red);color:#fff}
-.p-high{background:#8c2a12;color:#fff}
-.p-med{background:var(--blue);color:#fff}
+.p-high{background:var(--gold-grad);color:#2b1d03}
+.p-med{background:var(--blue-2);color:#fff}
 .p-low{background:var(--ash-2);color:var(--ink-2)}
 .p-mand{background:var(--ink);color:#fff}
-.p-crit,.p-high,.p-med,.p-low,.p-mand{
-  display:inline-block;padding:2px 8px;border-radius:2px;font-size:10.5px;
-  font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 
-/* ── process flow ── */
-.flow{display:block;margin:14px 0}
-.flow .st{display:block;background:var(--surface);border:1px solid var(--line);
-  border-left:3px solid var(--line-2);border-radius:2px;padding:12px 16px;
-  margin:0 0 6px;font-size:13.5px}
-.flow .st.key{border-left-color:var(--blue);background:var(--blue-soft)}
-.flow .st.star{border-left-color:var(--red);background:var(--red-soft)}
-.flow .ar{display:block;text-align:center;color:var(--line-2);font-size:13px;
-  line-height:1;margin:0 0 6px}
+/* ── process flow (treatment train) ── */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:16px 0}
+.flow .st{
+  flex:1 1 150px;display:flex;flex-direction:column;justify-content:center;
+  background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--line-2);
+  border-radius:var(--radius-sm);padding:11px 13px;font-size:13px;line-height:1.5;
+  box-shadow:var(--shadow);transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+}
+.flow .st:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.flow .st.key{border-top-color:var(--emerald);background:var(--emerald-soft)}
+.flow .st.star{border-top-color:var(--gold);background:var(--gold-soft)}
+.flow .ar{display:flex;align-items:center;justify-content:center;padding:0 2px;
+  color:var(--emerald);font-size:16px;font-weight:700;line-height:1}
 
 /* ── timeline ── */
-.tl{display:block;margin:14px 0;border-left:2px solid var(--line-2);padding-left:0}
+.tl{margin:16px 0 8px;border-left:2px solid var(--line-2);padding-left:0}
 .tl-i{position:relative;padding:0 0 18px 22px;margin:0}
-.tl-i::before{content:"";position:absolute;left:-6px;top:5px;width:9px;height:9px;
-  background:var(--surface);border:2px solid var(--blue);border-radius:50%}
+.tl-i::before{
+  content:"";position:absolute;left:-7px;top:5px;width:11px;height:11px;
+  background:var(--surface);border:2px solid var(--emerald);border-radius:50%;
+  box-shadow:0 0 0 4px rgba(16,185,129,.14);
+}
 .tl-i:last-child{padding-bottom:0}
-.tl-m{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--blue);margin-bottom:3px}
+.tl-m{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--emerald-d);margin-bottom:3px}
 .tl-c{font-size:13.5px;color:var(--ink-2)}
 .tl-c .t{font-weight:700;color:var(--ink)}
 .tl-c b{color:var(--ink)}
 
-/* ── bar charts ── */
+/* ── bar charts + progress ── */
 .bar-chart{display:block;margin:14px 0}
-.bc-row{display:grid;grid-template-columns:minmax(150px,1.4fr) 3fr auto;
-  align-items:center;gap:12px;padding:6px 0;font-size:13px}
+.bc-row{display:grid;grid-template-columns:minmax(150px,1.4fr) 3fr auto;align-items:center;gap:12px;padding:6px 0;font-size:13px}
 .bc-row .lbl{color:var(--ink-2);line-height:1.45}
-.bc-row .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;
-  color:var(--ink);white-space:nowrap}
-.bar{height:9px;background:var(--ash-2);border-radius:2px;overflow:hidden}
-.bar>i{display:block;height:100%;background:var(--blue)}
-.bar.am>i{background:var(--ink)}
-.bar.ol>i{background:var(--blue-2)}
+.bc-row .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--emerald-d);white-space:nowrap}
+.bar{height:9px;background:var(--ash-2);border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(7,13,24,.08)}
+.bar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#34d399,#10b981);transition:width .4s var(--ease)}
+.bar.am>i{background:var(--gold-grad)}
+.bar.ol>i{background:linear-gradient(90deg,#34d399,#10b981)}
 
-/* ── organisation chart (single column, stacked) ── */
+/* ── organisation chart ── */
 .org{display:block;margin:16px 0}
-.org-box{background:var(--ink);color:#fff;border:0;border-radius:3px;
-  padding:14px 18px;max-width:980px;margin:0 auto 0}
-.org-box .t{font-size:15px;font-weight:700}
-.org-box .s{font-size:11.5px;color:#a8b2bf;margin-top:2px}
-.org-board{background:var(--blue);color:#fff;border-radius:3px;padding:13px 18px;
-  max-width:980px;margin:10px auto 0}
-.org-board .t{font-size:14px;font-weight:700}
-.org-board .s{font-size:11.5px;color:#b9cbe6;margin-top:2px}
-.org-board .t,.org-board .s{display:block}
+.org-box{border-radius:var(--radius);padding:14px 18px;max-width:640px;margin:0 auto}
+.org-board{
+  background:linear-gradient(135deg,#13254d 0%,#0b1834 100%);color:#fff;
+  border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-emboss);
+}
+.org-board .t{font-size:14px;font-weight:700;display:block}
+.org-board .s{font-size:11.5px;color:#b9cbe6;margin-top:2px;display:block}
 .org-line{width:2px;height:18px;background:var(--line-2);margin:0 auto}
 .org-hline,.org-depts::before{display:none}
-.org-mgr{background:var(--surface);border:1px solid var(--ink);border-left:4px solid var(--ink);
-  border-radius:3px;padding:13px 17px;max-width:980px;margin:0 auto}
-.org-mgr .t{font-size:14.5px;font-weight:700;color:var(--ink)}
-.org-mgr .s{font-size:11.5px;color:var(--muted);margin-top:2px}
-.org-depts{display:block;margin:0;max-width:980px}
-.org-dept{position:relative;background:var(--surface);border:1px solid var(--line);
-  border-radius:3px;margin:12px 0 0;box-shadow:var(--shadow);overflow:hidden}
-.org-dept::before{display:none}
-.org-dept .hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;
-  padding:12px 16px;background:var(--ash);border-bottom:1px solid var(--line-2)}
+.org-mgr{
+  background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--emerald);
+  box-shadow:var(--shadow-emboss);
+}
+.org-mgr .t{font-size:14.5px;font-weight:700;color:var(--ink);display:block}
+.org-mgr .s{font-size:11.5px;color:var(--muted);margin-top:2px;display:block}
+/* the four departments: one auto-fit grid */
+.org-depts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;margin:14px 0 0;max-width:none;
+}
+.org-dept{
+  position:relative;background:var(--surface);border:1px solid rgba(7,13,24,.04);
+  border-radius:var(--radius);margin:0;box-shadow:var(--shadow-emboss);overflow:hidden;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.org-dept .hd{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;
+  padding:13px 16px;background:var(--ash);border-bottom:1px solid var(--line-2);
+  border-top:3px solid var(--emerald);
+}
 .org-dept .hd .ic{display:none}
 .org-dept .hd .t{font-size:14px;font-weight:700;color:var(--ink)}
 .org-dept .hd .e{font-size:11.5px;color:var(--muted);font-weight:500}
-.org-dept .bd{padding:6px 0}
-.org-dept .ft{padding:9px 16px;background:#f2f5f9;border-top:1px solid var(--line-2);
-  font-size:12px;font-weight:700;color:var(--ink)}
-.org-role{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;
-  padding:8px 16px;border-bottom:1px solid var(--ash-2);font-size:13px}
+.org-dept .bd{padding:4px 0}
+.org-dept .ft{
+  display:flex;justify-content:space-between;gap:8px;padding:10px 16px;
+  background:var(--emerald-soft);border-top:1px solid var(--emerald-line);
+  font-size:12px;font-weight:700;color:var(--emerald-d);
+}
+.org-role{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;
+  padding:9px 16px;border-bottom:1px solid var(--ash-2);font-size:13px;
+}
 .org-role:last-child{border-bottom:0}
-.org-role .rn{flex:1 1 260px;color:var(--ink-2);min-width:0}
-.org-role .rn .lv{display:inline-block;min-width:22px;margin-right:7px;padding:0 5px;
-  background:var(--ash-2);color:var(--ink-2);border-radius:2px;
-  font-size:9.5px;font-weight:700;letter-spacing:.05em;vertical-align:1px}
-.org-role .rn .lv.l2{background:var(--blue);color:#fff}
-.org-role .rv{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);
-  white-space:nowrap}
+.org-role .rn{flex:1 1 150px;color:var(--ink-2);min-width:0}
+.org-role .rn .lv{
+  display:inline-block;min-width:24px;margin-right:7px;padding:0 6px;
+  background:var(--ash-2);color:var(--ink-2);border-radius:999px;
+  font-size:9.5px;font-weight:700;letter-spacing:.05em;vertical-align:1px;text-align:center;
+}
+.org-role .rn .lv.l2{background:var(--emerald);color:#052016}
+.org-role .rv{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .org-role .rv b{color:var(--ink);font-weight:700}
 .org-role .rv span{display:block;font-size:11px;color:var(--muted)}
 
-/* ── dashboard-only chrome ── */
-header.top{max-width:980px;margin:0 auto;padding:26px 24px 0}
-header.top h1{margin:0;font-size:24px;font-weight:700;letter-spacing:-.01em}
-header.top .sub{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
-.controls{max-width:980px;margin:0 auto 0;padding:14px 24px;display:flex;
-  flex-wrap:wrap;gap:10px}
+/* ── controls + filters ── */
+.controls{margin:0 0 12px;padding:6px 0 4px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 input[type=search],select{
-  font:inherit;font-size:13px;padding:7px 11px;border:1px solid var(--line-2);
-  border-radius:2px;background:var(--surface);color:var(--ink)}
-input[type=search]:focus,select:focus{outline:2px solid var(--blue-2);outline-offset:-1px}
+  font:inherit;font-size:13px;padding:8px 12px;border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);
+  box-shadow:inset 0 1px 2px rgba(7,13,24,.05);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+input[type=search]:focus,select:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 3px rgba(16,185,129,.22)}
 .hidden{display:none !important}
-footer{max-width:980px;margin:0 auto;padding:26px 24px 0;border-top:1px solid var(--line-2);
-  font-size:12px;color:var(--muted);line-height:1.75}
+
+/* ── landing page cards (hover is CSS, not inline JS) ── */
+a.pcard{
+  display:flex;flex-direction:column;color:inherit;text-decoration:none;
+  background:var(--surface);border:1px solid rgba(7,13,24,.04);border-radius:var(--radius);
+  padding:20px 22px;box-shadow:var(--shadow-emboss);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+a.pcard:hover{text-decoration:none}
+.pc-kicker{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--emerald-d)}
+h3.pc-title{margin:6px 0 4px;padding:0;border:0;font-size:17px;font-weight:700;color:var(--ink)}
+.pc-en{font-size:12px;color:var(--muted);margin-bottom:10px}
+.pc-desc{font-size:13px;color:var(--ink-2);line-height:1.55}
+.pc-head{margin-top:auto;padding-top:12px;font-size:20px;font-weight:700;color:var(--emerald-d);letter-spacing:-.01em}
+
+/* ── footer (inside the sheet) ── */
+footer{margin:26px 0 0;padding:20px 4px 0;border-top:1px solid var(--line-2);font-size:12px;color:var(--muted);line-height:1.8}
 footer b{color:var(--ink-2)}
 
-@media (max-width:700px){
-  .inner{padding:20px 14px 50px}
-  .hero .hc{padding:30px 14px 26px}
-  .hero h1{font-size:23px}
+/* ── responsive ── */
+@media (max-width:1040px){
+  .g5{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .g2,.g3{grid-template-columns:minmax(0,1fr)}
+  .g5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .inner{margin:-22px 10px 24px;padding:20px 14px 30px;border-radius:18px}
+  .hero .hc{padding:34px 16px 40px}
+  .hero h1{font-size:24px}
   section{padding:18px 15px}
-  .kpi{flex-wrap:wrap;gap:6px}
-  .kpi .v{font-size:20px;margin-left:0}
-  .kpi .h{position:static;margin-top:4px}
+  #nav{padding:0 12px}
+  .kpi .v{font-size:22px}
   .bc-row{grid-template-columns:1fr;gap:4px}
+  .org-role .rv{text-align:left}
+  .tbl{overflow-x:auto}
+}
+@media (max-width:520px){
+  .g4,.g5{grid-template-columns:minmax(0,1fr)}
 }
 @media print{
   body{background:#fff}
-  #nav{position:static}
-  section,.kpi,.card,.tbl{box-shadow:none;break-inside:avoid}
+  #nav{position:static;box-shadow:none;background:#fff;color:var(--ink)}
+  #nav::after{display:none}
   .hero{display:none}
+  .inner{margin:0;box-shadow:none;background:#fff;border:0;border-radius:0}
+  section,.kpi,.card,.tbl,a.pcard{box-shadow:none;break-inside:avoid}
   a{color:var(--ink)}
-}
-
-/* ── additions for the new shell ── */
-#nav a b{
-  display:inline-block;min-width:17px;margin-right:6px;padding:0 4px;
-  background:#2a323c;color:#aeb8c4;border-radius:2px;
-  font-size:10px;font-weight:700;letter-spacing:.04em;text-align:center;
-}
-#nav a.on b{background:var(--blue-2);color:#dbe6f5}
-#nav a:hover b{background:#3c4653;color:#fff}
-.hero h1 .en{
-  display:block;font-size:15.5px;font-weight:600;color:#a9b8cd;
-  margin-top:9px;letter-spacing:0;line-height:1.45;
 }
 </style>
 </head><body>
@@ -338,7 +529,7 @@ footer b{color:var(--ink-2)}
   </div>
 </div>
 <div class="inner">
-<h2 style="font-size:21px;margin:0 0 6px"> ක්‍රියාවලිය — පියවරෙන් පියවර</h2><p class="lead">සෑම පියවරකටම අවශ්‍ය ලේඛන සහ ගතවන කාලය · <b>Each step, the documents it needs, and how long it takes</b></p><div class="grid g4"><div class="kpi ol"><div class="l">පියවර ගණන</div><div class="v">24</div><div class="h">ආරම්භයේ සිට නිෂ්පාදනය දක්වා</div></div><div class="kpi am"><div class="l">මුළු කාලය</div><div class="v">මාස 14–20</div><div class="h">critical path එක අනුව</div></div><div class="kpi bl"><div class="l"> අනිවාර්ය GATE</div><div class="v">1</div><div class="h">මෙය අසමත් වුවහොත් ව්‍යාපෘතිය නවතී</div></div><div class="kpi "><div class="l">මුළු ලේඛන</div><div class="v">160</div><div class="h">checklist එකේ සම්පූර්ණ ලැයිස්තුව</div></div></div><h3> සම්පූර්ණ පියවර ලැයිස්තුව</h3><div class="tbl scroll"><table><thead><tr><th>#</th><th class="num">පියවර / Step</th><th class="num">අවශ්‍ය ලේඛන / Documents needed</th><th class="num">කාලය / Duration</th><th class="num">අදියර</th></tr></thead><tbody><tr><td>1</td><td class="num">1. ආයෝජක ගිවිසුම / Investor agreement (MOU)</td><td class="num">MOU, Shareholders Agreement, Board Resolution, NDA</td><td class="num">සති 2</td><td class="num">අදියර 0</td></tr><tr><td>2</td><td class="num">2. සමාගම් ලියාපදිංචිය / Company incorporation (eROC)</td><td class="num">Name reservation, Form 1, AoA, Form 18, Form 19, BR certificate</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>3</td><td class="num">3. TIN + බැංකු ගිණුම / TIN + bank account</td><td class="num">TIN certificate, BR copy, Board Resolution, KYC</td><td class="num">සතිය 1</td><td class="num">අදියර 1</td></tr><tr><td>4</td><td class="num">4. ඉඩම් title + zoning තහවුරු කිරීම / Land title + zoning</td><td class="num">Title report, survey plan, UDA/PS written zoning confirmation</td><td class="num">සති 2–4</td><td class="num">අදියර 1</td></tr><tr><td>5</td><td class="num">5. WRB ලියාපදිංචිය / Water Resources Board registration</td><td class="num">WRB application, site plan, land documents</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>6</td><td class="num">6. ළිඳ කැණීම / Borewell drilling</td><td class="num">Hydrogeological survey report, WRB-registered driller permit</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>7</td><td class="num">7.  ජල පරීක්ෂණ / Water testing (SLS 614:2013)</td><td class="num">Accredited lab report — SLS 614, bromide, heavy metals, dry+wet season</td><td class="num">සති 2</td><td class="num">අදියර 1 </td></tr><tr><td>8</td><td class="num">8. ගොඩනැඟිලි අනුමැතිය / Building permit</td><td class="num">Architect + structural drawings, UDA Form B / PS approval, CoC later</td><td class="num">සති 4–8</td><td class="num">අදියර 1</td></tr><tr><td>9</td><td class="num">9. ඉදිකිරීම් / Construction</td><td class="num">Building plan approval, contractor agreement, progress certificates</td><td class="num">මාස 4–5</td><td class="num">අදියර 1</td></tr><tr><td>10</td><td class="num">10. යන්ත්‍ර quotation + ඇණවුම / Machinery quotations + PO</td><td class="num">3 quotations, proforma invoice, LC/PO, import documents</td><td class="num">සති 2 (lead time මාස 4–8)</td><td class="num">අදියර 2</td></tr><tr><td>11</td><td class="num">11. CEB 3-phase සම්බන්ධතාව / CEB connection</td><td class="num">CEB application, wiring diagram, test certificate</td><td class="num">සති 4–6</td><td class="num">අදියර 1</td></tr><tr><td>12</td><td class="num">12. ETP + ගිනි ආරක්ෂාව / ETP + fire systems</td><td class="num">ETP design, fire NOC, extinguisher certificates</td><td class="num">ඉදිකිරීම් සමඟ</td><td class="num">අදියර 1</td></tr><tr><td>13</td><td class="num">13. CoC + Trade Licence / Certificate of Conformity</td><td class="num">CoC (Form D), Annual/Trade Licence from local authority</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>14</td><td class="num">14. CEA EPL / Environmental Protection Licence</td><td class="num">EPL application, BR, land authorisation, abatement proposal</td><td class="num">සති 2–4</td><td class="num">අදියර 1</td></tr><tr><td>15</td><td class="num">15. යන්ත්‍ර සවි කිරීම + commissioning / Installation</td><td class="num">Installation certificates, commissioning report, calibration records</td><td class="num">සති 4–6</td><td class="num">අදියර 2</td></tr><tr><td>16</td><td class="num">16. සේවක බඳවා ගැනීම + පුහුණුව / Recruitment + training</td><td class="num">EPF Form D (දින 14ක් ඇතුළත), job descriptions, training records, medical certificates</td><td class="num">සති 4</td><td class="num">අදියර 2</td></tr><tr><td>17</td><td class="num">17. HACCP / GMP ලේඛන / Documentation</td><td class="num">HACCP plan, GMP manual, SOPs, CCP records, org chart, supervision schedules</td><td class="num">මාස 3 (සමාන්තරව)</td><td class="num">අදියර 2</td></tr><tr><td>18</td><td class="num">18. FCAU අයදුම්පත / FCAU application</td><td class="num">Location map, site plan, factory layout, source sketch, process flow chart, Trade Licence, 2 label specimens, org chart, training document</td><td class="num">සති 2</td><td class="num">අදියර 2</td></tr><tr><td>19</td><td class="num">19. SLSI Audit 1</td><td class="num">QMS documents, HACCP plan, lab records, SLSI recommendation letter</td><td class="num">සතිය 1 + වාර්තාව සති 2–3</td><td class="num">අදියර 2</td></tr><tr><td>20</td><td class="num">20. PHI / MOH / FDI පරීක්ෂණ / Inspections</td><td class="num">Inspection reports, corrective action records</td><td class="num">සති 1–2</td><td class="num">අදියර 2</td></tr><tr><td>21</td><td class="num">21. FCAU ස්ථාන පරීක්ෂණය / FCAU site inspection</td><td class="num">Site inspection report</td><td class="num">සතිය 1</td><td class="num">අදියර 2</td></tr><tr><td>22</td><td class="num">22.  තාවකාලික FCAU ලියාපදිංචිය / Temporary registration (1 yr)</td><td class="num">FCAU registration certificate</td><td class="num">නිකුත් වේ</td><td class="num">අදියර 2</td></tr><tr><td>23</td><td class="num">23. ලේබල් අනුමැතිය + මුද්‍රණය / Label approval + printing</td><td class="num">2 approved label specimens (Food Labelling & Advertising Regs 2005)</td><td class="num">සති 3–4</td><td class="num">අදියර 2</td></tr><tr><td>24</td><td class="num">24.  නිෂ්පාදනය ආරම්භයි / COMMERCIAL PRODUCTION</td><td class="num">Batch records, QC release certificates</td><td class="num">—</td><td class="num">අදියර 2</td></tr></tbody></table></div><div class="note rd"><b> GATE — පියවර 7:</b> ළිඳ කණින්න <b>ගොඩනැඟිල්ල ඉදිකිරීමට පෙර.</b> ජලය SLS 614:2013 සමත් නොවුණොත් FCAU ලියාපදිංචිය <b>ප්‍රතික්ෂේප වේ</b> — එවිට කර්මාන්ත ශාලාවක් තිබී ප්‍රයෝජනයක් නැත. මෙය ව්‍යාපෘතියේ විශාලතම තනි අවදානමයි.</div><div class="note am"><b> යන්ත්‍ර lead time:</b> විදේශ සැපයුම්කරුවන්ගෙන් <b>මාස 4–8</b>. ඇණවුම <b>පියවර 10</b> හිදී (මාස 5–6) කළ යුතුය — නොඑසේ නම් ගොඩනැඟිල්ල ඉවර වී යන්ත්‍ර නැතිව හිස්ව පවතී.</div><h3> ජල පිරිපහදු ක්‍රියාවලිය <span class="en">the treatment train, in order</span></h3><div class="flow"><div class="st "> නළ ළිඳ<br><span style="font-size:10.5px;font-weight:500">deep tube well</span></div><span class="ar">→</span><div class="st ">Raw tank<br><span style="font-size:10.5px;font-weight:500">ගබඩාව</span></div><span class="ar">→</span><div class="st key"> Sand filter<br><span style="font-size:10.5px;font-weight:500">MGSF · &lt;1 NTU</span></div><span class="ar">→</span><div class="st key"> Carbon filter<br><span style="font-size:10.5px;font-weight:500">ACF · free Cl &lt;0.1</span></div><span class="ar">→</span><div class="st ">Softener<br><span style="font-size:10.5px;font-weight:500">කඨිනතාව</span></div><span class="ar">→</span><div class="st ">Micron<br><span style="font-size:10.5px;font-weight:500">5 → 1 → 0.5 µm</span></div><span class="ar">→</span><div class="st star"> RO<br><span style="font-size:10.5px;font-weight:500">recovery 65%</span></div><span class="ar">→</span><div class="st ">Re-mineralise<br><span style="font-size:10.5px;font-weight:500">TDS නැවත</span></div><span class="ar">→</span><div class="st ">UV<br><span style="font-size:10.5px;font-weight:500">≥40 mJ/cm²</span></div><span class="ar">→</span><div class="st star"> Ozone<br><span style="font-size:10.5px;font-weight:500">0.2–0.4 ppm</span></div><span class="ar">→</span><div class="st ">0.2 µm sterile<br><span style="font-size:10.5px;font-weight:500">අවසන් පෙරහන</span></div><span class="ar">→</span><div class="st "> Filling<br><span style="font-size:10.5px;font-weight:500">cleanroom</span></div></div><div class="note"><b> CCP 7ක්:</b> MGSF &lt;1 NTU · ACF free Cl &lt;0.1 ppm · RO conductivity/TDS · UV ≥40 mJ/cm² · ozone 0.2–0.4 ppm at filler · 0.2µm ΔP/integrity · filling cleanroom ΔP. වාර්තා <b>වසර 2ක්</b> තබාගන්න.</div>
+<h2 class="pg-title"> ක්‍රියාවලිය — පියවරෙන් පියවර</h2><p class="lead">සෑම පියවරකටම අවශ්‍ය ලේඛන සහ ගතවන කාලය · <b>Each step, the documents it needs, and how long it takes</b></p><div class="grid g4"><div class="kpi ol"><div class="l">පියවර ගණන</div><div class="v">24</div><div class="h">ආරම්භයේ සිට නිෂ්පාදනය දක්වා</div></div><div class="kpi am"><div class="l">මුළු කාලය</div><div class="v">මාස 14–20</div><div class="h">critical path එක අනුව</div></div><div class="kpi bl"><div class="l"> අනිවාර්ය GATE</div><div class="v">1</div><div class="h">මෙය අසමත් වුවහොත් ව්‍යාපෘතිය නවතී</div></div><div class="kpi "><div class="l">මුළු ලේඛන</div><div class="v">160</div><div class="h">checklist එකේ සම්පූර්ණ ලැයිස්තුව</div></div></div><h3> සම්පූර්ණ පියවර ලැයිස්තුව</h3><div class="tbl scroll"><table><thead><tr><th>#</th><th class="num">පියවර / Step</th><th class="num">අවශ්‍ය ලේඛන / Documents needed</th><th class="num">කාලය / Duration</th><th class="num">අදියර</th></tr></thead><tbody><tr><td>1</td><td class="num">1. ආයෝජක ගිවිසුම / Investor agreement (MOU)</td><td class="num">MOU, Shareholders Agreement, Board Resolution, NDA</td><td class="num">සති 2</td><td class="num">අදියර 0</td></tr><tr><td>2</td><td class="num">2. සමාගම් ලියාපදිංචිය / Company incorporation (eROC)</td><td class="num">Name reservation, Form 1, AoA, Form 18, Form 19, BR certificate</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>3</td><td class="num">3. TIN + බැංකු ගිණුම / TIN + bank account</td><td class="num">TIN certificate, BR copy, Board Resolution, KYC</td><td class="num">සතිය 1</td><td class="num">අදියර 1</td></tr><tr><td>4</td><td class="num">4. ඉඩම් title + zoning තහවුරු කිරීම / Land title + zoning</td><td class="num">Title report, survey plan, UDA/PS written zoning confirmation</td><td class="num">සති 2–4</td><td class="num">අදියර 1</td></tr><tr><td>5</td><td class="num">5. WRB ලියාපදිංචිය / Water Resources Board registration</td><td class="num">WRB application, site plan, land documents</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>6</td><td class="num">6. ළිඳ කැණීම / Borewell drilling</td><td class="num">Hydrogeological survey report, WRB-registered driller permit</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>7</td><td class="num">7.  ජල පරීක්ෂණ / Water testing (SLS 614:2013)</td><td class="num">Accredited lab report — SLS 614, bromide, heavy metals, dry+wet season</td><td class="num">සති 2</td><td class="num">අදියර 1 </td></tr><tr><td>8</td><td class="num">8. ගොඩනැඟිලි අනුමැතිය / Building permit</td><td class="num">Architect + structural drawings, UDA Form B / PS approval, CoC later</td><td class="num">සති 4–8</td><td class="num">අදියර 1</td></tr><tr><td>9</td><td class="num">9. ඉදිකිරීම් / Construction</td><td class="num">Building plan approval, contractor agreement, progress certificates</td><td class="num">මාස 4–5</td><td class="num">අදියර 1</td></tr><tr><td>10</td><td class="num">10. යන්ත්‍ර quotation + ඇණවුම / Machinery quotations + PO</td><td class="num">3 quotations, proforma invoice, LC/PO, import documents</td><td class="num">සති 2 (lead time මාස 4–8)</td><td class="num">අදියර 2</td></tr><tr><td>11</td><td class="num">11. CEB 3-phase සම්බන්ධතාව / CEB connection</td><td class="num">CEB application, wiring diagram, test certificate</td><td class="num">සති 4–6</td><td class="num">අදියර 1</td></tr><tr><td>12</td><td class="num">12. ETP + ගිනි ආරක්ෂාව / ETP + fire systems</td><td class="num">ETP design, fire NOC, extinguisher certificates</td><td class="num">ඉදිකිරීම් සමඟ</td><td class="num">අදියර 1</td></tr><tr><td>13</td><td class="num">13. CoC + Trade Licence / Certificate of Conformity</td><td class="num">CoC (Form D), Annual/Trade Licence from local authority</td><td class="num">සති 2–3</td><td class="num">අදියර 1</td></tr><tr><td>14</td><td class="num">14. CEA EPL / Environmental Protection Licence</td><td class="num">EPL application, BR, land authorisation, abatement proposal</td><td class="num">සති 2–4</td><td class="num">අදියර 1</td></tr><tr><td>15</td><td class="num">15. යන්ත්‍ර සවි කිරීම + commissioning / Installation</td><td class="num">Installation certificates, commissioning report, calibration records</td><td class="num">සති 4–6</td><td class="num">අදියර 2</td></tr><tr><td>16</td><td class="num">16. සේවක බඳවා ගැනීම + පුහුණුව / Recruitment + training</td><td class="num">EPF Form D (දින 14ක් ඇතුළත), job descriptions, training records, medical certificates</td><td class="num">සති 4</td><td class="num">අදියර 2</td></tr><tr><td>17</td><td class="num">17. HACCP / GMP ලේඛන / Documentation</td><td class="num">HACCP plan, GMP manual, SOPs, CCP records, org chart, supervision schedules</td><td class="num">මාස 3 (සමාන්තරව)</td><td class="num">අදියර 2</td></tr><tr><td>18</td><td class="num">18. FCAU අයදුම්පත / FCAU application</td><td class="num">Location map, site plan, factory layout, source sketch, process flow chart, Trade Licence, 2 label specimens, org chart, training document</td><td class="num">සති 2</td><td class="num">අදියර 2</td></tr><tr><td>19</td><td class="num">19. SLSI Audit 1</td><td class="num">QMS documents, HACCP plan, lab records, SLSI recommendation letter</td><td class="num">සතිය 1 + වාර්තාව සති 2–3</td><td class="num">අදියර 2</td></tr><tr><td>20</td><td class="num">20. PHI / MOH / FDI පරීක්ෂණ / Inspections</td><td class="num">Inspection reports, corrective action records</td><td class="num">සති 1–2</td><td class="num">අදියර 2</td></tr><tr><td>21</td><td class="num">21. FCAU ස්ථාන පරීක්ෂණය / FCAU site inspection</td><td class="num">Site inspection report</td><td class="num">සතිය 1</td><td class="num">අදියර 2</td></tr><tr><td>22</td><td class="num">22.  තාවකාලික FCAU ලියාපදිංචිය / Temporary registration (1 yr)</td><td class="num">FCAU registration certificate</td><td class="num">නිකුත් වේ</td><td class="num">අදියර 2</td></tr><tr><td>23</td><td class="num">23. ලේබල් අනුමැතිය + මුද්‍රණය / Label approval + printing</td><td class="num">2 approved label specimens (Food Labelling & Advertising Regs 2005)</td><td class="num">සති 3–4</td><td class="num">අදියර 2</td></tr><tr><td>24</td><td class="num">24.  නිෂ්පාදනය ආරම්භයි / COMMERCIAL PRODUCTION</td><td class="num">Batch records, QC release certificates</td><td class="num">—</td><td class="num">අදියර 2</td></tr></tbody></table></div><div class="note rd"><b> GATE — පියවර 7:</b> ළිඳ කණින්න <b>ගොඩනැඟිල්ල ඉදිකිරීමට පෙර.</b> ජලය SLS 614:2013 සමත් නොවුණොත් FCAU ලියාපදිංචිය <b>ප්‍රතික්ෂේප වේ</b> — එවිට කර්මාන්ත ශාලාවක් තිබී ප්‍රයෝජනයක් නැත. මෙය ව්‍යාපෘතියේ විශාලතම තනි අවදානමයි.</div><div class="note am"><b> යන්ත්‍ර lead time:</b> විදේශ සැපයුම්කරුවන්ගෙන් <b>මාස 4–8</b>. ඇණවුම <b>පියවර 10</b> හිදී (මාස 5–6) කළ යුතුය — නොඑසේ නම් ගොඩනැඟිල්ල ඉවර වී යන්ත්‍ර නැතිව හිස්ව පවතී.</div><h3> ජල පිරිපහදු ක්‍රියාවලිය <span class="en">the treatment train, in order</span></h3><div class="flow"><div class="st "> නළ ළිඳ<br><span style="font-size:10.5px;font-weight:500">deep tube well</span></div><span class="ar">→</span><div class="st ">Raw tank<br><span style="font-size:10.5px;font-weight:500">ගබඩාව</span></div><span class="ar">→</span><div class="st key"> Sand filter<br><span style="font-size:10.5px;font-weight:500">MGSF · &lt;1 NTU</span></div><span class="ar">→</span><div class="st key"> Carbon filter<br><span style="font-size:10.5px;font-weight:500">ACF · free Cl &lt;0.1</span></div><span class="ar">→</span><div class="st ">Softener<br><span style="font-size:10.5px;font-weight:500">කඨිනතාව</span></div><span class="ar">→</span><div class="st ">Micron<br><span style="font-size:10.5px;font-weight:500">5 → 1 → 0.5 µm</span></div><span class="ar">→</span><div class="st star"> RO<br><span style="font-size:10.5px;font-weight:500">recovery 65%</span></div><span class="ar">→</span><div class="st ">Re-mineralise<br><span style="font-size:10.5px;font-weight:500">TDS නැවත</span></div><span class="ar">→</span><div class="st ">UV<br><span style="font-size:10.5px;font-weight:500">≥40 mJ/cm²</span></div><span class="ar">→</span><div class="st star"> Ozone<br><span style="font-size:10.5px;font-weight:500">0.2–0.4 ppm</span></div><span class="ar">→</span><div class="st ">0.2 µm sterile<br><span style="font-size:10.5px;font-weight:500">අවසන් පෙරහන</span></div><span class="ar">→</span><div class="st "> Filling<br><span style="font-size:10.5px;font-weight:500">cleanroom</span></div></div><div class="note"><b> CCP 7ක්:</b> MGSF &lt;1 NTU · ACF free Cl &lt;0.1 ppm · RO conductivity/TDS · UV ≥40 mJ/cm² · ozone 0.2–0.4 ppm at filler · 0.2µm ΔP/integrity · filling cleanroom ΔP. වාර්තා <b>වසර 2ක්</b> තබාගන්න.</div>
 <footer>
   Bandarawela, Badulla District, Uva Province · ආයෝජක / Investor: <b>Mr. Thilakarathna</b><br>
   නිෂ්පාදනය / Product: <b>Bottled Drinking Water (SLS 894)</b> ·
