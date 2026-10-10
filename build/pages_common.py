@@ -18,6 +18,7 @@ main dashboard can never disagree.
 """
 import html
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -105,6 +106,9 @@ def shell(M, num, title_si, title_en, subtitle, body):
     nav.append('</div>')
 
     category_si, category_en = PAGE_CATEGORY.get(num, PAGE_CATEGORY["0"])
+    hero_actions = ""
+    if num == "0":
+        hero_actions = """\n    <div class=\"hero-actions\">\n      <a class=\"btn btn-primary\" href=\"#project-sections\"><span class=\"si\">ව්‍යාපෘති සාරාංශය</span><span class=\"en\">Project overview</span></a>\n      <a class=\"btn btn-secondary\" href=\"dashboard.html\"><span class=\"si\">සම්පූර්ණ Dashboard</span><span class=\"en\">Open full dashboard</span></a>\n    </div>"""
 
     doc = f"""<!doctype html>
 <html lang="si"><head>
@@ -117,11 +121,11 @@ def shell(M, num, title_si, title_en, subtitle, body):
 <div id="wrap">
 <nav id="nav">{''.join(nav)}</nav>
 <main id="main">
-<div class="hero" style="{cover_bg()}">
+<div class="hero hero--upcountry" style="{cover_bg()}">
   <div class="hc">
     <div class="kicker"><span class="si">{category_si}</span><span class="en">{category_en}</span></div>
     <h1><span class="si">{title_si}</span><span class="en">{esc(title_en)}</span></h1>
-    <p class="hsub">{subtitle}</p>
+    <p class="hsub">{subtitle}</p>{hero_actions}
   </div>
 </div>
 <div class="inner">
@@ -143,19 +147,86 @@ def shell(M, num, title_si, title_en, subtitle, body):
     return highlight_prompts(fill_empty_table_cells(rendered))
 
 
+_HTML_TAGS = re.compile(r"<[^>]+>")
+_NUMBER_CELL = re.compile(r"^\(?-?\d+(?:\.\d+)?\)?$")
+
+
+def _looks_numeric(value):
+    """Return whether a rendered table value behaves like a number.
+
+    The reports contain a mix of quantities, currency, units and phases.  The
+    former all need to align on the decimal/ones place; the latter should stay
+    left-aligned for fast scanning.  This deliberately accepts common display
+    prefixes/suffixes while leaving descriptive text alone.
+    """
+    text = _HTML_TAGS.sub("", str(value)).replace("&nbsp;", " ").strip()
+    if not text or text in {"—", "-", "–"}:
+        return None
+    text = re.sub(r"(?i)\b(?:rs\.?|lkr)\s*", "", text)
+    text = text.replace(",", "").replace("%", "").strip()
+    text = re.sub(r"\s*(?:L|M|K)$", "", text, flags=re.I)
+    return bool(_NUMBER_CELL.fullmatch(text))
+
+
+def _numeric_columns(head, rows):
+    """Infer semantic number columns from actual data, not their position."""
+    numeric = set()
+    for index, title in enumerate(head):
+        values = [row[index] for row in rows if len(row) > index]
+        checks = [_looks_numeric(value) for value in values]
+        observed = [value for value in checks if value is not None]
+        if observed and sum(observed) / len(observed) >= 0.65:
+            numeric.add(index)
+            continue
+        label = _HTML_TAGS.sub("", str(title)).lower()
+        if any(token in label for token in (
+            "qty", "quantity", "cost", "price", "margin", "profit", "amount",
+            "rate", "salary", "capex", "opex", "investment", "%", "මුදල", "මිල",
+            "වියදම", "වැටුප", "ප්‍රමාණ", "ධාරිතාව",
+        )):
+            numeric.add(index)
+    return numeric
+
+
+def _amount_columns(head):
+    money_words = ("cost", "price", "amount", "rate", "salary", "capex", "opex",
+                   "investment", "මුදල", "මිල", "වියදම", "වැටුප")
+    return {index for index, title in enumerate(head)
+            if any(word in _HTML_TAGS.sub("", str(title)).lower() for word in money_words)}
+
+
 def table(head, rows, total=None, total_label="මුළු / TOTAL"):
-    """head: list of column titles. rows: list of lists. total: list or None."""
-    out = ['<div class="tbl scroll"><table><thead><tr>']
-    out += [f'<th class="num">{h}</th>' if i else f'<th>{h}</th>'
-            for i, h in enumerate(head)]
+    """Render an accessible report table with semantic numeric columns.
+
+    Number alignment is inferred per column, so a ``Unit`` or ``Phase`` column
+    remains readable while quantities and LKR figures receive tabular numeric
+    treatment.  Generated totals inherit the same column semantics.
+    """
+    numeric = _numeric_columns(head, rows)
+    amounts = _amount_columns(head)
+
+    def classes(index):
+        names = []
+        if index in numeric:
+            names.append("num")
+        if index in amounts:
+            names.append("amount")
+        return f' class="{" ".join(names)}"' if names else ""
+
+    out = ['<div class="tbl scroll"><table><colgroup>']
+    out += [f'<col{classes(index)}>' for index in range(len(head))]
+    out.append('</colgroup><thead><tr>')
+    out += [f'<th scope="col"{classes(index)}>{title}</th>'
+            for index, title in enumerate(head)]
     out.append('</tr></thead><tbody>')
-    for r in rows:
+    for row in rows:
         out.append('<tr>' + "".join(
-            f'<td class="num">{c}</td>' if i else f'<td>{c}</td>'
-            for i, c in enumerate(r)) + '</tr>')
+            f'<td{classes(index)}>{cell}</td>'
+            for index, cell in enumerate(row)) + '</tr>')
     if total:
+        total_row = [total_label] + list(total)
         out.append('<tr class="grand">' + "".join(
-            f'<td class="num">{c}</td>' if i else f'<td>{c}</td>'
-            for i, c in enumerate([total_label] + list(total))) + '</tr>')
+            f'<td{classes(index)}>{cell}</td>'
+            for index, cell in enumerate(total_row)) + '</tr>')
     out.append('</tbody></table></div>')
     return "".join(out)

@@ -198,13 +198,17 @@ def m(n):
     return f"{n/1_000_000:,.1f}M"
 
 
-ASSET = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                     "assets", "cover.jpg")
+ASSET_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "assets")
+HERO_ASSET = os.path.join(ASSET_DIR, "upcountry-hero.jpg")
+FALLBACK_ASSET = os.path.join(ASSET_DIR, "cover.jpg")
+# Keep the previous project cover as a safe fallback, while using the new
+# Bandarawela highlands photograph whenever it is part of the source tree.
+ASSET = HERO_ASSET if os.path.exists(HERO_ASSET) else FALLBACK_ASSET
 
 
 def hero(M, n_items, rec):
-    """Full-width upcountry cover. Embeds assets/cover.jpg as base64 so the
-    dashboard stays a single self-contained file; degrades gracefully."""
+    """Full-width Uva Highlands cover embedded as a self-contained asset."""
     style, art = "", '<div class="nofallback">💧🏔️</div>'
     if os.path.exists(ASSET):
         with open(ASSET, "rb") as fh:
@@ -212,7 +216,7 @@ def hero(M, n_items, rec):
             b64 = base64.b64encode(fh.read()).decode("ascii")
         style = f'background-image:url("data:image/jpeg;base64,{b64}")'
         art = ""  # the fallback tile must NOT render over the real photo
-    return f"""<div class="hero" style="{style}">
+    return f"""<div class="hero hero--upcountry" style="{style}">
   {art}
   <div class="hc">
     <div class="kicker"><span class="si">බණ්ඩාරවෙල · ඌව කඳුකරය</span><span class="en">Bandarawela · Uva Highlands</span></div>
@@ -224,6 +228,10 @@ def hero(M, n_items, rec):
       <span class="en">A {M["capacity_bph"]:,} BPH plant at {M["location"]}, funded by Mr. {M["investor"]}.
       Currently only the land exists — building, plant and every approval start from scratch.</span>
     </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#dash"><span class="si">ව්‍යාපෘති සාරාංශය බලන්න</span><span class="en">View project summary</span></a>
+      <a class="btn btn-secondary" href="index.html"><span class="si">කොටස් 7 වෙත යන්න</span><span class="en">Explore the seven sections</span></a>
+    </div>
     <div class="chips">
       <span class="chip">🏞️ <span class="si">ඉඩම ඇත</span><span class="en"><b>Land owned</b></span></span>
       <span class="chip">🏗️ <span class="si">ගොඩනැඟිල්ල + යන්ත්‍ර = මුල සිට</span><span class="en"><b>From scratch</b></span></span>

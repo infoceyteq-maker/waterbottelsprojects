@@ -714,7 +714,20 @@ def main():
             f'<div class="pc-desc"><span class="si">{desc}</span><span class="en">{desc_en}</span></div>'
             f'<div class="pc-head">{head}</div></a>')
 
-    body = ('<h2 class="pg-title">📄 ව්‍යාපෘති කොටස් — වෙන වෙනම</h2>'
+    overview = (
+        '<section class="executive-overview" id="project-sections">'
+        '<div class="overview-heading"><div>'
+        '<p class="section-kicker"><span class="si">ආයෝජන අවස්ථාව</span><span class="en">Investment snapshot</span></p>'
+        '<h2><span class="si">ව්‍යාපෘතිය — එක බැල්මකින්</span><span class="en">The project, at a glance</span></h2>'
+        '</div><a class="overview-link" href="dashboard.html"><span class="si">සම්පූර්ණ විශ්ලේෂණය</span><span class="en">Full analysis</span><b aria-hidden="true">→</b></a></div>'
+        '<div class="landing-metrics">'
+        f'<article class="landing-metric"><span class="metric-label"><span class="si">නිර්දේශිත මුළු ආයෝජනය</span><span class="en">Recommended investment</span></span><strong>Rs {m(M["recommended"]["total_investment"])}</strong><small><span class="si">CAPEX + වැඩකරන ප්‍රාග්ධනය</span><span class="en">CAPEX plus working capital</span></small></article>'
+        f'<article class="landing-metric"><span class="metric-label"><span class="si">නිෂ්පාදන ධාරිතාව</span><span class="en">Plant capacity</span></span><strong>{M["capacity_bph"]:,} <em>BPH</em></strong><small><span class="si">RO + UV + Ozone line</span><span class="en">RO + UV + Ozone line</span></small></article>'
+        f'<article class="landing-metric"><span class="metric-label"><span class="si">Break-even ප්‍රමාණය</span><span class="en">Break-even volume</span></span><strong>{M["breakeven_pet"]:,}</strong><small><span class="si">PET බෝතල් / මාසය</span><span class="en">PET bottles per month</span></small></article>'
+        f'<article class="landing-metric"><span class="metric-label"><span class="si">බෝතලයක දායකත්වය</span><span class="en">Contribution per bottle</span></span><strong>Rs {M["blend_contribution"]:,.2f}</strong><small><span class="si">මිශ්‍ර නිෂ්පාදන ඇස්තමේන්තුව</span><span class="en">Blended product estimate</span></small></article>'
+        '</div></section>'
+    )
+    body = (overview + '<h2 class="pg-title">📄 ව්‍යාපෘති කොටස් — වෙන වෙනම</h2>'
             '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>Project sections, in the order '
             'you asked for</b></p>'
             '<div class="grid g3">' + "".join(cards) + '</div>'
