@@ -300,9 +300,16 @@ def check_dashboard(item_count):
         ok("dashboard HTML tags balanced")
 
     # --- the cover photo must not be hidden behind the placeholder tile ---
-    hero = html_src[html_src.index('<div class="hero"'):html_src.index('<div class="hc">')]
+    # A hero can carry optional modifier classes (for example, the Uva Highlands
+    # treatment) as long as it still embeds a complete, visible JPEG.
+    hero_open = re.search(r'<div class="[^\"]*\bhero\b[^\"]*"[^>]*>', html_src)
+    if not hero_open:
+        fail("dashboard hero container missing")
+        hero = ""
+    else:
+        hero = html_src[hero_open.start():html_src.index('<div class="hc">', hero_open.end())]
     if 'background-image:url("data:image/jpeg;base64,' not in hero:
-        fail("hero has no cover image - assets/cover.jpg missing or not embedded")
+        fail("hero has no cover image - upcountry asset missing or not embedded")
     elif "nofallback" in hero:
         fail("the placeholder tile renders OVER the cover photo - the image is invisible")
     else:
