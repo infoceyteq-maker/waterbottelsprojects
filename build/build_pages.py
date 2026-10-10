@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the five pages + the landing page. Run: python3 build/build_pages.py"""
+"""Emit the six pages + the landing page. Run: python3 build/build_pages.py"""
 import html
 import os
 import sys
@@ -369,11 +369,103 @@ def page5(M):
     return "".join(s)
 
 
+
+# =====================================================================
+# PAGE 6 - SALES & MARKETING  (price ladder + first-stock profit margin)
+# =====================================================================
+def page6(M):
+    t = M["sales_totals"]
+    qty, cost, rev, mg, dist, ret, mpc = t
+    s = []
+    s.append('<h2 style="font-size:21px;margin:0 0 6px">📈 අලෙවි සහ නාමකරණ — '
+             'මිල සහ ලාභය</h2>'
+             '<p class="lead">Factory → Distributor → Retail මිල පඩිපෙළ සහ පළමු '
+             'stock එකේ ලාභය · <b>The three-tier price ladder and the profit on '
+             'the first stock</b></p>')
+
+    s.append('<div class="grid g4">')
+    s.append(kpi("පළමු stock එකේ ආදායම", "Rs " + f'{rev:,.0f}',
+                 f'බෝතල් {qty:,} · Factory මිලට', "ol"))
+    s.append(kpi("💰 අපේ ලාභය / Our margin", "Rs " + f'{mg:,.0f}',
+                 f'Factory මිල − නිෂ්පාදන පිරිවැය', "am"))
+    s.append(kpi("ලාභ ප්‍රතිශතය / Margin", f'{mpc:.1f}<em>%</em>',
+                 "ආදායමෙන් ප්‍රතිශතයක් ලෙස", "bl"))
+    s.append(kpi("සිල්ලට වටිනාකම / Retail value", "Rs " + f'{ret:,.0f}',
+                 "පාරිභෝගිකයා ගෙවන මුළු මුදල", ""))
+    s.append('</div>')
+
+    # ---- 1. the price ladder ----
+    s.append('<h3>💵 මිල පඩිපෙළ <span class="en">the price ladder</span></h3>')
+    s.append(table(["නිෂ්පාදනය / Product", "Factory<br>(අපේ මිල)",
+                    "Distributor<br>(බෙදාහරින්නා)", "Retail<br>(සිල්ල)",
+                    "බෙදාහරින්නාගේ ලාභය", "සිල්ලර වෙළඳාගේ ලාභය"],
+                   [[x[0], f'Rs {x[3]:,.0f}', f'Rs {x[4]:,.0f}', f'Rs {x[5]:,.0f}',
+                     f'Rs {x[4]-x[3]:,.0f} ({(x[4]-x[3])/x[3]*100:.0f}%)',
+                     f'Rs {x[5]-x[4]:,.0f} ({(x[5]-x[4])/x[4]*100:.0f}%)']
+                    for x in M["sales_rows"]]))
+    s.append('<div class="note ol"><b>📌 අපට ලාභය ලැබෙන්නේ '
+             '<b>Factory මිල</b> එකෙනි.</b> Distributor සහ Retail මිල '
+             'බෙදාහරින්නාගේ සහ සිල්ලර වෙළඳාගේ ලාභයයි — ඒවා අපේ ආදායම නොවේ.</div>')
+
+    # ---- 2. margin per product ----
+    s.append('<h3>🧮 නිෂ්පාදනය අනුව ලාභය '
+             '<span class="en">margin per product</span></h3>')
+    s.append(table(["නිෂ්පාදනය", "නිෂ්පාදන පිරිවැය", "Factory මිල",
+                    "එකක ලාභය", "Margin %"],
+                   [[x[0], f'Rs {x[2]:,.2f}', f'Rs {x[3]:,.0f}',
+                     f'<b>Rs {x[3]-x[2]:,.2f}</b>', f'{x[9]:.1f}%']
+                    for x in M["sales_rows"]],
+                   [f'Rs {cost/qty:,.2f}', f'Rs {rev/qty:,.2f}',
+                    f'<b>Rs {mg/qty:,.2f}</b>', f'{mpc:.1f}%'],
+                   "සාමාන්‍ය / BLENDED"))
+
+    # ---- 3. first stock profit ----
+    s.append('<h3>📦 පළමු stock එකේ ලාභය '
+             '<span class="en">profit on the first stock</span></h3>')
+    s.append(table(["නිෂ්පාදනය", "Qty", "නිෂ්පාදන පිරිවැය (Rs)",
+                    "Factory ආදායම (Rs)", "💰 අපේ ලාභය (Rs)", "Margin %"],
+                   [[x[0], f'{x[1]:,}', f'{x[6]:,.0f}', f'{x[7]:,.0f}',
+                     f'<b>{x[8]:,.0f}</b>', f'{x[9]:.1f}%'] for x in M["sales_rows"]],
+                   [f'{qty:,}', f'{cost:,.0f}', f'{rev:,.0f}', f'<b>{mg:,.0f}</b>',
+                    f'{mpc:.1f}%']))
+    s.append(f'<div class="note"><b>💰 පළමු stock එකේ සාරාංශය:</b> '
+             f'නිෂ්පාදන පිරිවැය <b>Rs {cost:,.0f}</b> · '
+             f'Factory ආදායම <b>Rs {rev:,.0f}</b> · '
+             f'<b>අපේ ලාභය Rs {mg:,.0f} ({mpc:.1f}%)</b></div>')
+
+    # ---- 4. who earns what along the chain ----
+    s.append('<h3>🔗 නාලිකාව දිගේ ලාභය බෙදී යන ආකාරය '
+             '<span class="en">who earns what</span></h3>')
+    s.append(table(["", "මුදල (Rs)", "%"], [
+        ["🏭 අපේ නිෂ්පාදන පිරිවැය / Our production cost", f'{cost:,.0f}',
+         f'{cost/ret*100:.1f}%'],
+        ["🏭 <b>අපේ ලාභය / OUR MARGIN</b> (Factory − පිරිවැය)", f'{mg:,.0f}',
+         f'{mg/ret*100:.1f}%'],
+        ["🚚 බෙදාහරින්නාගේ ලාභය / Distributor margin", f'{dist-rev:,.0f}',
+         f'{(dist-rev)/ret*100:.1f}%'],
+        ["🏪 සිල්ලර වෙළඳාගේ ලාභය / Retailer margin", f'{ret-dist:,.0f}',
+         f'{(ret-dist)/ret*100:.1f}%'],
+    ], [f'{ret:,.0f}', "100%"], "🛒 සිල්ල වටිනාකම / RETAIL VALUE"))
+    s.append('<div class="note rd"><b>⚠️ 500 ml ගැන සැලකිලිමත් වන්න:</b> '
+             'Factory Rs 38 එකේ අපේ ලාභය <b>Rs 11.30 (29.7%)</b> පමණි — '
+             'නිෂ්පාදන පිරිවැය Rs 26.70 නිසා. මෙය අඩුම margin එකයි. '
+             '<b>5 L සහ 19 L වල margin 58–62%</b> බැවින් ඒවාට '
+             'ප්‍රමුඛතාව දෙන්න. Phase 2 හි blow moulding එකතු කළවිට '
+             'බෝතල් පිරිවැය 30–40% අඩු වී 500 ml margin එක සැලකිය යුතු ලෙස '
+             'ඉහළ යයි.</div>')
+    s.append('<div class="note ol"><b>📌 මතක තබාගන්න:</b> මෙම ලාභය '
+             '<b>variable cost පමණක්</b> අඩු කිරීමෙන් පසු ලැබෙන්නයි. '
+             'සේවක පඩි, විදුලිය සහ ස්ථාවර වියදම් ආවරණය කිරීමට '
+             f'මාසිකව බෝතල් <b>~{M["breakeven_pet"]:,}</b>ක් '
+             f'(ධාරිතාවෙන් {M["breakeven_pct"]*100:.0f}%) අවශ්‍යයි.</div>')
+    return "".join(s)
+
+
 def main():
     M = build_model()
     os.makedirs(OUT, exist_ok=True)
 
-    builders = {"1": page1, "2": page2, "3": page3, "4": page4, "5": page5}
+    builders = {"1": page1, "2": page2, "3": page3, "4": page4, "5": page5, "6": page6}
     subs = {
         "1": "ෆැක්ටරි එක ලියාපදිංචි කර, ගොඩනැඟිල්ල ඉදිකර, යන්ත්‍ර සවිකර, "
              "වැඩ පටන් ගන්න දවස වෙනකම් වන සම්පූර්ණ පිරිවැය — කාර්යාල උපකරණ ද ඇතුළුව.",
@@ -385,6 +477,8 @@ def main():
              "ගතවන කාලය.",
         "5": "රැකියා ධූරාවලිය දෙපාර්තමේන්තු 4ක් අනුව — සෑම තනතුරකම වැටුප, "
              "EPF 12% සහ ETF 3% සහිතව.",
+        "6": "Factory → Distributor → Retail මිල පඩිපෙළ, නිෂ්පාදනය අනුව ලාභය, "
+             "සහ පළමු stock එකේ ලාභ ප්‍රතිශතය.",
     }
     written = []
     for fname, num, si, en in PAGES:
@@ -408,12 +502,15 @@ def main():
             "4": "ක්‍රියාවලිය පියවරෙන් පියවර · අවශ්‍ය ලේඛන · ගතවන කාලය.",
         "5": "රැකියා ධූරාවලිය — Manufacturing & Quality · HR & Finance · "
              "Sales & Marketing · Transportation. වැටුප් + EPF/ETF සහිතව.",
+        "6": "Factory → Distributor → Retail මිල පඩිපෙළ · නිෂ්පාදනය අනුව ලාභය · "
+             "පළමු stock එකේ ලාභය.",
         }[num]
         head = {"1": f'Rs {m(M["doc_totals"]["registration"]+M["doc_totals"]["equipment"]+M["office_total"]+M["doc_totals"]["transport"]+M["doc_totals"]["misc"]+M["hr_one_off_total"])}',
                 "2": f'Rs {m(M["fp_total"])}',
                 "3": f'Rs {M["fs_full_cost"]:,.0f}',
                 "4": f'{len(M["process_steps"])} පියවර',
-                "5": f'{M["hr_headcount"]} දෙනා · Rs {m(M["hr_month_total"])}/මාස'}[num]
+                "5": f'{M["hr_headcount"]} දෙනා · Rs {m(M["hr_month_total"])}/මාස',
+                "6": f'ලාභය Rs {M["sales_totals"][3]:,.0f} ({M["sales_totals"][6]:.1f}%)'}[num]
         cards.append(
             f'<a class="card" href="{fname}" style="text-decoration:none;color:inherit;'
             f'display:block;transition:box-shadow .15s" '
@@ -427,8 +524,8 @@ def main():
             f'<div style="margin-top:12px;font-size:20px;font-weight:750;'
             f'color:var(--olive-d)">{head}</div></a>')
 
-    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 5ක් — වෙන වෙනම</h2>'
-            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The five pages, in the order '
+    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 6ක් — වෙන වෙනම</h2>'
+            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The six pages, in the order '
             'you asked for</b></p>'
             '<div class="grid g2">' + "".join(cards) + '</div>'
             '<div class="note ol"><b>📊 සම්පූර්ණ Dashboard එක:</b> සියල්ල එක පිටුවක '
@@ -445,7 +542,7 @@ def main():
         fh.write(html)
     print(f"[ok] index.html (landing)          "
           f"{os.path.getsize(os.path.join(OUT,'index.html'))/1024:,.0f} KB")
-    print("\n[ok] 5 pages + landing written into site/")
+    print("\n[ok] 6 pages + landing written into site/")
 
 
 if __name__ == "__main__":

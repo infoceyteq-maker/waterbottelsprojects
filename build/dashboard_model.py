@@ -43,8 +43,9 @@ SKUS = [
             "Maintenance & spares": 0.80,
             "Rejects & losses (3%)": 0.90,
         },
-        "ex_factory_price": 48.00,
-        "retail_price": 75.00,
+        "ex_factory_price": 38.00,   # factory price - OURS
+        "distributor_price": 50.00,
+        "retail_price": 80.00,
     },
     {
         "sku": "1 L", "share": 0.25, "volume_l": 1.0,
@@ -60,8 +61,9 @@ SKUS = [
             "Maintenance & spares": 1.00,
             "Rejects & losses (3%)": 1.15,
         },
-        "ex_factory_price": 65.00,
-        "retail_price": 100.00,
+        "ex_factory_price": 55.00,   # factory price - OURS
+        "distributor_price": 70.00,
+        "retail_price": 120.00,
     },
     {
         "sku": "1.5 L", "share": 0.20, "volume_l": 1.5,
@@ -77,8 +79,9 @@ SKUS = [
             "Maintenance & spares": 1.20,
             "Rejects & losses (3%)": 1.35,
         },
-        "ex_factory_price": 82.00,
-        "retail_price": 130.00,
+        "ex_factory_price": 65.00,   # factory price - OURS
+        "distributor_price": 90.00,
+        "retail_price": 150.00,
     },
     {
         "sku": "5 L", "share": 0.15, "volume_l": 5.0,
@@ -94,8 +97,9 @@ SKUS = [
             "Maintenance & spares": 2.50,
             "Rejects & losses (3%)": 2.20,
         },
-        "ex_factory_price": 200.00,
-        "retail_price": 290.00,
+        "ex_factory_price": 200.00,   # factory price - OURS
+        "distributor_price": 300.00,
+        "retail_price": 400.00,
     },
 ]
 
@@ -112,8 +116,9 @@ SKU_19L = {
         "Labour + reverse logistics": 25.00,
         "Maintenance & spares": 5.00,
     },
-    "ex_factory_price": 320.00,
-    "retail_price": 420.00,
+    "ex_factory_price": 200.00,   # factory price - OURS
+    "distributor_price": 350.00,
+        "retail_price": 550.00,
     "volume_month_y1": 20000,
 }
 
@@ -556,6 +561,27 @@ def first_production(first_stock, hr_month_total, skus=SKUS, sku19=SKU_19L):
     return mat_rows, mat_total, op_rows, op_total, sub, cont, sub + cont
 
 
+def sales_margin(first_stock, skus=SKUS, sku19=SKU_19L):
+    """First-stock profit margin across the three price tiers.
+
+    Returns (rows, totals) where rows are
+    [product, qty, unit cost, factory, dist, retail, total cost,
+     factory revenue, our margin, margin %, distributor value, retail value].
+    """
+    rows = []
+    for name, qty in first_stock:
+        sk = _sku(name, skus, sku19)
+        cost = sum(sk["costs"].values())
+        fac, dist, ret = (sk["ex_factory_price"], sk["distributor_price"],
+                          sk["retail_price"])
+        rows.append([name, qty, cost, fac, dist, ret,
+                     qty * cost, qty * fac, qty * (fac - cost),
+                     (fac - cost) / fac * 100, qty * dist, qty * ret])
+    t = [sum(r[i] for r in rows) for i in (1, 6, 7, 8, 10, 11)]
+    t.append(t[3] / t[2] * 100 if t[2] else 0)      # blended margin %
+    return rows, t
+
+
 PROCESS_STEPS = [
     # (step, documents, duration, stage, gate)
     ("1. ආයෝජක ගිවිසුම / Investor agreement (MOU)",
@@ -814,6 +840,8 @@ def build_model():
         "fp_contingency": first_production(FIRST_STOCK, hr_monthly()[3])[5],
         "fp_total": first_production(FIRST_STOCK, hr_monthly()[3])[6],
         "fs_margin": first_stock_full(FIRST_STOCK)[2] - first_stock_full(FIRST_STOCK)[1],
+        "sales_rows": sales_margin(FIRST_STOCK)[0],
+        "sales_totals": sales_margin(FIRST_STOCK)[1],
         "budget_docs": BUDGET_DOCS,
         "hr_plan": HR_PLAN,
         "departments": DEPARTMENTS,

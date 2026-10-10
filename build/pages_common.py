@@ -32,6 +32,7 @@ PAGES = [
     ("3-first-stock-cost.html", "3", "පළමු stock එකේ පිරිවැය", "First stock cost"),
     ("4-process-documents.html", "4", "ක්‍රියාවලිය + ලේඛන", "Process & documents"),
     ("5-organisation-chart.html", "5", "කර්මාන්ඩල සටහන", "Organisation chart"),
+    ("6-sales-marketing.html", "6", "අලෙවි සහ නාමකරණ", "Sales & marketing"),
 ]
 
 
