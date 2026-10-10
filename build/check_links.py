@@ -329,16 +329,18 @@ def check_dashboard(item_count):
     else:
         landing = open(idx, encoding="utf-8").read()
         missing = [f for f in ("1-setup-budget.html", "2-first-production.html",
-                               "3-first-stock-cost.html", "4-process-documents.html")
+                               "3-first-stock-cost.html", "4-process-documents.html",
+                               "5-organisation-chart.html")
                    if f'href="{f}"' not in landing]
         if missing:
             fail(f"landing page does not link: {missing}")
         else:
-            ok("landing page links all four pages")
+            ok("landing page links all five pages")
 
-    # each of the four pages must exist and be well formed
+    # each of the five pages must exist and be well formed
     four = ["1-setup-budget.html", "2-first-production.html",
-            "3-first-stock-cost.html", "4-process-documents.html"]
+            "3-first-stock-cost.html", "4-process-documents.html",
+            "5-organisation-chart.html"]
     from html.parser import HTMLParser
 
     class Bal(HTMLParser):
@@ -364,6 +366,18 @@ def check_dashboard(item_count):
             else:
                 self.st.pop()
 
+    orgp = os.path.join(ROOT, "site", "5-organisation-chart.html")
+    if os.path.exists(orgp):
+        org = open(orgp, encoding="utf-8").read()
+        need = ["Manufacturing &amp; Quality", "HR &amp; Finance",
+                "Sales &amp; Marketing", "Transportation", "org-dept",
+                "EPF", "ETF", "Plant Manager"]
+        miss = [n for n in need if n not in org]
+        if miss:
+            fail(f"org chart missing: {miss}")
+        else:
+            ok("org chart has all 4 departments, the hierarchy and the EPF/ETF math")
+
     for f in four:
         path = os.path.join(ROOT, "site", f)
         if not os.path.exists(path):
@@ -374,7 +388,7 @@ def check_dashboard(item_count):
         if b.st or b.e:
             fail(f"{f} unbalanced HTML: {b.st[:3]} {b.e[:3]}")
     if not any(f"site/{f} missing" in str(x) for x in []):
-        ok(f"all four pages built and well formed")
+        ok("all five pages built and well formed")
 
 
 def load_csv_rows():

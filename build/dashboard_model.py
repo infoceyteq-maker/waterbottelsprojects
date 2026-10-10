@@ -227,27 +227,64 @@ BUDGET_DOCS = [
 ]
 
 # ---------------------------------------------------------------- HR BUDGET
-# Staffing plan for a 6,000 BPH plant running one shift.
-# (role, headcount, monthly_gross_lkr, budget_doc)
-HR_PLAN = [
-    ("Plant Manager / කර්මාන්ත ශාලා කළමනාකරු",          1, 175000),
-    ("Production Supervisor / නිෂ්පාදන පර්යේෂක",          2,  85000),
-    ("QC Manager (Chemist) / තත්ත්ව පාලන කළමනාකරු",       1, 110000),
-    ("QC Technician / තත්ත්ව පාලන තාක්ෂණවේදී",            2,  55000),
-    ("Water Treatment Operator / ජල පිරිපහදු ශිල්පී",     2,  48000),
-    ("Machine Operator / යන්ත්‍ර ක්‍රියාකරු",              6,  45000),
-    ("Filling Line Worker / පිරවීමේ රේඛා සේවක",           8,  32000),
-    ("Maintenance Technician / නඩත්තු ශිල්පී",            2,  55000),
-    ("Storekeeper / ගබඩා භාරකරු",                         2,  38000),
-    ("Driver / රියදුරු",                                   3,  42000),
-    ("Loader / Helper / භාණ්ඩ කරුවන්",                     4,  28000),
-    ("Security / ආරක්ෂක",                                  3,  30000),
-    ("Cleaner / පිරිසිදු කරන්නන්",                        2,  25000),
-    ("Accountant / ගිණුම්කරු",                             1,  85000),
-    ("Admin / HR Officer / පරිපාලන නිලධාරී",               1,  70000),
-    ("Sales / Marketing Officer / අලෙවි නිලධාරී",          2,  65000),
+# Organisation, department by department, with reporting levels.
+#   level 0 = Board / investor, 1 = Plant Manager,
+#   2 = department head,        3 = senior staff, 4 = line staff
+DEPARTMENTS = [
+    {
+        "key": "mfg", "icon": "🏭",
+        "si": "නිෂ්පාදන සහ තත්ත්ව පාලනය", "en": "Manufacturing & Quality",
+        "roles": [
+            ("Production Supervisor / නිෂ්පාදන පර්යේෂක",        2, 2,  85000),
+            ("QC Manager (Chemist) / තත්ත්ව පාලන කළමනාකරු",     1, 2, 110000),
+            ("Water Treatment Operator / ජල පිරිපහදු ශිල්පී",   2, 3,  48000),
+            ("Machine Operator / යන්ත්‍ර ක්‍රියාකරු",            6, 3,  45000),
+            ("QC Technician / තත්ත්ව පාලන තාක්ෂණවේදී",          2, 3,  55000),
+            ("Maintenance Technician / නඩත්තු ශිල්පී",          2, 3,  55000),
+            ("Storekeeper / ගබඩා භාරකරු",                       2, 3,  38000),
+            ("Filling Line Worker / පිරවීමේ රේඛා සේවක",         8, 4,  32000),
+        ],
+    },
+    {
+        "key": "hrf", "icon": "💼",
+        "si": "මානව සම්පත් සහ මුදල්", "en": "HR & Finance",
+        "roles": [
+            ("Accountant / ගිණුම්කරු",                          1, 2,  85000),
+            ("Admin / HR Officer / පරිපාලන නිලධාරී",            1, 2,  70000),
+            ("Security / ආරක්ෂක",                                3, 3,  30000),
+            ("Cleaner / පිරිසිදු කරන්නන්",                      2, 3,  25000),
+        ],
+    },
+    {
+        "key": "sales", "icon": "📈",
+        "si": "අලෙවි සහ නාමකරණ", "en": "Sales & Marketing",
+        "roles": [
+            ("Sales & Marketing Officer / අලෙවි නිලධාරී",       2, 2,  65000),
+        ],
+    },
+    {
+        "key": "transport", "icon": "🚚",
+        "si": "ප්‍රවාහන", "en": "Transportation",
+        "roles": [
+            ("Transport Supervisor / ප්‍රවාහන පර්යේෂක",         1, 2,  70000),
+            ("Driver / රියදුරු",                                 3, 3,  42000),
+            ("Loader / Helper / භාණ්ඩ කරුවන්",                   4, 3,  28000),
+        ],
+    },
 ]
-# ------------------------------------------------- OFFICE EQUIPMENT (new)
+LEVEL_NAMES = {0: "Board / ආයෝජක", 1: "Plant Manager", 2: "Department head",
+               3: "Senior staff", 4: "Line staff"}
+
+# Top of the tree - not part of any department.
+TOP_ROLE = ("Plant Manager / කර්මාන්ත ශාලා කළමනාකරු", 1, 175000)
+
+# Flat (role, headcount, salary) list, derived from DEPARTMENTS so the payroll
+# page and the org chart page always agree.
+HR_PLAN = [(TOP_ROLE[0], TOP_ROLE[1], TOP_ROLE[2])] + [
+    (r[0], r[1], r[3]) for d in DEPARTMENTS for r in d["roles"]
+]
+
+# ------------------------------------------------- OFFICE EQUIPMENT
 # Requested: office equipment must appear in the setup budget too.
 OFFICE_EQUIPMENT = [
     ("Office furniture - desks, chairs, cabinets",       1, "set",   850000),
@@ -262,14 +299,21 @@ OFFICE_EQUIPMENT = [
     ("Accounting / ERP software licence (year 1)",       1, "lot",   350000),
 ]
 
-# ------------------------------------------------------- FIRST STOCK (new)
-# The user's first order stock - the launch batch.
+# ------------------------------------------------------- FIRST STOCK
+# The investor's first order stock - the launch batch.
 FIRST_STOCK = [
     ("500 ml", 5000),
     ("1 L",    3000),
     ("1.5 L",  3000),
     ("5 L",    1000),
     ("19 L",    150),
+]
+
+HR_ONE_OFF = [
+    ("Recruitment + advertising / බඳවා ගැනීම",            1, 350000),
+    ("Uniforms + PPE + safety shoes / නිල ඇඳුම් + ආරක්ෂක", 45,  18000),
+    ("Initial training (SLSI, GMP, machines) / පුහුණුව",   1, 500000),
+    ("Medical certificates / වෛද්‍ය සහතික",                45,   4500),
 ]
 
 EPF_ER_PCT = 0.12          # employer EPF
@@ -772,6 +816,9 @@ def build_model():
         "fs_margin": first_stock_full(FIRST_STOCK)[2] - first_stock_full(FIRST_STOCK)[1],
         "budget_docs": BUDGET_DOCS,
         "hr_plan": HR_PLAN,
+        "departments": DEPARTMENTS,
+        "level_names": LEVEL_NAMES,
+        "top_role": TOP_ROLE,
         "hr_one_off": HR_ONE_OFF,
         "hr_headcount": hr_monthly()[0],
         "hr_gross": hr_monthly()[1],

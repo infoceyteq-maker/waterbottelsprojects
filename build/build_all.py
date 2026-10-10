@@ -7,11 +7,11 @@ Runs, in order:
   1. build_checklist.py  -> docs/12-master-document-checklist.md  (from the CSV)
   2. build_dashboard.py  -> site/dashboard.html                   (the panel)
   3. build_site.py       -> site/*.html (the 21-document pack)
-  4. build_pages.py      -> the 4 pages + the landing page (index.html)
-  5. check_links.py      -> self-check; exits non-zero if anything is broken
+  5. build_pages.py      -> the 5 pages + the landing page (index.html)
+  6. check_links.py      -> self-check; exits non-zero if anything is broken
 
 build_pages.py runs last because it owns index.html - the landing page that
-links the four pages, the full dashboard and the document pack.
+links the five pages, the full dashboard and the document pack.
 Preview:  cd site && python3 -m http.server 8000 --bind 0.0.0.0
 """
 import os

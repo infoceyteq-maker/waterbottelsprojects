@@ -13,7 +13,7 @@
 
 Plus a landing page (index.html) that links all four.
 
-Everything is derived from build/dashboard_model.py, so the four pages and the
+Everything is derived from build/dashboard_model.py, so the five pages and the
 main dashboard can never disagree.
 """
 import os
@@ -31,6 +31,7 @@ PAGES = [
     ("2-first-production.html", "2", "පළමු නිෂ්පාදන අයවැය", "First production"),
     ("3-first-stock-cost.html", "3", "පළමු stock එකේ පිරිවැය", "First stock cost"),
     ("4-process-documents.html", "4", "ක්‍රියාවලිය + ලේඛන", "Process & documents"),
+    ("5-organisation-chart.html", "5", "කර්මාන්ඩල සටහන", "Organisation chart"),
 ]
 
 
@@ -58,7 +59,7 @@ def shell(M, num, title_si, title_en, subtitle, body):
            '<span style="display:block;font-size:11.5px;font-weight:500;'
            'color:var(--muted);margin-top:3px">Bottled Drinking Water Plant</span></h1>'
            f'<p>{M["location"]}<br><b>ආයෝජක / Investor:<br>{M["investor"]}</b></p></div>',
-           '<div class="nsec">පිටු 4 / The four pages</div>']
+           '<div class="nsec">පිටු 4 / The five pages</div>']
     for fname, n, si, en in PAGES:
         on = ' class="on"' if n == num else ""
         nav.append(f'<a href="{fname}"{on}>📄 පිටුව {n} — {si}'
@@ -81,7 +82,7 @@ def shell(M, num, title_si, title_en, subtitle, body):
 <main id="main">
 <div class="hero" style="{cover_bg()}">
   <div class="hc">
-    <div class="kicker">පිටුව {num} &nbsp;·&nbsp; Page {num} of 4</div>
+    <div class="kicker">පිටුව {num} &nbsp;·&nbsp; Page {num} of 5</div>
     <h1>{title_si}<br><span style="font-size:19px;font-weight:600;color:#cbd5ce">{title_en}</span></h1>
     <p class="hsub">{subtitle}</p>
   </div>

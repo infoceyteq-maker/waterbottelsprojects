@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Emit the four pages + the landing page. Run: python3 build/build_pages.py"""
+"""Emit the five pages + the landing page. Run: python3 build/build_pages.py"""
+import html
 import os
 import sys
 
@@ -271,11 +272,108 @@ def page4(M):
     return "".join(s)
 
 
+
+# =====================================================================
+# PAGE 5 - ORGANISATION CHART
+# =====================================================================
+def page5(M):
+    s = []
+    s.append('<h2 style="font-size:21px;margin:0 0 6px">🏛️ කර්මාන්ඩල සටහන — '
+             'දෙපාර්තමේන්තු අනුව</h2>'
+             '<p class="lead">රැකියා ධූරාවලිය, සෑම දෙපාර්තමේන්තුවකම වැටුප් සහ EPF/ETF · '
+             '<b>The employment hierarchy, department by department, with salary '
+             'and EPF</b></p>')
+
+    s.append('<div class="grid g4">')
+    s.append(kpi("මුළු සේවකයන්", f'{M["hr_headcount"]}',
+                 "දෙපාර්තමේන්තු 4ක් + Plant Manager", "ol"))
+    s.append(kpi("දළ වැටුප් / Gross", "Rs " + f'{M["hr_gross"]:,.0f}',
+                 "මාසික · EPF/ETF ට පෙර", "am"))
+    s.append(kpi("EPF 12% + ETF 3%", "Rs " + f'{M["hr_employer"]:,.0f}',
+                 "සේවාදායක බර / employer burden", "bl"))
+    s.append(kpi("මාසික මුළු / Monthly", "Rs " + f'{M["hr_month_total"]:,.0f}',
+                 f'වාර්ෂික Rs {M["hr_year_total"]:,.0f}', ""))
+    s.append('</div>')
+
+    # ---- the chart itself ----
+    s.append('<div class="org">')
+    s.append('<div class="org-box org-board"><div class="t">🏛️ Board of Directors / '
+             f'අධ්‍යක්ෂ මණ්ඩලය</div>'
+             f'<div class="s">Investor / ආයෝජක: {M["investor"]}</div></div>')
+    s.append('<div class="org-line"></div>')
+    s.append(f'<div class="org-box org-mgr"><div class="t">👔 {M["top_role"][0]}</div>'
+             f'<div class="s">{M["top_role"][1]} දෙනා · '
+             f'Rs {M["top_role"][2]:,}/මාස · Level 1</div></div>')
+    s.append('<div class="org-line"></div>')
+    s.append('<div class="org-hline"></div>')
+    s.append('<div class="org-depts">')
+    for d in M["departments"]:
+        hc = sum(r[1] for r in d["roles"])
+        gross = sum(r[1] * r[3] for r in d["roles"])
+        s.append(f'<div class="org-dept"><div class="hd">'
+                 f'<div class="ic">{d["icon"]}</div>'
+                 f'<div class="t">{d["si"]}</div>'
+                 f'<div class="e">{html.escape(d["en"])}</div></div><div class="bd">')
+        for name, n, lvl, sal in d["roles"]:
+            lvcls = "l2" if lvl == 2 else ""
+            s.append(f'<div class="org-role"><div class="rn">'
+                     f'<span class="lv {lvcls}">L{lvl}</span>{name}</div>'
+                     f'<div class="rv"><b>{n} × Rs {sal:,}</b>'
+                     f'<span>= Rs {n*sal:,}</span></div></div>')
+        s.append(f'</div><div class="ft"><span>{hc} දෙනා</span>'
+                 f'<span>Rs {gross:,}/මාස</span></div></div>')
+    s.append('</div></div>')
+
+    # ---- payroll with EPF/ETF ----
+    s.append('<h3>💵 සම්පූර්ණ වැටුප් ලැයිස්තුව — EPF/ETF සහිතව '
+             '<span class="en">full payroll with EPF and ETF</span></h3>')
+    rows = [[f'👔 {M["top_role"][0]}', "—", "1", "L1",
+             f'{M["top_role"][2]:,}', f'{M["top_role"][2]:,}']]
+    for d in M["departments"]:
+        for name, n, lvl, sal in d["roles"]:
+            rows.append([f'{d["icon"]} {name}', html.escape(d["en"]), f'{n}', f'L{lvl}',
+                         f'{sal:,}', f'{n*sal:,}'])
+    s.append(table(["තනතුර / Role", "දෙපාර්තමේන්තුව", "සේවකයන්", "මට්ටම",
+                    "එකෙකුගේ වැටුප (Rs)", "මාසික මුළු (Rs)"],
+                   rows, [f'{M["hr_headcount"]}', "", "", f'{M["hr_gross"]:,.0f}'],
+                   "දළ වැටුප් / GROSS"))
+
+    epf = round(M["hr_gross"] * M["epf_er_pct"])
+    etf = round(M["hr_gross"] * M["etf_pct"])
+    s.append('<h3>📋 EPF / ETF ගණනය කිරීම '
+             '<span class="en">statutory calculation</span></h3>')
+    s.append(table(["", "අනුපාතය", "මාසික (Rs)", "වාර්ෂික (Rs)"], [
+        ["දළ වැටුප් / Gross salaries", "—", f'{M["hr_gross"]:,.0f}',
+         f'{M["hr_gross"]*12:,.0f}'],
+        ["EPF — සේවාදායක කොටස / employer",
+         f'{M["epf_er_pct"]*100:.0f}%', f'{epf:,}', f'{epf*12:,}'],
+        ["ETF — සේවාදායක කොටස / employer",
+         f'{M["etf_pct"]*100:.0f}%', f'{etf:,}', f'{etf*12:,}'],
+    ], [f'{M["hr_month_total"]:,.0f}', f'{M["hr_year_total"]:,.0f}'],
+        "💰 මුළු සේවක පිරිවැය / TOTAL"))
+    s.append('<div class="note rd"><b>⚠️ නීතිමය අවශ්‍යතා:</b> '
+             'පළමු සේවකයා බඳවා ගත් දින <b>14ක් ඇතුළත</b> EPF Form D ඉදිරිපත් '
+             'කළ යුතුය. සේවාදායකයා <b>EPF 12% + ETF 3% = 15%</b> ගෙවයි; '
+             'සේවකයාගේ වැටුපෙන් <b>EPF 8%</b> අඩු කෙරේ. වැටුප් ගෙවීම '
+             '<b>ඊළඟ මාසයේ අවසන් වැඩ කරන දිනයට</b> පෙර කළ යුතුය.</div>')
+    s.append('<div class="note ol"><b>📌 දෙපාර්තමේන්තු 4:</b> '
+             '🏭 නිෂ්පාදන සහ තත්ත්ව පාලනය (25) · '
+             '💼 මානව සම්පත් සහ මුදල් (7) · '
+             '📈 අලෙවි සහ නාමකරණ (2) · '
+             '🚚 ප්‍රවාහන (8) · '
+             '+ 👔 Plant Manager (1) = <b>43 දෙනා</b></div>')
+    s.append('<div class="note"><b>💡 Phase 2 හිදී:</b> දෙවන shift එක ආරම්භ '
+             'කරන විට නිෂ්පාදන සේවකයන් දළ වශයෙන් <b>දෙගුණ</b> කළ යුතුය '
+             '(Machine Operator, Filling Line Worker, Water Treatment Operator). '
+             'කළමනාකාරීය සහ QC තනතුරු එලෙසම පවතී.</div>')
+    return "".join(s)
+
+
 def main():
     M = build_model()
     os.makedirs(OUT, exist_ok=True)
 
-    builders = {"1": page1, "2": page2, "3": page3, "4": page4}
+    builders = {"1": page1, "2": page2, "3": page3, "4": page4, "5": page5}
     subs = {
         "1": "ෆැක්ටරි එක ලියාපදිංචි කර, ගොඩනැඟිල්ල ඉදිකර, යන්ත්‍ර සවිකර, "
              "වැඩ පටන් ගන්න දවස වෙනකම් වන සම්පූර්ණ පිරිවැය — කාර්යාල උපකරණ ද ඇතුළුව.",
@@ -285,6 +383,8 @@ def main():
              "500 ml 5,000 · 1 L 3,000 · 1.5 L 3,000 · 5 L 1,000 · 19 L 150.",
         "4": "ක්‍රියාවලිය පියවරෙන් පියවර, සෑම පියවරකටම අවශ්‍ය ලේඛන සහ "
              "ගතවන කාලය.",
+        "5": "රැකියා ධූරාවලිය දෙපාර්තමේන්තු 4ක් අනුව — සෑම තනතුරකම වැටුප, "
+             "EPF 12% සහ ETF 3% සහිතව.",
     }
     written = []
     for fname, num, si, en in PAGES:
@@ -306,11 +406,14 @@ def main():
             "3": "500 ml 5,000 · 1 L 3,000 · 1.5 L 3,000 · 5 L 1,000 · 19 L 150 "
                  "— එකක පිරිවැය වෙන වෙනම.",
             "4": "ක්‍රියාවලිය පියවරෙන් පියවර · අවශ්‍ය ලේඛන · ගතවන කාලය.",
+        "5": "රැකියා ධූරාවලිය — Manufacturing & Quality · HR & Finance · "
+             "Sales & Marketing · Transportation. වැටුප් + EPF/ETF සහිතව.",
         }[num]
         head = {"1": f'Rs {m(M["doc_totals"]["registration"]+M["doc_totals"]["equipment"]+M["office_total"]+M["doc_totals"]["transport"]+M["doc_totals"]["misc"]+M["hr_one_off_total"])}',
                 "2": f'Rs {m(M["fp_total"])}',
                 "3": f'Rs {M["fs_full_cost"]:,.0f}',
-                "4": f'{len(M["process_steps"])} පියවර'}[num]
+                "4": f'{len(M["process_steps"])} පියවර',
+                "5": f'{M["hr_headcount"]} දෙනා · Rs {m(M["hr_month_total"])}/මාස'}[num]
         cards.append(
             f'<a class="card" href="{fname}" style="text-decoration:none;color:inherit;'
             f'display:block;transition:box-shadow .15s" '
@@ -324,8 +427,8 @@ def main():
             f'<div style="margin-top:12px;font-size:20px;font-weight:750;'
             f'color:var(--olive-d)">{head}</div></a>')
 
-    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 4ක් — වෙන වෙනම</h2>'
-            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The four pages, in the order '
+    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 5ක් — වෙන වෙනම</h2>'
+            '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The five pages, in the order '
             'you asked for</b></p>'
             '<div class="grid g2">' + "".join(cards) + '</div>'
             '<div class="note ol"><b>📊 සම්පූර්ණ Dashboard එක:</b> සියල්ල එක පිටුවක '
@@ -342,7 +445,7 @@ def main():
         fh.write(html)
     print(f"[ok] index.html (landing)          "
           f"{os.path.getsize(os.path.join(OUT,'index.html'))/1024:,.0f} KB")
-    print("\n[ok] 4 pages + landing written into site/")
+    print("\n[ok] 5 pages + landing written into site/")
 
 
 if __name__ == "__main__":
