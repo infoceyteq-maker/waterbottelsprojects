@@ -298,10 +298,10 @@ def build():
              '<div class="tbl"><table>'
              '<tr><th>අයිතමය</th><th>තත්ත්වය</th></tr>'
              f'<tr class="land"><td><b>ඉඩම</b> — {M["location"]}</td>'
-             f'<td><span class="pill p-high">✓ ඇත</span> — {M["investor"]} සතු</td></tr>'
-             '<tr><td>ආයෝජකයා</td><td><span class="pill p-high">✓ සිටී</span> — '
+             f'<td><span class="pill p-ok">✓ ඇත</span> — {M["investor"]} සතු</td></tr>'
+             '<tr><td>ආයෝජකයා</td><td><span class="pill p-ok">✓ සිටී</span> — '
              f'{M["investor"]}</td></tr>'
-             '<tr><td>ව්‍යාපාර සංකල්පය</td><td><span class="pill p-high">✓ පැහැදිලියි</span></td></tr>'
+             '<tr><td>ව්‍යාපාර සංකල්පය</td><td><span class="pill p-ok">✓ පැහැදිලියි</span></td></tr>'
              '</table></div>'
              '<div class="note rd" style="margin-bottom:0"><b>⚠️ තහවුරු කළ යුතුයි:</b> '
              'ඉඩම <b>පර්චස් 160+</b> ද? කර්මාන්ත භාවිතයට <b>zoning අවසර</b> තිබේද? '
@@ -450,12 +450,12 @@ def build():
             for name, qty, unit, rate, amt, cat, inkind, stg, doc in rows:
                 n += 1
                 cls = ' class="land"' if inkind else ''
-                tag = ' <span class="pill p-high">in-kind</span>' if inkind else ''
+                tag = ' <span class="pill p-gold">in-kind</span>' if inkind else ''
                 out.append(f'<tr{cls}><td class="num">{n}</td><td>{name}{tag}</td>'
                            f'<td class="num">{qty:,}</td><td>{unit}</td>'
                            f'<td class="num">{rate:,.0f}</td>'
                            f'<td class="num"><b>{amt:,}</b></td>'
-                           f'<td><span class="pill {"p-high" if stg==1 else "p-med"}">'
+                           f'<td><span class="pill {"p-ok" if stg==1 else "p-med"}">'
                            f'අදියර {stg}</span></td></tr>')
             out.append(f'<tr class="grand"><td></td><td>මුළු / TOTAL</td>'
                        f'<td class="num"></td><td></td><td class="num"></td>'

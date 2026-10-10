@@ -14,7 +14,7 @@ from dashboard_model import build_model                       # noqa: E402
 # =====================================================================
 def page1(M):
     s = []
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">💰 ආරම්භයේ සිට වැඩ පටන් ගන්න '
+    s.append('<h2 class="pg-title">💰 ආරම්භයේ සිට වැඩ පටන් ගන්න '
              'දවස වෙනකම් — සම්පූර්ණ අයවැය</h2>'
              '<p class="lead">ෆැක්ටරි එක ලියාපදිංචි කර, ගොඩනැඟිල්ල ඉදිකර, '
              'යන්ත්‍ර සවිකර, වැඩ පටන් ගන්න සූදානම් වන තෙක් · '
@@ -117,7 +117,7 @@ def page2(M):
     stock = dict(M["first_stock"])
     total_bottles = sum(stock.values())
 
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">🏭 නිෂ්පාදනය පටන් ගත් දවසේ සිට '
+    s.append('<h2 class="pg-title">🏭 නිෂ්පාදනය පටන් ගත් දවසේ සිට '
              'පළමු order stock එක ඉවර වෙනකම්</h2>'
              '<p class="lead">බෝතල්, ලේබල්, බෝතල් පිරවීම, සේවක පඩි — සියල්ල · '
              '<b>Bottles, labels, bottling, employee wages — everything in the '
@@ -192,7 +192,7 @@ def page2(M):
 # =====================================================================
 def page3(M):
     s = []
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">🧮 පළමු stock එකේ බෝතල් පිරිවැය</h2>'
+    s.append('<h2 class="pg-title">🧮 පළමු stock එකේ බෝතල් පිරිවැය</h2>'
              '<p class="lead">ඔබ දුන් ප්‍රමාණ අනුව, නිෂ්පාදනය බැගින් වෙන වෙනම · '
              '<b>Your exact quantities, costed product by product</b></p>')
 
@@ -232,7 +232,7 @@ def page3(M):
 # =====================================================================
 def page4(M):
     s = []
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">🔄 ක්‍රියාවලිය — පියවරෙන් පියවර</h2>'
+    s.append('<h2 class="pg-title">🔄 ක්‍රියාවලිය — පියවරෙන් පියවර</h2>'
              '<p class="lead">සෑම පියවරකටම අවශ්‍ය ලේඛන සහ ගතවන කාලය · '
              '<b>Each step, the documents it needs, and how long it takes</b></p>')
 
@@ -278,7 +278,7 @@ def page4(M):
 # =====================================================================
 def page5(M):
     s = []
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">🏛️ කර්මාන්ඩල සටහන — '
+    s.append('<h2 class="pg-title">🏛️ කර්මාන්ඩල සටහන — '
              'දෙපාර්තමේන්තු අනුව</h2>'
              '<p class="lead">රැකියා ධූරාවලිය, සෑම දෙපාර්තමේන්තුවකම වැටුප් සහ EPF/ETF · '
              '<b>The employment hierarchy, department by department, with salary '
@@ -377,7 +377,7 @@ def page6(M):
     t = M["sales_totals"]
     qty, cost, rev, mg, dist, ret, mpc = t
     s = []
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">📈 අලෙවි සහ නාමකරණ — '
+    s.append('<h2 class="pg-title">📈 අලෙවි සහ නාමකරණ — '
              'මිල සහ ලාභය</h2>'
              '<p class="lead">Factory → Distributor → Retail මිල පඩිපෙළ සහ පළමු '
              'stock එකේ ලාභය · <b>The three-tier price ladder and the profit on '
@@ -473,7 +473,7 @@ def page7(M):
     oy = F["one_year"]
     dt = M["doc_totals"]
     s = []
-    s.append('<h2 style="font-size:21px;margin:0 0 6px">🎯 අවසන් සාරාංශය '
+    s.append('<h2 class="pg-title">🎯 අවසන් සාරාංශය '
              '— ආයෝජනය, ලාභය, ආපසු ලැබෙන කාලය</h2>'
              '<p class="lead">මුළු අයවැය එක තැනක · දවසට විකුණිය යුතු '
              'ප්‍රමාණය · ආයෝජනය ආපසු ලැබෙන මාස · <b>the whole budget in '
@@ -690,19 +690,14 @@ def main():
                 "7": f'ආයෝජනය {m(M["final"]["investment"])} · දවසට '
                      f'{M["final"]["be_day"]:,.0f} බෝතල්'}[num]
         cards.append(
-            f'<a class="card" href="{fname}" style="text-decoration:none;color:inherit;'
-            f'display:block;transition:box-shadow .15s" '
-            f'onmouseover="this.style.boxShadow=\'0 8px 24px rgba(0,0,0,.12)\'" '
-            f'onmouseout="this.style.boxShadow=\'\'">'
-            f'<div style="font-size:11px;font-weight:700;letter-spacing:1px;'
-            f'text-transform:uppercase;color:var(--emerald-d)">පිටුව {num} · Page {num}</div>'
-            f'<h3 style="margin:6px 0 4px;font-size:16px">{si}</h3>'
-            f'<div style="font-size:12px;color:var(--muted);margin-bottom:10px">{en}</div>'
-            f'<div style="font-size:13px;color:var(--ink2);line-height:1.55">{desc}</div>'
-            f'<div style="margin-top:12px;font-size:20px;font-weight:750;'
-            f'color:var(--olive-d)">{head}</div></a>')
+            f'<a class="pcard" href="{fname}">'
+            f'<div class="pc-kicker">පිටුව {num} · Page {num}</div>'
+            f'<h3 class="pc-title">{si}</h3>'
+            f'<div class="pc-en">{en}</div>'
+            f'<div class="pc-desc">{desc}</div>'
+            f'<div class="pc-head">{head}</div></a>')
 
-    body = ('<h2 style="font-size:21px;margin:0 0 6px">📄 පිටු 7ක් — වෙන වෙනම</h2>'
+    body = ('<h2 class="pg-title">📄 පිටු 7ක් — වෙන වෙනම</h2>'
             '<p class="lead">ඔබ ඉල්ලූ පිළිවෙළින් · <b>The seven pages, in the order '
             'you asked for</b></p>'
             '<div class="grid g2">' + "".join(cards) + '</div>'
