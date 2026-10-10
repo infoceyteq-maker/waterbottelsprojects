@@ -181,12 +181,12 @@ def main():
             shutil.copy2(src, os.path.join(data_out, name))
             copied += 1
 
-    # The dashboard is what a visitor should land on, so it becomes the site root.
-    # "/" -> dashboard,  "/docs.html" -> the markdown documentation index.
+    # Set the dashboard as a fallback root when building the document pack alone.
+    # The full build runs build_pages.py afterwards, which writes the landing page to index.html.
     dash = os.path.join(OUT, "dashboard.html")
     if os.path.exists(dash):
         shutil.copyfile(dash, os.path.join(OUT, "index.html"))
-        print("[ok] published dashboard as the site root: / -> dashboard")
+        print("[ok] set dashboard as document-pack fallback at / (full build replaces it with the project landing page)")
     else:
         print("[!] site/dashboard.html missing - run build_dashboard.py first")
 

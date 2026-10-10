@@ -37,7 +37,7 @@ def main():
         if rc != 0:
             print(f"\n[FAIL] {step} exited {rc}")
             return rc
-    print("\n[ok] all builds passed - the dashboard is served at \"/\"")
+    print("\n[ok] all builds passed - the project landing page is served at \"/\"; dashboard at /dashboard.html")
     return 0
 
 

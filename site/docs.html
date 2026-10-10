@@ -1335,8 +1335,9 @@ html[data-language="en"] #nav ol#nl a .en{display:inline!important}
 <hr />
 <h2>  ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel</h2>
 <blockquote>
-<p><strong><span class="si">බලන්න</span><span class="en">View:</span></strong> <code>site/dashboard.html</code> — එය <strong><code>/</code> (site root)</strong> ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.<br />
+<p><strong><span class="si">බලන්න</span><span class="en">View:</span></strong> <code>site/dashboard.html</code> — සම්පූර්ණ dashboard එක. Site landing page එක <code>site/index.html</code> හි ඇත.<br />
 <strong>Build:</strong> <code>.venv/bin/python build/build_all.py</code> (සියල්ල එකවර; Windows: <code>.venv\Scripts\python.exe build\build_all.py</code>) · <strong><span class="si">ලේඛන</span><span class="en">Docs:</span></strong> <code>site/docs.html</code></p>
+<p><strong>GitHub Pages:</strong> Build and deployment source එක <strong>GitHub Actions</strong> ලෙස සකසන්න. <code>.github/workflows/deploy-pages.yml</code> මඟින් <code>site/</code> build කර publish කරයි; website home එක landing page වන අතර dashboard එක <code>/dashboard.html</code> හි ඇත.</p>
 </blockquote>
 <p>මුළු ව්‍යාපෘතියම <strong>එක පිටුවක</strong> — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:</p>
 <table>

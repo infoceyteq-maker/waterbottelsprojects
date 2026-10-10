@@ -69,8 +69,10 @@ Use the **භාෂාව / Language** selector at the top of any generated page
 
 ## 📊 ⭐ ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel
 
-> **බලන්න / View:** `site/dashboard.html` — එය **`/` (site root)** ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.
+> **බලන්න / View:** `site/dashboard.html` — සම්පූර්ණ dashboard එක. Site landing page එක `site/index.html` හි ඇත.
 > **Build:** `.venv/bin/python build/build_all.py` (සියල්ල එකවර; Windows: `.venv\Scripts\python.exe build\build_all.py`) · **ලේඛන / Docs:** `site/docs.html`
+
+> **GitHub Pages:** Build and deployment source එක **GitHub Actions** ලෙස සකසන්න. `.github/workflows/deploy-pages.yml` මඟින් `site/` build කර publish කරයි; website home එක landing page වන අතර dashboard එක `/dashboard.html` හි ඇත.
 
 මුළු ව්‍යාපෘතියම **එක පිටුවක** — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:
 
