@@ -263,6 +263,17 @@ def check_dashboard(item_count):
             fail(f"dashboard missing expected content: {label} ('{token}')")
     ok("dashboard contains investor, location, SLS 894 and break-even content")
 
+    # the dashboard must also be the site root, so "/" shows it
+    idx = os.path.join(ROOT, "site", "index.html")
+    if not os.path.exists(idx):
+        fail("site/index.html missing - \"/\" would not show the dashboard")
+    elif os.path.getsize(idx) != os.path.getsize(fp):
+        fail("site/index.html is not a copy of dashboard.html - "
+             "\"/\" shows the docs index, not the dashboard. Re-run build_site.py")
+    else:
+        ok(f"site/index.html == dashboard.html, so \"/\" lands on the dashboard "
+           f"({os.path.getsize(idx)/1024:,.0f} KB)")
+
 
 def load_csv_rows():
     with open(os.path.join(ROOT, "data", "master-checklist.csv"), newline="",

@@ -15,7 +15,7 @@ OUT = os.path.join(ROOT, "site")
 
 # Ordered navigation: (source path relative to repo root, output name, nav title)
 NAV = [
-    ("README.md", "index.html", "🏠 මුල් පිටුව / Home"),
+    ("README.md", "docs.html", "🏠 ලේඛන මුල් පිටුව / Docs Home"),
     (None, "dashboard.html", "📊 ⭐ ව්‍යාපෘති DASHBOARD (මුදල් + Qty)"),
     ("docs/01-phase-0-investor-mou.md", "p01.html", "0 · ආයෝජක එකඟතා / Investor & MOU"),
     ("docs/02-phase-1-company-registration.md", "p02.html", "1 · සමාගම් ලියාපදිංචිය / Company (1st Reg.)"),
@@ -181,6 +181,15 @@ def main():
         if os.path.exists(src):
             shutil.copy2(src, os.path.join(data_out, name))
             copied += 1
+
+    # The dashboard is what a visitor should land on, so it becomes the site root.
+    # "/" -> dashboard,  "/docs.html" -> the markdown documentation index.
+    dash = os.path.join(OUT, "dashboard.html")
+    if os.path.exists(dash):
+        shutil.copyfile(dash, os.path.join(OUT, "index.html"))
+        print("[ok] published dashboard as the site root: / -> dashboard")
+    else:
+        print("[!] site/dashboard.html missing - run build_dashboard.py first")
 
     print(f"[ok] built {written} pages + {copied} data files into {OUT}")
     print("[ok] preview: cd site && python3 -m http.server 8000 --bind 0.0.0.0")

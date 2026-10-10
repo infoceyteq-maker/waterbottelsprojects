@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="si"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🏠 ලේඛන මුල් පිටුව / Docs Home · බෝතල් ජල කර්මාන්ත ශාලාව — Bandarawela</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2431;--fg:#e6edf3;--muted:#9aa7b4;
+--accent:#3fb6f0;--accent2:#7ee787;--border:#2b3441;--warn:#ffdf5d;--red:#ff7b72;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font-family:"Noto Sans Sinhala","Iskoola Pota","Nirmala UI",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+line-height:1.65;font-size:16px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+#wrap{display:flex;min-height:100vh}
+#nav{width:330px;flex:0 0 330px;background:var(--panel);border-right:1px solid var(--border);
+padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+#nav h1{font-size:15px;margin:0 0 4px;color:var(--accent2);letter-spacing:.3px}
+#nav .sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+#nav ol{list-style:none;padding:0;margin:0}
+#nav li{margin:1px 0}
+#nav a{display:block;padding:7px 10px;border-radius:7px;font-size:13px;color:var(--fg)}
+#nav a:hover{background:var(--panel2);text-decoration:none}
+#nav a.on{background:linear-gradient(90deg,rgba(63,182,240,.22),transparent);
+border-left:3px solid var(--accent);color:#fff;font-weight:600}
+#main{flex:1;padding:34px 46px 90px;max-width:1180px;min-width:0}
+h1{font-size:27px;border-bottom:2px solid var(--border);padding-bottom:12px;margin-top:6px}
+h2{font-size:21px;margin-top:38px;color:var(--accent2);
+border-left:4px solid var(--accent2);padding-left:12px}
+h3{font-size:17px;margin-top:28px;color:var(--accent)}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:13.5px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--accent);font-weight:600;white-space:nowrap}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+code{background:var(--panel2);padding:2px 6px;border-radius:4px;font-size:12.5px;color:var(--warn)}
+pre{background:#0a0e14;border:1px solid var(--border);border-radius:9px;padding:16px;
+overflow-x:auto;font-size:12.5px;line-height:1.5}
+pre code{background:none;padding:0;color:#c9d5e1}
+blockquote{border-left:4px solid var(--warn);background:rgba(255,223,93,.07);
+margin:18px 0;padding:12px 18px;border-radius:0 8px 8px 0}
+hr{border:none;border-top:1px solid var(--border);margin:34px 0}
+input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);
+background:var(--panel2);color:var(--fg);font-size:13px;margin-bottom:12px}
+ul li,ol li{margin:4px 0}
+@media(max-width:980px){#wrap{flex-direction:column}#nav{width:100%;flex:none;height:auto;
+position:static;border-right:none;border-bottom:1px solid var(--border)}#main{padding:20px}}
+@media print{#nav{display:none}#main{max-width:100%;padding:0}body{background:#fff;color:#000}
+table{font-size:10px}th,td{border-color:#bbb}th{background:#eee;color:#000}}
+</style></head>
+<body><div id="wrap">
+<nav id="nav">
+  <h1>💧 බෝතල් ජල කර්මාන්ත ශාලාව</h1>
+  <div class="sub">Bottled Water Manufacturing Plant · Bandarawela, Badulla<br>
+  සම්පූර්ණ ලේඛන පැකේජය · v1.1 · SLS 894 · 2026-10-10</div>
+  <input type="text" id="q" placeholder="🔍 පිටු සොයන්න / Filter pages…" oninput="flt()">
+  <ol id="nl"><li><a href="docs.html" id="n-docs.html" class="on">🏠 ලේඛන මුල් පිටුව / Docs Home</a></li>
+<li><a href="dashboard.html" id="n-dashboard.html">📊 ⭐ ව්‍යාපෘති DASHBOARD (මුදල් + Qty)</a></li>
+<li><a href="p01.html" id="n-p01.html">0 · ආයෝජක එකඟතා / Investor &amp; MOU</a></li>
+<li><a href="p02.html" id="n-p02.html">1 · සමාගම් ලියාපදිංචිය / Company (1st Reg.)</a></li>
+<li><a href="p03.html" id="n-p03.html">2 · ඉඩම සහ ගොඩනැඟිල්ල / Land</a></li>
+<li><a href="p04.html" id="n-p04.html">3 · ජල මූලාශ්‍රය / Water Source (WRB)</a></li>
+<li><a href="p05.html" id="n-p05.html">4 · කර්මාන්ත ශාලාව / Factory</a></li>
+<li><a href="p06.html" id="n-p06.html">5 · යන්ත්‍රෝපකරණ / Machinery</a></li>
+<li><a href="p07.html" id="n-p07.html">6 · ⭐ FCAU ලියාපදිංචිය / MoH Registration</a></li>
+<li><a href="p08.html" id="n-p08.html">7 · SLSI සහතික / SLSI Certification</a></li>
+<li><a href="p09.html" id="n-p09.html">8 · පරිසර / Environment (CEA)</a></li>
+<li><a href="p10.html" id="n-p10.html">9 · බදු සහ ශ්‍රම / Tax &amp; Labour</a></li>
+<li><a href="p11.html" id="n-p11.html">10 · වෙළඳපොළ / Launch &amp; Market</a></li>
+<li><a href="p12.html" id="n-p12.html">⭐ MASTER CHECKLIST</a></li>
+<li><a href="p13.html" id="n-p13.html">13 · අයවැය / Budget</a></li>
+<li><a href="p14.html" id="n-p14.html">14 · කාලසටහන / Timeline</a></li>
+<li><a href="p15.html" id="n-p15.html">15 · Due Diligence</a></li>
+<li><a href="p16.html" id="n-p16.html">16 · අවදානම් / Risk Register</a></li>
+<li><a href="p17.html" id="n-p17.html">17 · ආයතන / Agency Directory</a></li>
+<li><a href="p18.html" id="n-p18.html">18 · නැවුම් කිරීම් / Renewals</a></li>
+<li><a href="p19.html" id="n-p19.html">19 · ලේබල් / Labels</a></li>
+<li><a href="p20.html" id="n-p20.html">20 · 💧 පිරිපහදුව / Water Treatment Train</a></li>
+<li><a href="p21.html" id="n-p21.html">21 · 📋 තීරණ / Decisions &amp; Assumptions</a></li>
+<li><a href="t01.html" id="n-t01.html">📄 MOU / Term Sheet</a></li>
+<li><a href="t02.html" id="n-t02.html">📄 Shareholders Agreement</a></li>
+<li><a href="t03.html" id="n-t03.html">📄 Board Resolution</a></li>
+<li><a href="t04.html" id="n-t04.html">📄 ජල පරීක්ෂණ ලිපිය</a></li>
+<li><a href="t05.html" id="n-t05.html">📄 FCAU ආවරණ ලිපිය</a></li></ol>
+</nav>
+<main id="main"><h1>💧 බෝතල් කළ පානීය ජල කර්මාන්ත ශාලාව — සම්පූර්ණ ව්‍යාපෘති ලේඛන පැකේජය</h1>
+<h1>Bottled Drinking Water Manufacturing Plant — Complete Project Documentation Pack</h1>
+<blockquote>
+<p><strong>ස්ථානය / Location:</strong> බණ්ඩාරවෙල, බදුල්ල දිස්ත්‍රික්කය, ඌව පළාත — Bandarawela, Badulla District, Uva Province<br />
+<strong>ව්‍යාපෘති වර්ගය / Structure:</strong> ආයෝජක හවුල්කාරිත්වයක් සහිත පෞද්ගලික සමාගමක් (Private Limited Company with an investor partnership)<br />
+<strong>සකස් කළ දිනය / Prepared:</strong> 2026-10-10<br />
+<strong>අනුවාදය / Version:</strong> 1.1</p>
+</blockquote>
+<hr />
+<h2>✅ තහවුරු කළ තීරණ | LOCKED DECISIONS (2026-10-10)</h2>
+<table>
+<thead>
+<tr>
+<th>තීරණය</th>
+<th>විස්තරය</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🎯 <strong>නිෂ්පාදනය</strong></td>
+<td><strong>"බෝතල් කළ පානීය ජලය / Bottled Drinking Water" — SLS 894</strong></td>
+</tr>
+<tr>
+<td>❌ <strong>නොකරයි</strong></td>
+<td>Natural Mineral Water (SLS 1038) — සැබෑ උල්පතක් අවශ්‍ය බැවින්</td>
+</tr>
+<tr>
+<td>💧 <strong>මූලාශ්‍රය</strong></td>
+<td>නළ ළිඳ / භූගත ජලය (deep tube well)</td>
+</tr>
+<tr>
+<td>🔬 <strong>පිරිපහදුව</strong></td>
+<td>සම්පූර්ණ filtration — <strong>MGSF → ACF → Softener → Micron → RO → UV → Ozone → 0.2µm</strong></td>
+</tr>
+<tr>
+<td>🏷️ <strong>ලේබල්</strong></td>
+<td>"Bottled Drinking Water" — "Natural Mineral Water" / "Spring Water" <strong>භාවිත කළ නොහැක</strong></td>
+</tr>
+<tr>
+<td>💵 <strong>ආයෝජකයා</strong></td>
+<td><strong>Mr. Thilakarathna</strong> — මුදල් සපයයි; <strong>ඉඩම පමණක්</strong> දැනට ඇති වත්කමයි</td>
+</tr>
+<tr>
+<td>🏭 <strong>ධාරිතාව</strong></td>
+<td>6,000 BPH (බෝතල් පැයට) — PET 500ml/1L/1.5L + 19L returnable</td>
+</tr>
+<tr>
+<td>💰 <strong>අයවැය</strong></td>
+<td>⭐ <strong>Option A "Lean Start" Rs 163.3M</strong> (Full Build Rs 214.2M · Minimum Rs 125.1M)</td>
+</tr>
+<tr>
+<td>🧾 <strong>බෝතලයක පිරිවැය</strong></td>
+<td><strong>Rs 33.44</strong> (blended) — ex-factory Rs 61.60 → ලාභය <strong>Rs 28.16 (45.7%)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong><a href="p21.html">තීරණ වාර්තාව / Decision log</a></strong> · <strong><a href="p20.html">ජල පිරිපහදු පද්ධතිය / Treatment train</a></strong></p>
+<hr />
+<h2>📊 ⭐ ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel</h2>
+<blockquote>
+<p><strong>බලන්න / View:</strong> <code>site/dashboard.html</code> — එය <strong><code>/</code> (site root)</strong> ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.<br />
+<strong>Build:</strong> <code>python3 build/build_all.py</code> (සියල්ල එකවර) · <strong>ලේඛන / Docs:</strong> <code>site/docs.html</code></p>
+</blockquote>
+<p>මුළු ව්‍යාපෘතියම <strong>එක පිටුවක</strong> — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:</p>
+<table>
+<thead>
+<tr>
+<th>අංශය</th>
+<th>අන්තර්ගතය</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1️⃣ ව්‍යාපෘති සාරාංශය</td>
+<td>Mr. Thilakarathna · Bandarawela · දැනට ඇත්තේ ඉඩම පමණයි</td>
+</tr>
+<tr>
+<td>2️⃣ නිෂ්පාදන සැලැස්ම</td>
+<td><strong>බෝතල් Qty</strong> — 500ml 135,000 · 1L 90,000 · 1.5L 75,000 /මාස (Y1)</td>
+</tr>
+<tr>
+<td>3️⃣ පිරිපහදු ක්‍රියාවලිය</td>
+<td>8 පියවර · 7 CCPs · SLS 894 පරීක්ෂණ</td>
+</tr>
+<tr>
+<td>4️⃣ ද්‍රව්‍ය අවශ්‍යතා</td>
+<td><strong>බෝතල් + ලේබල් Qty</strong> — ලේබල් = බෝතල් × 1.04 (4% waste)</td>
+</tr>
+<tr>
+<td>5️⃣ සම්පූර්ණ අයවැය</td>
+<td><strong>36 CAPEX අයිතම්</strong> + අයවැය විකල්ප 3ක්</td>
+</tr>
+<tr>
+<td>6️⃣ ඒකක පිරිවැය</td>
+<td><strong>බෝතලයක ලාභය</strong> — අයිතම-අයිතම 10-අයිතම් breakdown</td>
+</tr>
+<tr>
+<td>7️⃣ ලාභ ප්‍රක්ෂේපණය</td>
+<td>වසර 4ක් · break-even 28% · <strong>sensitivity වගු 2ක්</strong></td>
+</tr>
+<tr>
+<td>8️⃣ වේගවත් වර්ධනය</td>
+<td>Phase 1→5 ක්‍රියාකාරී සැලැස්ම</td>
+</tr>
+<tr>
+<td>9️⃣ අවදානම්</td>
+<td>ඉහළම අවදානම් 8 + ආරක්ෂක පියවර</td>
+</tr>
+<tr>
+<td>🔟 ලේඛන ලැයිස්තුව</td>
+<td><strong>සම්පූර්ණ අයිතම් 160</strong> — tick කරන්න, progress bar එකක් සමඟ</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🎯 මෙම පැකේජයෙන් ලැබෙන්නේ මොනවාද? / What is in this pack?</h2>
+<p>ඔබ ඉල්ලූ පරිදි — <strong>"1st Registration Document එක ඉඳන්"</strong>, එනම් සමාගම ලියාපදිංචි කිරීමේ පළමු ලේඛනයේ සිට කර්මාන්ත ශාලාව විවෘත කර නිෂ්පාදනය ආරම්භ කරන තෙක් <strong>අවශ්‍ය සියලුම මූලික ලේඛන, අවශ්‍ය දේවල් (උපකරණ/සේවා), සහ සේවා සපයන්නන්</strong> — වෙන වෙනම, පිළිවෙළින්, ලැයිස්තුගත කර ඇත.</p>
+<p>As you asked — from the <strong>very first registration document</strong> (company incorporation) right up to opening the plant and starting production, every required document, every required item and every required service is listed <strong>separately and in order</strong>.</p>
+<hr />
+<h2>📚 ලේඛන සිතියම / Document Map</h2>
+<h3>කොටස 1 — පියවර 10 ව්‍යාපෘති මාර්ග සිතියම (Phase-by-phase requirements)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ලේඛනය / Document</th>
+<th>අන්තර්ගතය / Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td><a href="p01.html">Phase 0 — ආයෝජක එකඟතා / Investor &amp; MOU</a></td>
+<td>ආයෝජක පරීක්ෂණ ලේඛන, MOU, Term Sheet, හවුල්කාරිත්ව ගිවිසුම්</td>
+</tr>
+<tr>
+<td>02</td>
+<td><a href="p02.html">Phase 1 — <strong>සමාගම ලියාපදිංචි කිරීම (1st Registration)</strong></a></td>
+<td>eROC, Form 1/18/19, Articles of Association, TIN, බැංකු ගිණුම</td>
+</tr>
+<tr>
+<td>03</td>
+<td><a href="p03.html">Phase 2 — ඉඩම සහ ගොඩනැඟිල්ල / Land &amp; Premises</a></td>
+<td>ඔප්පු, සමීක්ෂණ සැලසුම, UDA/ප්‍රා.ස. අනුමැති, Certificate of Conformity</td>
+</tr>
+<tr>
+<td>04</td>
+<td><a href="p04.html">Phase 3 — ජල මූලාශ්‍රය / Water Source (WRB)</a></td>
+<td>Gazette 2010/23, ළිඳ/නළ ළිඳ, SLS 614:2013 පරීක්ෂණ</td>
+</tr>
+<tr>
+<td>05</td>
+<td><a href="p05.html">Phase 4 — කර්මාන්ත ශාලා ඉදිකිරීම / Factory Construction</a></td>
+<td>ආහාර ශ්‍රේණියේ සැලසුම, filling room, utilities, ETP</td>
+</tr>
+<tr>
+<td>06</td>
+<td><a href="p06.html">Phase 5 — යන්ත්‍රෝපකරණ සහ උපකරණ / Machinery &amp; Equipment</a></td>
+<td>සම්පූර්ණ machine list, lab equipment, spare parts, consumables</td>
+</tr>
+<tr>
+<td>07</td>
+<td><a href="p07.html">Phase 6 — <strong>සෞඛ්‍ය අමාත්‍යාංශ ලියාපදිංචිය (FCAU)</strong></a></td>
+<td>Food (Bottled Water Registration) Regulations 2011 — සම්පූර්ණ ලේඛන ලැයිස්තුව</td>
+</tr>
+<tr>
+<td>08</td>
+<td><a href="p08.html">Phase 7 — SLSI සහතික කිරීම / SLSI Certification</a></td>
+<td>SLS 894, SLS 1038, SLS 1336:2008 (PET බෝතල්), SLS Mark</td>
+</tr>
+<tr>
+<td>09</td>
+<td><a href="p09.html">Phase 8 — පරිසර අනුමැති / Environmental (CEA)</a></td>
+<td>EPL, Scheduled Waste Licence, discharge standards</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="p10.html">Phase 9 — බදු, ශ්‍රම, වෙනත් නීතිමය / Tax, Labour, Statutory</a></td>
+<td>TIN, VAT, SSCL, EPF/ETF, Factory Ordinance, Annual Return</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="p11.html">Phase 10 — වෙළඳපොළට පිවිසීම / Launch &amp; Market</a></td>
+<td>Trademark, Barcode, Label, Distribution, Export, BOI</td>
+</tr>
+</tbody>
+</table>
+<h3>කොටස 2 — එක්තැන් කරන ලද මූලික ලේඛන (Consolidated references)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ලේඛනය / Document</th>
+<th>අන්තර්ගතය / Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12</td>
+<td><a href="p12.html"><strong>MASTER CHECKLIST — සම්පූර්ණ ලේඛන ලැයිස්තුව</strong></a></td>
+<td>ලේඛන <strong>90+</strong> එකම තැනක — Phase, නිකුතු කරන ආයතනය, කාලය, වියදම, වලංගු කාලය</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="p13.html">මූලධන ආයෝජනය සහ අයවැය / Capital Investment Budget</a></td>
+<td>CAPEX / OPEX, කුඩා–මධ්‍යම–විශාල යන විකල්ප 3</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="p14.html">ව්‍යාපෘති කාල සටහන / Project Timeline</a></td>
+<td>මාස 12–18 Gantt සැලැස්ම</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="p15.html">ආයෝජක Due Diligence පැකේජය / Investor Due Diligence</a></td>
+<td>ආයෝජකයාට පෙන්විය යුතු ලේඛන</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="p16.html">අවදානම් ලේඛනය / Risk Register</a></td>
+<td>අවදානම් 20ක් + අඩු කිරීමේ ක්‍රියාමාර්ග</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="p17.html">ආයතන සහ සේවා සපයන්නන් / Agency &amp; Service Directory</a></td>
+<td>කවුරුන් වෙත කුමක් ලබාගන්නේද — සම්පූර්ණ ලැයිස්තුව</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="p18.html">නැවුම් කිරීමේ කාලසටහන / Renewal &amp; Compliance Calendar</a></td>
+<td>මාසික / වාර්ෂික / වසර 3ක යුතුකම්</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="p19.html">ලේබල් අවශ්‍යතා / Label Requirements</a></td>
+<td>Food (Labelling &amp; Advertising) Regulations 2005</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="p20.html">💧 <strong>ජල පිරිපහදු පද්ධතිය / Water Treatment Train</strong></a></td>
+<td>⭐ සම්පූර්ණ <strong>filtration දාමය</strong> — එක් එක් පෙරහන මොනවා ඉවත් කරයිද, CCP 7ක්, media මාරු කිරීමේ කාලසටහන, RO reject, <strong>bromate අවදානම</strong></td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="p21.html">📋 <strong>තීරණ සහ උපකල්පන / Decision &amp; Assumption Log</strong></a></td>
+<td>⭐ තහවුරු කළ තීරණ, විවෘත ප්‍රශ්න 6ක්, ධාරිතාව පිළිබඳ නිර්දේශය, Phase 1→4 වර්ධන සැලැස්ම</td>
+</tr>
+</tbody>
+</table>
+<h3>කොටස 3 — සූදානම් කරගත හැකි ආකෘති පත්‍ර (Ready-to-use templates)</h3>
+<table>
+<thead>
+<tr>
+<th>ලේඛනය / Template</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="t01.html">MOU / Term Sheet — ආයෝජක අන්‍යෝන්‍ය අවබෝධතා ගිවිසුම</a></td>
+</tr>
+<tr>
+<td><a href="t02.html">Shareholders Agreement — Heads of Terms</a></td>
+</tr>
+<tr>
+<td><a href="t03.html">Board Resolution — සමාගම ලියාපදිංචි කිරීම සඳහා</a></td>
+</tr>
+<tr>
+<td><a href="t04.html">ජල පරීක්ෂණ ඉල්ලුම් ලිපිය (SLSI/ITI)</a></td>
+</tr>
+<tr>
+<td><a href="t05.html">FCAU අයදුම්පත සඳහා ආවරණ ලිපිය</a></td>
+</tr>
+</tbody>
+</table>
+<h3>කොටස 4 — දත්ත ගොනු (Machine-readable data)</h3>
+<table>
+<thead>
+<tr>
+<th>ගොනුව / File</th>
+<th>භාවිතය / Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="data/master-checklist.csv"><code>data/master-checklist.csv</code></a></td>
+<td>Excel/Google Sheets වෙත ගෙන යා හැක — progress tracking</td>
+</tr>
+<tr>
+<td><a href="data/capex-estimate.csv"><code>data/capex-estimate.csv</code></a></td>
+<td>යන්ත්‍රෝපකරණ + ඉදිකිරීම් අයවැය</td>
+</tr>
+<tr>
+<td><a href="data/renewals.csv"><code>data/renewals.csv</code></a></td>
+<td>නැවුම් කිරීමේ දින</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🚀 ඉක්මන් ආරම්භය / Quick Start — පළමු පියවර 7</h2>
+<ol>
+<li><strong>ඉඩම තහවුරු කරගන්න</strong> — අවම <strong>පර්චස් 160</strong> (FCAU අවශ්‍යතාව). ඔප්පුව/බදු ගිවිසුම (වසර 5+) ලියාපදිංචි කරන්න.</li>
+<li><strong>ජල මූලාශ්‍රය පරීක්ෂා කරන්න</strong> — කර්මාන්ත ශාලාව ඉදිකිරීමට <strong>පෙර</strong> ළිඳ සම්පූර්ණ කර <strong>SLS 614:2013</strong> පරීක්ෂණ වාර්තාව ලබාගන්න. මෙය අසමත් වුවහොත් ලියාපදිංචිය නොලැබේ.</li>
+<li><strong>MOU එක අත්සන් කරන්න</strong> — ආයෝජකයා සමඟ කොටස්, පාලනය, පිටවීමේ කොන්දේසි.</li>
+<li><strong>සමාගම ලියාපදිංචි කරන්න (eROC)</strong> — මෙයයි <strong>1st Registration Document</strong>.</li>
+<li><strong>TIN + බැංකු ගිණුම</strong> ලබාගන්න.</li>
+<li><strong>ගොඩනැඟිලි අනුමැති + යන්ත්‍ර ඇණවුම්</strong> එකවර ආරම්භ කරන්න.</li>
+<li><strong>FCAU අයදුම්පත</strong> → SLSI audit → තාවකාලික ලියාපදිංචිය.</li>
+</ol>
+<hr />
+<h2>⚠️ වැදගත් සටහන / Important Note</h2>
+<p>මෙම ලේඛනය <strong>මාර්ගෝපදේශයකි (guidance document)</strong>, නීතිමය උපදෙසක් නොවේ. රජයේ ගාස්තු, නීති සහ අවශ්‍යතා වෙනස් විය හැක. එක් එක් අයිතමය සඳහා <strong>"තහවුරු කරන්න / Verify"</strong> ලෙස සලකුණු කර ඇති ස්ථානවලදී අදාළ ආයතනයෙන් (DRC, FCAU, SLSI, CEA, WRB, IRD, ප්‍රාදේශීය ලේකම්/ප්‍රා.ස.) ඍජුවම තහවුරු කරගන්න.</p>
+<p>This is a <strong>guidance document</strong>, not legal advice. Verify all fees and requirements directly with the issuing authority before committing money.</p>
+<hr />
+<h2>🖥️ ලේඛන පිරික්සීම / Browse the pack</h2>
+<p><code>site/</code> තුළ ස්ථිතික වෙබ් අඩවියක් උත්පාදනය කර ඇත. නැරඹීමට:</p>
+<pre><code class="language-bash">python3 build/build_all.py &amp;&amp; cd site &amp;&amp; python3 -m http.server 8000 --bind 0.0.0.0
+</code></pre></main>
+</div>
+<script>
+function flt(){var v=document.getElementById('q').value.toLowerCase();
+document.querySelectorAll('#nl a').forEach(function(a){
+a.parentElement.style.display=a.textContent.toLowerCase().indexOf(v)>-1?'':'none';});}
+</script>
+</body></html>

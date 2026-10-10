@@ -1,4 +1,9 @@
-site/
+# generated documentation site - but the dashboard IS the deliverable, so it ships
+site/*
+!site/dashboard.html
+!site/index.html
+!site/docs.html
+
 __pycache__/
 *.pyc
 .DS_Store

@@ -28,7 +28,8 @@
 
 ## 📊 ⭐ ව්‍යාපෘති DASHBOARD — මුදල්, බෝතල් Qty, ලාභය | One-page panel
 
-> **බලන්න:** `site/dashboard.html` (build කරන්න: `python3 build/build_dashboard.py`)
+> **බලන්න / View:** `site/dashboard.html` — එය **`/` (site root)** ලෙස publish වේ, එබැවින් preview එක විවෘත කළ විට dashboard එකම පළමුව පෙනේ.
+> **Build:** `python3 build/build_all.py` (සියල්ල එකවර) · **ලේඛන / Docs:** `site/docs.html`
 
 මුළු ව්‍යාපෘතියම **එක පිටුවක** — කියවන්නට පහසු, ඕනෑම කෙනෙකුට තේරෙන ආකාරයට:
 
@@ -133,5 +134,5 @@ This is a **guidance document**, not legal advice. Verify all fees and requireme
 `site/` තුළ ස්ථිතික වෙබ් අඩවියක් උත්පාදනය කර ඇත. නැරඹීමට:
 
 ```bash
-python3 build/build_site.py && cd site && python3 -m http.server 8000 --bind 0.0.0.0
+python3 build/build_all.py && cd site && python3 -m http.server 8000 --bind 0.0.0.0
 ```
